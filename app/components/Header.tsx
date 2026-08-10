@@ -1,9 +1,20 @@
 import Link from "next/link";
+import MenuMobile from "@/app/components/MenuMobile";
 import { categorias } from "@/lib/noticias";
 
 const secoes = [
   { href: "/arquivo", rotulo: "Arquivo" },
   { href: "/arsenal", rotulo: "Arsenal" },
+];
+
+/** Mesma navegação da barra, em lista única — é o que o menu mobile mostra. */
+const linksDoMenu = [
+  { href: "/", rotulo: "Notícias" },
+  ...categorias.map((categoria) => ({
+    href: `/${categoria.slug}`,
+    rotulo: categoria.rotulo,
+  })),
+  ...secoes,
 ];
 
 export default function Header() {
@@ -27,7 +38,8 @@ export default function Header() {
           </span>
         </div>
 
-        <nav className="hidden shrink-0 items-center gap-5 text-sm font-medium sm:flex lg:text-base">
+        {/* Abaixo de lg os links não cabem na linha: viram o menu de hambúrguer. */}
+        <nav className="hidden shrink-0 items-center gap-5 text-sm font-medium lg:flex lg:text-base">
           <Link href="/" className="transition-colors hover:text-[#F97316]">
             Notícias
           </Link>
@@ -53,6 +65,8 @@ export default function Header() {
             </Link>
           ))}
         </nav>
+
+        <MenuMobile links={linksDoMenu} />
       </div>
     </header>
   );
