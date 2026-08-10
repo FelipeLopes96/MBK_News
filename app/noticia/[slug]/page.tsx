@@ -1,0 +1,93 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import Markdown from "react-markdown";
+import Header from "@/app/components/Header";
+import ImagemNoticia from "@/app/components/ImagemNoticia";
+import NewsletterForm from "@/app/components/NewsletterForm";
+import {
+  formatarData,
+  getNoticiaPorSlug,
+  getTodasNoticias,
+  rotuloDaCategoria,
+} from "@/lib/noticias";
+
+export function generateStaticParams() {
+  return getTodasNoticias().map((noticia) => ({ slug: noticia.slug }));
+}
+
+export async function generateMetadata(
+  props: PageProps<"/noticia/[slug]">
+): Promise<Metadata> {
+  const { slug } = await props.params;
+  const noticia = getNoticiaPorSlug(slug);
+
+  if (!noticia) {
+    return { title: "Notícia não encontrada | O Corner" };
+  }
+
+  return {
+    title: `${noticia.title} | O Corner`,
+    description: noticia.resumo,
+  };
+}
+
+export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
+  const { slug } = await props.params;
+  const noticia = getNoticiaPorSlug(slug);
+
+  if (!noticia) {
+    notFound();
+  }
+
+  return (
+    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+      <Header />
+
+      <article className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
+        <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+          <ImagemNoticia
+            src={noticia.imagem}
+            alt={noticia.title}
+            sizes="(min-width: 768px) 768px, 100vw"
+            preload
+          />
+        </div>
+
+        <div className="mt-8 flex items-center gap-3">
+          <Link
+            href={`/${noticia.categoria}`}
+            className="rounded bg-[#F97316] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#1A1A1A] hover:opacity-90"
+          >
+            {rotuloDaCategoria(noticia.categoria)}
+          </Link>
+          <time
+            dateTime={noticia.date}
+            className="text-xs font-semibold uppercase tracking-wide text-zinc-500"
+          >
+            {formatarData(noticia.date)}
+          </time>
+        </div>
+
+        <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+          {noticia.title}
+        </h1>
+
+        <div className="prose prose-invert mt-8 max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-zinc-300">
+          <Markdown>{noticia.conteudo}</Markdown>
+        </div>
+
+        <div className="mt-12">
+          <NewsletterForm />
+        </div>
+
+        <Link
+          href="/"
+          className="mt-12 inline-block text-sm font-medium text-[#F97316] hover:underline"
+        >
+          ← Voltar para as notícias
+        </Link>
+      </article>
+    </div>
+  );
+}

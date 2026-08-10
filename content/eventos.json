@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "organizacao": "UFC",
+    "nome": "UFC 320: Duelo de Campeões",
+    "data": "2026-08-22",
+    "local": "T-Mobile Arena, Las Vegas"
+  },
+  {
+    "id": 2,
+    "organizacao": "ONE",
+    "nome": "ONE Championship 178: Bangkok",
+    "data": "2026-08-29",
+    "local": "Lumpinee Stadium, Bangkok"
+  },
+  {
+    "id": 3,
+    "organizacao": "PFL",
+    "nome": "PFL Playoffs: Semifinais",
+    "data": "2026-09-05",
+    "local": "The Anthem, Washington D.C."
+  },
+  {
+    "id": 4,
+    "organizacao": "UFC",
+    "nome": "UFC Fight Night: São Paulo",
+    "data": "2026-09-19",
+    "local": "Ginásio do Ibirapuera, São Paulo"
+  },
+  {
+    "id": 5,
+    "organizacao": "ONE",
+    "nome": "ONE Friday Fights 92",
+    "data": "2026-10-02",
+    "local": "Impact Arena, Bangkok"
+  }
+]
