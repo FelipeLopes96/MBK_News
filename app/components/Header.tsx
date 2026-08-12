@@ -21,7 +21,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-[#1A1A1A] text-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-        <div className="flex min-w-0 items-baseline gap-3">
+        {/* Abaixo de lg a tagline não cabe ao lado do menu: cai para a linha de baixo. */}
+        <div className="flex min-w-0 flex-col gap-0.5 lg:flex-row lg:items-baseline lg:gap-3">
           <Link
             href="/"
             className="shrink-0 text-2xl font-extrabold tracking-tight text-[#F97316]"
@@ -29,11 +30,10 @@ export default function Header() {
             O Corner
           </Link>
 
-          {/* Tagline só a partir de lg — abaixo disso não cabe ao lado do menu. */}
           <span aria-hidden="true" className="hidden text-zinc-600 lg:inline">
             |
           </span>
-          <span className="hidden truncate text-base text-zinc-400 lg:inline">
+          <span className="text-xs leading-tight text-zinc-400 lg:truncate lg:text-base">
             A referência digital em esportes de combate
           </span>
         </div>
