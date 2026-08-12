@@ -23,7 +23,7 @@ export default function NoticiaCard({
       {/* No mobile a altura vem do estica do flex, acompanhando o texto ao lado. */}
       <div className="relative w-1/3 shrink-0 sm:aspect-video sm:w-full">
         <ImagemNoticia
-          src={noticia.imagem}
+          src={noticia.imagem?.url}
           alt={noticia.title}
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 33vw"
           preload={preload}

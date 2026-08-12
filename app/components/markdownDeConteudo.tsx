@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Components } from "react-markdown";
+import CreditoDeImagem from "@/app/components/CreditoDeImagem";
 
 /**
  * Componentes usados pelo react-markdown no corpo das matérias.
@@ -7,6 +8,10 @@ import type { Components } from "react-markdown";
  * Imagens escritas no .md — ![alt](/noticias/arquivo.jpg "legenda opcional") —
  * passam pelo next/image em vez de virar um <img> cru, e o `title` do Markdown
  * vira a legenda embaixo da foto.
+ *
+ * O `title` também aceita a fonte da imagem depois de uma barra vertical:
+ * ![alt](/noticias/arquivo.jpg "legenda|https://origem-da-foto") — a legenda
+ * fica na figcaption e a URL vira a linha de crédito, igual à foto de capa.
  */
 export const componentesDeMarkdown: Components = {
   // Uma imagem sozinha na linha é um parágrafo com um único filho no Markdown.
@@ -27,6 +32,10 @@ export const componentesDeMarkdown: Components = {
       return null;
     }
 
+    const [legenda, fonte] = (title ?? "")
+      .split("|")
+      .map((parte) => parte.trim());
+
     return (
       <figure className="my-8">
         <Image
@@ -39,10 +48,15 @@ export const componentesDeMarkdown: Components = {
           sizes="(min-width: 768px) 768px, 100vw"
           className="h-auto w-full rounded-lg"
         />
-        {title ? (
+        {legenda ? (
           <figcaption className="mt-3 text-center text-sm leading-6 text-zinc-500">
-            {title}
+            {legenda}
           </figcaption>
+        ) : null}
+        {fonte ? (
+          <div className="text-center">
+            <CreditoDeImagem imagem={{ url: src, fonte }} />
+          </div>
         ) : null}
       </figure>
     );

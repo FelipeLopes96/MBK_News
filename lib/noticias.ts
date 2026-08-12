@@ -1,6 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import {
+  normalizarData,
+  normalizarFontes,
+  normalizarImagem,
+  type Fonte,
+  type ImagemComCredito,
+} from "@/lib/conteudo";
+
+/** Imagem de capa com os dados de atribuição exigidos na publicação. */
+export type ImagemDeNoticia = ImagemComCredito;
 
 export type Noticia = {
   title: string;
@@ -9,7 +19,9 @@ export type Noticia = {
   date: string;
   categoria: string;
   resumo: string;
-  imagem?: string;
+  imagem?: ImagemDeNoticia;
+  /** Veículos consultados na apuração, exibidos no fim da matéria. */
+  fontes: Fonte[];
   destaque: boolean;
   /** Corpo do arquivo .md, ainda em Markdown. */
   conteudo: string;
@@ -31,17 +43,6 @@ export const NOTICIAS_POR_PAGINA = 9;
 
 const diretorioDeNoticias = path.join(process.cwd(), "content", "noticias");
 
-/**
- * O YAML converte datas sem aspas em objetos Date. Normalizamos para string
- * ISO (AAAA-MM-DD) para que a ordenação e a formatação não dependam disso.
- */
-function normalizarData(valor: unknown): string {
-  if (valor instanceof Date) {
-    return valor.toISOString().slice(0, 10);
-  }
-  return String(valor ?? "");
-}
-
 function lerNoticias(): Noticia[] {
   const arquivos = fs
     .readdirSync(diretorioDeNoticias)
@@ -57,7 +58,8 @@ function lerNoticias(): Noticia[] {
       date: normalizarData(data.date),
       categoria: String(data.categoria ?? ""),
       resumo: String(data.resumo ?? ""),
-      imagem: data.imagem ? String(data.imagem) : undefined,
+      imagem: normalizarImagem(data.imagem),
+      fontes: normalizarFontes(data.fontes),
       destaque: data.destaque === true,
       conteudo: content.trim(),
     } satisfies Noticia;

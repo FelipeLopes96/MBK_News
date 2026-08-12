@@ -1,16 +1,25 @@
 import Link from "next/link";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
-import type { ItemDeConteudo } from "@/lib/conteudo";
 
+/**
+ * Card em grade usado pelo Arquivo, pelo Arsenal e pelas entidades do Arquivo
+ * (organizações, lendas, momentos). Recebe campos soltos em vez de um tipo de
+ * conteúdo específico justamente para servir a todos eles.
+ */
 export default function ConteudoCard({
-  item,
   href,
-  rotuloCategoria,
+  titulo,
+  rotulo,
+  resumo,
+  imagem,
   preload = false,
 }: {
-  item: ItemDeConteudo;
   href: string;
-  rotuloCategoria: string;
+  titulo: string;
+  /** Linha em laranja acima do título — categoria, tipo de entidade etc. */
+  rotulo: string;
+  resumo?: string;
+  imagem?: string;
   preload?: boolean;
 }) {
   return (
@@ -20,8 +29,8 @@ export default function ConteudoCard({
     >
       <div className="relative aspect-video w-full">
         <ImagemNoticia
-          src={item.imagem}
-          alt={item.title}
+          src={imagem}
+          alt={titulo}
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           preload={preload}
         />
@@ -29,14 +38,16 @@ export default function ConteudoCard({
 
       <div className="flex flex-1 flex-col gap-3 p-5">
         <span className="text-xs font-semibold uppercase tracking-wide text-[#F97316]">
-          {rotuloCategoria}
+          {rotulo}
         </span>
 
         <h3 className="text-lg font-semibold leading-snug text-white transition-colors group-hover:text-[#F97316]">
-          {item.title}
+          {titulo}
         </h3>
 
-        <p className="text-sm leading-6 text-zinc-400">{item.resumo}</p>
+        {resumo ? (
+          <p className="text-sm leading-6 text-zinc-400">{resumo}</p>
+        ) : null}
       </div>
     </Link>
   );

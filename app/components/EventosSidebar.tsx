@@ -9,6 +9,8 @@ const coresPorOrganizacao: Record<string, string> = {
   UFC: "border-red-500/30 bg-red-500/15 text-red-400",
   ONE: "border-sky-500/30 bg-sky-500/15 text-sky-400",
   PFL: "border-emerald-500/30 bg-emerald-500/15 text-emerald-400",
+  "Jungle Fight": "border-lime-500/30 bg-lime-500/15 text-lime-400",
+  WGP: "border-amber-500/30 bg-amber-500/15 text-amber-400",
 };
 
 function badgeDaOrganizacao(organizacao: string): string {
@@ -41,7 +43,10 @@ function ItemDeEvento({ evento }: { evento: Evento }) {
         <p className="mt-1.5 text-sm font-semibold leading-snug text-white">
           {evento.nome}
         </p>
-        <p className="mt-0.5 truncate text-xs text-zinc-500">{evento.local}</p>
+        <p className="mt-0.5 truncate text-xs text-zinc-500">
+          {evento.hora ? `${evento.hora} · ` : null}
+          {evento.local}
+        </p>
       </div>
     </li>
   );

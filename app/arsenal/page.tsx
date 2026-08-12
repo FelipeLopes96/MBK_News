@@ -32,9 +32,11 @@ export default function ArsenalPage() {
             {reviews.map((review, indice) => (
               <ConteudoCard
                 key={review.slug}
-                item={review}
                 href={`/arsenal/${review.slug}`}
-                rotuloCategoria={rotuloDaCategoria(review.categoria)}
+                titulo={review.title}
+                rotulo={rotuloDaCategoria(review.categoria)}
+                resumo={review.resumo}
+                imagem={review.imagem}
                 preload={indice === 0}
               />
             ))}

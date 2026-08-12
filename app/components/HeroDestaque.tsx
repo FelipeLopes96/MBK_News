@@ -19,7 +19,7 @@ export default function HeroDestaque({
           estreitas, onde só a proporção deixaria a imagem baixa demais. */}
       <div className="relative aspect-[16/9] min-h-52 w-full sm:aspect-[2/1] sm:min-h-0">
         <ImagemNoticia
-          src={noticia.imagem}
+          src={noticia.imagem?.url}
           alt={noticia.title}
           sizes="(min-width: 1024px) 66vw, 100vw"
           preload

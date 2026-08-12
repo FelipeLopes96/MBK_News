@@ -33,5 +33,13 @@
     "nome": "UFC Fight Night: Nurmagomedov x Song",
     "data": "2026-08-29",
     "local": "Oriental Sports Center, Xangai"
+  },
+  {
+    "id": 6,
+    "organizacao": "WGP",
+    "nome": "WGP 86",
+    "data": "2026-08-30",
+    "hora": "18h",
+    "local": "Local a confirmar"
   }
 ]

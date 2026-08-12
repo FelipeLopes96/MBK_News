@@ -14,6 +14,11 @@ export type ItemDeConteudo = {
   categoria: string;
   resumo: string;
   imagem?: string;
+  /**
+   * Organizações às quais o conteúdo se refere (slugs de content/organizacoes).
+   * É o que faz o artigo aparecer no hub da organização.
+   */
+  organizacoes: string[];
   /** Corpo do arquivo .md, ainda em Markdown. */
   conteudo: string;
 };
@@ -23,22 +28,135 @@ export type CategoriaDeConteudo = {
   rotulo: string;
 };
 
+/** Imagem com os dados de atribuição exigidos na publicação. */
+export type ImagemComCredito = {
+  url: string;
+  /** Quem fez a foto (fotógrafo ou agência). */
+  credito?: string;
+  /** Onde a imagem foi obtida (veículo, site oficial, banco de imagens). */
+  fonte?: string;
+  /** Termos de uso — ex.: "Getty Images", "CC BY 2.0", "Divulgação". */
+  licenca?: string;
+};
+
+/** Veículo consultado na apuração. Vira link quando tem `url`. */
+export type Fonte = {
+  rotulo: string;
+  url?: string;
+  /** Natureza da fonte — ex.: "oficial", "imprensa". */
+  tipo?: string;
+};
+
 /** O YAML converte datas sem aspas em Date; normalizamos para string ISO. */
-function normalizarData(valor: unknown): string {
+export function normalizarData(valor: unknown): string {
   if (valor instanceof Date) {
     return valor.toISOString().slice(0, 10);
   }
   return String(valor ?? "");
 }
 
-function lerPasta(pasta: string): ItemDeConteudo[] {
+/** Campo opcional de texto: só vira valor quando tem conteúdo de verdade. */
+export function textoOpcional(valor: unknown): string | undefined {
+  const texto = String(valor ?? "").trim();
+  return texto || undefined;
+}
+
+/** Lista de strings tolerante a valor único e a itens vazios. */
+export function normalizarLista(valor: unknown): string[] {
+  const lista = Array.isArray(valor) ? valor : [valor];
+  return lista
+    .map((item) => String(item ?? "").trim())
+    .filter((item) => item.length > 0);
+}
+
+/**
+ * `imagem` aceita duas formas no frontmatter: a string simples usada nos
+ * conteúdos antigos e o objeto com atribuição — url, credito, fonte, licenca.
+ */
+export function normalizarImagem(valor: unknown): ImagemComCredito | undefined {
+  if (typeof valor === "string") {
+    const url = valor.trim();
+    return url ? { url } : undefined;
+  }
+
+  if (valor && typeof valor === "object") {
+    const campos = valor as Record<string, unknown>;
+    const url = textoOpcional(campos.url);
+    if (!url) {
+      return undefined;
+    }
+
+    return {
+      url,
+      credito: textoOpcional(campos.credito),
+      fonte: textoOpcional(campos.fonte),
+      licenca: textoOpcional(campos.licenca),
+    };
+  }
+
+  return undefined;
+}
+
+/**
+ * `fontes` aceita nomes soltos — "UFC" — ou objetos { rotulo, url } quando a
+ * fonte tem link. Também aceita uma URL crua, que vira rótulo e link.
+ */
+export function normalizarFontes(valor: unknown): Fonte[] {
+  const lista = Array.isArray(valor) ? valor : [valor];
+
+  return lista.flatMap((item): Fonte[] => {
+    if (typeof item === "string") {
+      const texto = item.trim();
+      if (!texto) return [];
+      return [/^https?:\/\//.test(texto) ? { rotulo: texto, url: texto } : { rotulo: texto }];
+    }
+
+    if (item && typeof item === "object") {
+      const campos = item as Record<string, unknown>;
+      const url = textoOpcional(campos.url);
+      const rotulo =
+        textoOpcional(campos.rotulo) ??
+        textoOpcional(campos.nome) ??
+        textoOpcional(campos.name) ??
+        url;
+      if (!rotulo) return [];
+      return [{ rotulo, url, tipo: textoOpcional(campos.tipo ?? campos.type) }];
+    }
+
+    return [];
+  });
+}
+
+/**
+ * Organizações relacionadas. Aceita `organizacoes`, `organizations` e
+ * `organization` porque as três formas aparecem nos conteúdos.
+ */
+export function normalizarOrganizacoes(data: Record<string, unknown>): string[] {
+  return normalizarLista(
+    data.organizacoes ?? data.organizations ?? data.organization
+  );
+}
+
+/** Slug derivado do nome do arquivo, sem o prefixo de data. */
+export function slugDoArquivo(arquivo: string): string {
+  return arquivo.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.md$/, "");
+}
+
+export type ArquivoBruto = {
+  /** Nome do arquivo no disco, ex.: "2026-05-28-muay-thai-vs-kickboxing.md". */
+  arquivo: string;
+  data: Record<string, unknown>;
+  conteudo: string;
+};
+
+function lerBrutos(pasta: string): ArquivoBruto[] {
   const diretorio = path.join(process.cwd(), "content", pasta);
 
   if (!fs.existsSync(diretorio)) {
     return [];
   }
 
-  const itens = fs
+  return fs
     .readdirSync(diretorio)
     .filter((arquivo) => arquivo.endsWith(".md"))
     .map((arquivo) => {
@@ -46,38 +164,52 @@ function lerPasta(pasta: string): ItemDeConteudo[] {
       const { data, content } = matter(bruto);
 
       return {
-        title: String(data.title ?? ""),
-        slug: String(
-          data.slug ??
-            arquivo.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.md$/, "")
-        ),
-        date: normalizarData(data.date),
-        categoria: String(data.categoria ?? ""),
-        resumo: String(data.resumo ?? ""),
-        imagem: data.imagem ? String(data.imagem) : undefined,
+        arquivo,
+        data: data as Record<string, unknown>,
         conteudo: content.trim(),
-      } satisfies ItemDeConteudo;
+      };
     });
-
-  // Mais recentes primeiro.
-  return itens.sort((a, b) => b.date.localeCompare(a.date));
 }
 
 // Em produção lemos o disco uma vez por processo; em dev relemos sempre, senão
 // criar ou editar um .md não aparece sem reiniciar o servidor.
-const cache = new Map<string, ItemDeConteudo[]>();
+const cache = new Map<string, ArquivoBruto[]>();
 
-export function carregarConteudo(pasta: string): ItemDeConteudo[] {
+/**
+ * Frontmatter + corpo de todos os .md de uma pasta de `content/`, sem impor
+ * formato. É a base tanto dos artigos quanto das entidades do Arquivo.
+ */
+export function carregarBrutos(pasta: string): ArquivoBruto[] {
   if (process.env.NODE_ENV !== "production") {
-    return lerPasta(pasta);
+    return lerBrutos(pasta);
   }
 
   let itens = cache.get(pasta);
   if (!itens) {
-    itens = lerPasta(pasta);
+    itens = lerBrutos(pasta);
     cache.set(pasta, itens);
   }
   return itens;
+}
+
+export function carregarConteudo(pasta: string): ItemDeConteudo[] {
+  const itens = carregarBrutos(pasta).map(({ arquivo, data, conteudo }) => {
+    return {
+      title: String(data.title ?? ""),
+      slug: String(data.slug ?? slugDoArquivo(arquivo)),
+      date: normalizarData(data.date),
+      categoria: String(data.categoria ?? ""),
+      resumo: String(data.resumo ?? ""),
+      // Aqui só a URL interessa, mas normalizamos igual para o caso de um
+      // artigo trazer o objeto com crédito em vez da string simples.
+      imagem: normalizarImagem(data.imagem)?.url,
+      organizacoes: normalizarOrganizacoes(data),
+      conteudo,
+    } satisfies ItemDeConteudo;
+  });
+
+  // Mais recentes primeiro.
+  return itens.sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export function rotuloDe(

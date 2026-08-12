@@ -6,6 +6,8 @@ export type Evento = {
   nome: string;
   /** Data em formato ISO (AAAA-MM-DD). */
   data: string;
+  /** Horário de início, quando divulgado — ex.: "18h". */
+  hora?: string;
   local: string;
 };
 

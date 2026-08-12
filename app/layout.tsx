@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "@/app/components/Footer";
+import { NOME_DO_SITE, urlDoSite } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,10 +14,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const descricaoDoSite =
+  "Notícias, análises e bastidores de MMA, boxe, jiu-jitsu e muay thai. O Corner é a referência digital em esportes de combate.";
+
+/**
+ * Defaults herdados por todas as páginas: `metadataBase` resolve os canonical
+ * relativos e as URLs de Open Graph, e o bloco `openGraph` vale para as páginas
+ * que não declaram o seu.
+ */
 export const metadata: Metadata = {
-  title: "O Corner | A referência digital em esportes de combate",
-  description:
-    "Notícias, análises e bastidores de MMA, boxe, jiu-jitsu e muay thai. O Corner é a referência digital em esportes de combate.",
+  metadataBase: new URL(urlDoSite),
+  title: `${NOME_DO_SITE} | A referência digital em esportes de combate`,
+  description: descricaoDoSite,
+  openGraph: {
+    siteName: NOME_DO_SITE,
+    locale: "pt_BR",
+    type: "website",
+    title: `${NOME_DO_SITE} | A referência digital em esportes de combate`,
+    description: descricaoDoSite,
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

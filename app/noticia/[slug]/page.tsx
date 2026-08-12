@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
+import BlocoDeFontes from "@/app/components/BlocoDeFontes";
+import CreditoDeImagem from "@/app/components/CreditoDeImagem";
 import Header from "@/app/components/Header";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
 import NewsletterForm from "@/app/components/NewsletterForm";
@@ -48,12 +50,13 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
       <article className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
         <div className="relative aspect-video w-full overflow-hidden rounded-lg">
           <ImagemNoticia
-            src={noticia.imagem}
+            src={noticia.imagem?.url}
             alt={noticia.title}
             sizes="(min-width: 768px) 768px, 100vw"
             preload
           />
         </div>
+        <CreditoDeImagem imagem={noticia.imagem} />
 
         <div className="mt-8 flex items-center gap-3">
           <Link
@@ -79,6 +82,8 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
             {noticia.conteudo}
           </Markdown>
         </div>
+
+        <BlocoDeFontes fontes={noticia.fontes} />
 
         <div className="mt-12">
           <NewsletterForm />

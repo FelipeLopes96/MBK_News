@@ -4,7 +4,14 @@ slug: "allan-nascimento-morre-34-anos"
 date: "2026-08-11"
 categoria: "mma"
 resumo: "Peso-mosca brasileiro foi encontrado morto em casa no dia 3 de agosto. Allan, conhecido como “Puro Osso”, havia lutado pela última vez apenas seis semanas antes."
-imagem: "/noticias/allan-nascimento.jpg"
+fontes:
+  - "UFC"
+  - "The Independent"
+imagem:
+  url: "/noticias/allan-nascimento.jpg"
+  credito: ""
+  fonte: "https://www.ufc.com.br/athlete/allan-nascimento"
+  licenca: ""
 destaque: false
 ---
 
@@ -36,7 +43,7 @@ Ele começou a lutar profissionalmente em 2011 e passou mais de uma década comp
 
 ## Uma perda que vai além do octógono
 
-![Allan 'Puro Osso' Nascimento dando entrevista no octógono](/noticias/allan-nascimento2.jpg "A última luta de Allan 'Puro Osso' Nascimento havia sido em 20 de Junho de 2026, no card preliminar do UFC Vegas 119")
+![Allan 'Puro Osso' Nascimento dando entrevista no octógono](/noticias/allan-nascimento2.jpg "A última luta de Allan 'Puro Osso' Nascimento havia sido em 20 de Junho de 2026, no card preliminar do UFC Vegas 119|https://www.ufc.com.br/news/allan-puro-osso-leva-bonus-performance-noite-ufc-vegas-110")
 
 A morte de Allan deixa uma lacuna principalmente para quem dividiu a rotina de treinos com ele.
 

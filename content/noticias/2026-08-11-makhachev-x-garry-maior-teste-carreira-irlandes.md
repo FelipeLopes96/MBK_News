@@ -4,7 +4,15 @@ slug: "makhachev-x-garry-maior-teste-carreira-irlandes"
 date: "2026-08-11"
 categoria: "mma"
 resumo: "Islam Makhachev defende o cinturão dos meio-médios contra Ian Machado Garry neste sábado, em Filadélfia. O russo busca a 17ª vitória seguida no UFC, enquanto o irlandês tenta provar que está pronto para ser campeão."
-imagem: "/noticias/Islam-makhachev-x-Ian-Garry.jpg"
+fontes:
+  - "UFC"
+  - "MMA Fighting"
+  - "ESPN MMA"
+imagem:
+  url: "/noticias/Islam-makhachev-x-Ian-Garry.jpg"
+  credito: ""
+  fonte: ""
+  licenca: ""
 destaque: true
 ---
 
