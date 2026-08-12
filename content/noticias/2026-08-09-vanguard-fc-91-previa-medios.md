@@ -4,7 +4,7 @@ slug: "vanguard-fc-91-previa-medios"
 date: "2026-08-09"
 categoria: "mma"
 resumo: "Caio Bertoldi defende o título contra Rurik Sundqvist em um combate que decide o rumo de uma divisão parada há dois anos e meio."
-imagem: ""
+imagem: "/noticias/vanguard-fc-91.jpg"
 destaque: true
 ---
 

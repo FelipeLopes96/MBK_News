@@ -5,6 +5,7 @@ import Markdown from "react-markdown";
 import Header from "@/app/components/Header";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
 import NewsletterForm from "@/app/components/NewsletterForm";
+import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
 import {
   formatarData,
   getNoticiaPorSlug,
@@ -74,7 +75,9 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
         </h1>
 
         <div className="prose prose-invert mt-8 max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-zinc-300">
-          <Markdown>{noticia.conteudo}</Markdown>
+          <Markdown components={componentesDeMarkdown}>
+            {noticia.conteudo}
+          </Markdown>
         </div>
 
         <div className="mt-12">
