@@ -1,12 +1,15 @@
 ---
-title: "Allan Nascimento morre aos 34 anos, uma semana depois de sua última luta no UFC"
-slug: "allan-nascimento-morre-34-anos"
-date: "2026-08-11"
+title: "Tragédia no MMA: Allan Nascimento morre aos 34 anos"
+slug: "tragedia-mma-allan-nascimento-morre-aos-34"
+date: "2026-08-12"
 categoria: "mma"
-resumo: "Peso-mosca brasileiro foi encontrado morto em casa no dia 3 de agosto. Allan, conhecido como “Puro Osso”, havia lutado pela última vez apenas seis semanas antes."
+resumo: "Ex-lutador do UFC morreu no dia 3 de agosto, aos 34 anos. Allan havia competido pela última vez apenas seis semanas antes."
+imagem: ""
+destaque: true
 fontes:
   - "UFC"
-  - "The Independent"
+  - "MMA Mania"
+  - "Times of India"
 imagem:
   url: "/noticias/allan-nascimento.jpg"
   credito: ""
@@ -21,37 +24,19 @@ A notícia pegou o mundo do MMA de surpresa principalmente pela idade de Allan e
 
 ## Uma carreira construída no jiu-jitsu
 
-Conhecido pelo apelido de “Puro Osso”, Allan era faixa-preta de jiu-jitsu e treinava na Chute Boxe Diego Lima, em São Paulo, ao lado de nomes como Charles Oliveira e Norma Dumont.
+Conhecido como "Puro Osso", Allan era faixa-preta de jiu-jitsu e treinava na Chute Boxe Diego Lima, ao lado de nomes como Charles Oliveira.
 
-Seu cartel profissional terminou com 22 vitórias e sete derrotas, sendo 15 vitórias por finalização e duas por nocaute. Doze de seus triunfos terminaram ainda no primeiro round.
+Profissional desde 2011, terminou a carreira com 22 vitórias e sete derrotas. No UFC, foram seis lutas, com quatro vitórias. 
 
-Allan chegou ao UFC em 2021 e permaneceu na organização por quase cinco anos. Nesse período, conquistou vitórias importantes sobre Carlos Hernandez, Jafel Filho e Cody Durden, além de dividir o octógono com outros nomes da categoria.
-
-A última luta, contra Raposo, não terminou como ele queria. Foi uma decisão apertada, definida pelos juízes após três rounds.
-
-Pouco mais de um mês depois, Allan morreu.
-
-## A despedida de Dana White
-
-O UFC prestou homenagem ao lutador logo após a notícia da morte. Nesta semana, Dana White também falou publicamente sobre Allan e lamentou a perda do atleta.
-
-A organização descreveu Allan como um lutador dedicado e destacou sua trajetória dentro do peso-mosca.
-
-Para quem acompanhava apenas os grandes nomes da divisão, talvez Allan não fosse um dos atletas mais conhecidos do elenco. Mas dentro do circuito brasileiro e entre os fãs mais antigos do MMA, seu nome era bastante familiar.
-
-Ele começou a lutar profissionalmente em 2011 e passou mais de uma década competindo antes de chegar ao UFC.
-
-## Uma perda que vai além do octógono
+A última delas aconteceu em 20 de junho. Pouco mais de um mês depois, veio a notícia que surpreendeu toda a comunidade do MMA.
 
 ![Allan 'Puro Osso' Nascimento dando entrevista no octógono](/noticias/allan-nascimento2.jpg "A última luta de Allan 'Puro Osso' Nascimento havia sido em 20 de Junho de 2026, no card preliminar do UFC Vegas 119|https://www.ufc.com.br/news/allan-puro-osso-leva-bonus-performance-noite-ufc-vegas-110")
 
-A morte de Allan deixa uma lacuna principalmente para quem dividiu a rotina de treinos com ele.
+## Uma perda que vai além do octógono
 
-O lutador passou boa parte da carreira entre academias, viagens, camps e lutas. Chegou ao maior palco do MMA depois de anos construindo seu caminho no esporte e ainda estava competindo em alto nível aos 34 anos.
+Charles Oliveira, companheiro de equipe, chamou Allan de irmão ao prestar homenagem ao lutador. Dana White também se manifestou sobre a morte nesta semana. 
 
-Não há, neste momento, outras informações oficiais que expliquem as circunstâncias médicas da morte além do relato de um aparente ataque cardíaco. Por isso, qualquer tentativa de relacionar o falecimento a treinamento, corte de peso ou outros fatores seria apenas especulação.
-
-O que fica confirmado é mais simples, e bastante triste.
+O octógono tinha acabado de ficar para trás em junho. A vida, infelizmente, não deu a ele a chance de descobrir qual seria o próximo capítulo.
 
 Allan Nascimento entrou no UFC em 2021 querendo provar que seu trabalho havia chegado ao maior palco do esporte. Saiu dele quase cinco anos depois com 29 lutas profissionais no cartel e uma carreira construída praticamente inteira dentro do MMA.
 

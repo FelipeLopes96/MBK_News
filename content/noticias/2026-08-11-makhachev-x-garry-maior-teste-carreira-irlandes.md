@@ -1,13 +1,14 @@
 ---
-title: "Makhachev x Garry: o maior teste da carreira do irlandês está a poucos dias de distância"
-slug: "makhachev-x-garry-maior-teste-carreira-irlandes"
-date: "2026-08-11"
+title: "Makhachev x Garry: quem pode parar o campeão?"
+slug: "makhachev-x-garry-quem-pode-parar-o-campeao"
+date: "2026-08-12"
 categoria: "mma"
-resumo: "Islam Makhachev defende o cinturão dos meio-médios contra Ian Machado Garry neste sábado, em Filadélfia. O russo busca a 17ª vitória seguida no UFC, enquanto o irlandês tenta provar que está pronto para ser campeão."
+resumo: "Islam Makhachev defende o cinturão dos meio-médios contra Ian Machado Garry neste sábado. O russo tenta quebrar o recorde de vitórias consecutivas do UFC, enquanto o irlandês busca o maior triunfo da carreira."
+imagem: ""
+destaque: true
 fontes:
   - "UFC"
   - "MMA Fighting"
-  - "ESPN MMA"
 imagem:
   url: "/noticias/Islam-makhachev-x-Ian-Garry.jpg"
   credito: ""
@@ -38,54 +39,18 @@ Se Garry ficar preso ali, a vantagem física que ele tem em pé começa a valer 
 
 Por isso, o irlandês passou parte da preparação trabalhando justamente seu jogo de chão com Demian Maia. O brasileiro, um dos maiores especialistas em jiu-jitsu que já passaram pelo UFC, acredita que Garry tem as ferramentas necessárias para vencer Makhachev.
 
-## O que Garry precisa fazer?
-
-A resposta parece simples: não deixar Makhachev lutar do jeito que ele quer.
-
-Garry precisa manter distância, usar seu alcance e evitar passar muito tempo de costas para a grade. Se conseguir fazer o russo perseguir a luta em pé, terá mais oportunidades para trabalhar sua trocação.
-
-O problema é conseguir fazer isso durante cinco rounds.
-
-Makhachev é muito bom em tirar espaço do adversário. Uma entrada bem feita pode virar clinch. O clinch pode virar grade. A grade pode virar queda.
-
-E, quando ele consegue colocar a luta no chão, começa a parte em que o campeão se sente mais confortável.
-
-Garry sabe disso. Tanto que passou o camp buscando melhorar exatamente essa parte do jogo.
-
-## Makhachev ainda é o favorito
-
-Apesar da diferença de tamanho e das qualidades de Garry, Makhachev chega como favorito para a luta.
-
-E existe uma razão para isso: ainda não vimos alguém conseguir impor um plano consistente contra ele durante cinco rounds.
-
-Garry tem características que podem complicar bastante a vida do russo, mas terá que provar que consegue mantê-lo longe o suficiente para que essas características façam diferença.
-
-O próprio Garry parece bastante confiante. Nesta semana, o irlandês chegou a dizer que acredita ter enfrentado uma sequência de adversários mais difícil recentemente do que Makhachev.
-
-Confiança não falta.
-
-Agora falta descobrir se ela sobrevive aos primeiros minutos com Makhachev.
-
 ## E tem um terceiro homem esperando
 
 Enquanto os dois fazem o camp para a luta principal, Michael Morales será o reserva oficial do UFC 330.
 
 O equatoriano, que ainda está invicto, precisa estar pronto para assumir a luta caso Makhachev ou Garry não possa competir. O problema é que ele revelou nesta semana estar enfrentando um corte de peso bastante agressivo para conseguir chegar aos 77 kg.
 
-Morales começou a semana na casa dos 193 libras, mais de 20 libras acima do limite da categoria.
+## A pergunta é simples
 
-Não é exatamente uma situação confortável para quem está ali para "ficar de prontidão".
+Garry tem ferramentas para complicar a vida do campeão. Mas precisa conseguir usá-las antes que Makhachev imponha seu jogo.
 
-## Afinal, quem pode pará-lo?
+Uma vitória coloca o irlandês no topo da divisão.
 
-Essa é a pergunta que acompanha Makhachev há algum tempo.
+Para Makhachev, pode significar algo ainda maior: o recorde isolado de vitórias consecutivas e mais um capítulo na discussão sobre seu lugar entre os maiores da história do UFC.
 
-Garry talvez tenha um dos perfis mais interessantes para tentar fazer isso: é grande, tem alcance, movimentação e uma trocação capaz de manter o russo ocupado.
-
-Mas tudo isso precisa funcionar contra um lutador que raramente permite que o adversário lute exatamente como gostaria.
-
-É por isso que o UFC 330 é tão interessante.
-
-Garry não precisa apenas vencer Makhachev. Precisa mostrar que existe um caminho para derrotá-lo.
-
-E sábado, na Filadélfia, vamos descobrir se ele encontrou esse caminho.
+Sábado, a gente descobre quem consegue lutar do próprio jeito.
