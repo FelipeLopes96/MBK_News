@@ -9,7 +9,7 @@ fontes:
   - "MMA Fighting"
   - "MMA Mania"
 imagem:
-  url: 
+  url: "/noticias/salkilld-x-gamrot.jpg"
   credito: ""
   fonte: 
   licenca: ""
