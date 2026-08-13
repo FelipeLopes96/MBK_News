@@ -4,8 +4,6 @@ slug: "ryan-garcia-conor-benn-cinturao-carreiras-em-jogo"
 date: "2026-08-12"
 categoria: "boxe"
 resumo: "Ryan Garcia defenderá o cinturão dos meio-médios do WBC contra Conor Benn em 12 de setembro, em Las Vegas."
-imagem: ""
-destaque: true
 fontes:
   - "ESPN"
   - "BoxingScene"

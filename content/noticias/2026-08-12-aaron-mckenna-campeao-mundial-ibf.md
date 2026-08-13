@@ -5,8 +5,6 @@ slug: "aaron-mckenna-campeao-mundial-ibf"
 date: "2026-08-12"
 categoria: "boxe"
 resumo: "O irlandês Aaron McKenna derrotou Etinosa Oliha por decisão unânime e conquistou o cinturão mundial dos médios da IBF em Dublin."
-imagem: ""
-destaque: true
 fontes:
   - "RTÉ"
   - "ESPN"

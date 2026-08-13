@@ -4,8 +4,6 @@ slug: "teremoana-atropela-savage-e-mantem-100-por-cento-nocautes"
 date: "2026-08-12"
 categoria: "boxe"
 resumo: "O australiano Teremoana Teremoana nocauteou DeAndre Savage no segundo round e chegou a 12 vitórias e 12 nocautes na carreira."
-imagem: ""
-destaque: false
 fontes:
   - "TalkSport"
   - "News.com.au"

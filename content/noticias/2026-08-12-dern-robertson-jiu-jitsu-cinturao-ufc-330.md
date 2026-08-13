@@ -4,8 +4,6 @@ slug: "dern-robertson-jiu-jitsu-cinturao-ufc-330"
 date: "2026-08-12"
 categoria: "mma"
 resumo: "Mackenzie Dern faz sua primeira defesa do cinturão peso-palha contra Gillian Robertson neste sábado, em Filadélfia. As duas têm forte histórico de finalizações."
-imagem: ""
-destaque: false
 fontes:
   - "UFC"
   - "MMA Fighting"

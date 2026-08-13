@@ -4,8 +4,6 @@ slug: "claressa-shields-volta-aos-medios-kaye-scott"
 date: "2026-08-12"
 categoria: "boxe"
 resumo: "Claressa Shields enfrenta Kaye Scott neste sábado, em Atlanta, pelos cinturões WBC e WBA dos médios."
-imagem: ""
-destaque: false
 fontes:
   - "ESPN"
   - "Reuters"

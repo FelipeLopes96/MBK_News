@@ -4,8 +4,6 @@ slug: "zebra-ufc-salkilld-finaliza-gamrot-top-6"
 date: "2026-08-12"
 categoria: "mma"
 resumo: "Quillan Salkilld finalizou Mateusz Gamrot no primeiro round e subiu para o sexto lugar do ranking dos leves. Foi a sexta vitória consecutiva do australiano no UFC."
-imagem: ""
-destaque: false
 fontes:
   - "UFC"
   - "MMA Fighting"

@@ -4,8 +4,6 @@ slug: "contender-series-nova-temporada-quatro-contratos-ufc"
 date: "2026-08-12"
 categoria: "mma"
 resumo: "A 10ª temporada do Contender Series começou com quatro lutadores conquistando contratos com o UFC na primeira noite."
-imagem: ""
-destaque: false
 fontes:
   - "UFC"
   - "MMA Fighting"

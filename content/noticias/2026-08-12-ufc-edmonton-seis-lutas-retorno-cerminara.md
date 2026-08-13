@@ -4,8 +4,6 @@ slug: "ufc-edmonton-seis-lutas-retorno-cerminara"
 date: "2026-08-12"
 categoria: "mma"
 resumo: "O UFC adicionou seis lutas ao card de Edmonton, incluindo o retorno de Katlyn Cerminara após mais de dois anos afastada."
-imagem: ""
-destaque: false
 fontes:
   - "MMA Fighting"
   - "UFC"

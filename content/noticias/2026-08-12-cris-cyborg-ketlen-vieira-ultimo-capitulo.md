@@ -4,8 +4,6 @@ slug: "cris-cyborg-ketlen-vieira-ultimo-capitulo"
 date: "2026-08-12"
 categoria: "mma"
 resumo: "Cris Cyborg enfrenta Ketlen Vieira no dia 22 de agosto, em Tampa. A PFL promove o duelo como a despedida da brasileira, mas a própria Cyborg ainda não confirmou que irá se aposentar."
-imagem: ""
-destaque: false
 fontes:
   - "PFL"
   - "Sherdog"

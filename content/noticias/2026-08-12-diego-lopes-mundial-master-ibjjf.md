@@ -4,8 +4,6 @@ slug: "diego-lopes-mundial-master-ibjjf"
 date: "2026-08-12"
 categoria: "jiu-jitsu"
 resumo: "O lutador do UFC está inscrito no Mundial Master da IBJJF e vai competir de kimono na faixa-preta Master 1."
-imagem: ""
-destaque: true
 fontes:
   - "IBJJF"
   - "BJJ Beat"

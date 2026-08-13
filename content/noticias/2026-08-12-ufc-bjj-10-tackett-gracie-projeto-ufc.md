@@ -4,8 +4,6 @@ slug: "ufc-bjj-10-tackett-gracie-projeto-ufc"
 date: "2026-08-12"
 categoria: "jiu-jitsu"
 resumo: "O UFC BJJ 10 acontece em 20 de agosto, em Las Vegas, com Andrew Tackett x Jonnatas Gracie entre as principais atrações."
-imagem: ""
-destaque: true
 fontes:
   - "UFC"
   - "MMA Mania"

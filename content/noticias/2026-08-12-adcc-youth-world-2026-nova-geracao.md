@@ -4,8 +4,6 @@ slug: "adcc-youth-world-2026-nova-geracao"
 date: "2026-08-12"
 categoria: "jiu-jitsu"
 resumo: "A primeira edição do ADCC Youth World reuniu 304 atletas de 110 academias em Austin, nos Estados Unidos."
-imagem: ""
-destaque: false
 fontes:
   - "Jits.gg"
   - "FloGrappling"

@@ -4,8 +4,6 @@ slug: "william-zepeda-domina-roach-conquista-titulo-mundial"
 date: "2026-08-12"
 categoria: "boxe"
 resumo: "William Zepeda derrotou Lamont Roach Jr. por decisão unânime e conquistou o cinturão peso-leve do WBC."
-imagem: ""
-destaque: false
 fontes:
   - "ESPN"
   - "WBC"

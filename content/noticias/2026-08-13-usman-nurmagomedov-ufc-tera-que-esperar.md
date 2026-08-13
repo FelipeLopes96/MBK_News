@@ -4,8 +4,6 @@ slug: "usman-nurmagomedov-ufc-tera-que-esperar"
 date: "2026-08-12"
 categoria: "mma"
 resumo: "Usman Nurmagomedov encerrou seu contrato com a PFL, mas uma cláusula dá à organização 90 dias de exclusividade para negociar uma renovação."
-imagem: ""
-destaque: false
 fontes:
   - "Times of India"
 imagem:

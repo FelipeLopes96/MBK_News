@@ -4,8 +4,6 @@ slug: "moses-itauma-pode-entrar-para-historia-contra-hrgovic"
 date: "2026-08-12"
 categoria: "boxe"
 resumo: "Moses Itauma enfrenta Filip Hrgović em 29 de agosto pelo cinturão dos pesados da IBF. Aos 21 anos, o britânico pode se tornar o segundo campeão mundial mais jovem da história da categoria."
-imagem: ""
-destaque: true
 fontes:
   - "The Guardian"
   - "MMA Mania"

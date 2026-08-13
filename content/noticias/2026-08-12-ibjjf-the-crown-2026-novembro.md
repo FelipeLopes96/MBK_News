@@ -4,8 +4,6 @@ slug: "ibjjf-the-crown-2026-novembro"
 date: "2026-08-12"
 categoria: "jiu-jitsu"
 resumo: "A IBJJF confirmou o retorno do The Crown para 8 de novembro, em Long Beach, com atletas de elite e formato de convite."
-imagem: ""
-destaque: false
 fontes:
   - "IBJJF"
   - "FloGrappling"

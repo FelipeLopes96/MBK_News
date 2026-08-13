@@ -4,8 +4,6 @@ slug: "murilo-bustamante-faixa-coral-oitavo-grau"
 date: "2026-08-12"
 categoria: "jiu-jitsu"
 resumo: "Ex-campeão do UFC e um dos nomes históricos do jiu-jitsu brasileiro, Murilo Bustamante foi promovido ao 8º grau da faixa-preta."
-imagem: ""
-destaque: false
 fontes:
   - "Jits Magazine"
   - "BJJ Beat"

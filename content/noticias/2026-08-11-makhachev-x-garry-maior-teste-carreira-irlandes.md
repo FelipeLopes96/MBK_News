@@ -4,8 +4,6 @@ slug: "makhachev-x-garry-quem-pode-parar-o-campeao"
 date: "2026-08-12"
 categoria: "mma"
 resumo: "Islam Makhachev defende o cinturão dos meio-médios contra Ian Machado Garry neste sábado. O russo tenta quebrar o recorde de vitórias consecutivas do UFC, enquanto o irlandês busca o maior triunfo da carreira."
-imagem: ""
-destaque: true
 fontes:
   - "UFC"
   - "MMA Fighting"

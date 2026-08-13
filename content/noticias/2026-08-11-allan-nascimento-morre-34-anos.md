@@ -4,8 +4,6 @@ slug: "tragedia-mma-allan-nascimento-morre-aos-34"
 date: "2026-08-12"
 categoria: "mma"
 resumo: "Ex-lutador do UFC morreu no dia 3 de agosto, aos 34 anos. Allan havia competido pela última vez apenas seis semanas antes."
-imagem: ""
-destaque: true
 fontes:
   - "UFC"
   - "MMA Mania"

@@ -4,8 +4,6 @@ slug: "adele-fornarino-deixa-adcc-remuneracao-mulheres"
 date: "2026-08-12"
 categoria: "jiu-jitsu"
 resumo: "A atual campeã absoluta do ADCC anunciou que não disputará a edição de 2026 e criticou questões de remuneração, segurança e estrutura para as atletas."
-imagem: ""
-destaque: true
 fontes:
   - "BJJEE"
   - "Jiu Jitsu Style"
