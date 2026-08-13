@@ -17,7 +17,7 @@ aliases:
   - "pride-fc"
   - "pride-fighting-championships"
 imagem:
-  url: ""
+  url: "/noticias/Pride1.jpg"
   credito: ""
   fonte: ""
   licenca: ""
@@ -56,6 +56,8 @@ O PRIDE rapidamente passou a reunir alguns dos maiores nomes do MMA. Antônio Ro
 Nogueira conquistou o primeiro cinturão dos pesos-pesados do PRIDE em 2001. No mesmo período, Wanderlei Silva iniciou um dos reinados mais marcantes da organização.
 
 Nos pesos-pesados, Fedor se tornou o principal nome da organização e permaneceu invicto em sua passagem pelo PRIDE.
+
+![Montagem com nove lutadores do PRIDE, entre eles Antônio Rodrigo Nogueira, Mirko Cro Cop, Fedor Emelianenko, Wanderlei Silva e Kazushi Sakuraba](/noticias/Pride2.png "Alguns dos principais nomes que passaram pelo PRIDE.")
 
 ## Uma rivalidade com o UFC
 

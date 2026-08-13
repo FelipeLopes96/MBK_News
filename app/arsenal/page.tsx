@@ -21,7 +21,7 @@ export default function ArsenalPage() {
           Arsenal
         </h1>
         <p className="mt-2 text-zinc-400">
-          Rankings e análises de equipamento — o que vale o dinheiro e o que
+          Rankings e análises de equipamento: o que vale o dinheiro e o que
           não vale.
         </p>
 

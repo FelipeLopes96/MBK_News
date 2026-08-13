@@ -13,7 +13,7 @@ resumo: "Criado em 1993 como um experimento para descobrir qual arte marcial ser
 tituloDaHistoria: "UFC: de torneio experimental a maior palco do MMA"
 legado: "O UFC ajudou a transformar diferentes artes marciais em um esporte próprio. O que começou como um experimento para descobrir qual estilo seria mais eficiente acabou criando uma indústria global de MMA."
 imagem:
-  url: ""
+  url: "/noticias/UFC1.jpg"
   credito: ""
   fonte: ""
   licenca: ""
@@ -65,6 +65,8 @@ A final entre Forrest Griffin e Stephan Bonnar se tornou um dos momentos mais im
 A partir daí, o UFC começou a ampliar sua presença internacional. Novos mercados, grandes contratos de mídia e uma geração de estrelas transformaram a organização em uma propriedade esportiva global.
 
 Anderson Silva, Georges St-Pierre, Jon Jones, José Aldo, Ronda Rousey, Amanda Nunes e Conor McGregor, entre muitos outros, ajudaram a construir diferentes capítulos dessa expansão.
+
+![Montagem com dez lutadores que marcaram a história do UFC, entre eles Anderson Silva, Jon Jones, Georges St-Pierre, José Aldo e Conor McGregor](/noticias/UFC2.png "Alguns dos nomes que marcaram diferentes eras do UFC.")
 
 O UFC deixou de ser apenas uma organização de lutas. O Octógono passou a ser uma das imagens mais reconhecidas dos esportes de combate.
 

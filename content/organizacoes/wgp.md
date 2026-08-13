@@ -15,7 +15,7 @@ aliases:
   - "wgp-kickboxing"
   - "wgp-kombat"
 imagem:
-  url: ""
+  url: "/noticias/WGP1.jpg"
   credito: ""
   fonte: ""
   licenca: ""

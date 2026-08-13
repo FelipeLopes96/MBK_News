@@ -15,7 +15,7 @@ export default function LendasPage() {
     <ListagemDeEntidades
       trilha={[{ rotulo: "Arquivo", href: "/arquivo" }, { rotulo: "Lendas" }]}
       titulo="Lendas"
-      descricao="Os atletas que definiram eras — o que fizeram, contra quem, e o que ficou depois que pararam."
+      descricao="Os atletas que definiram eras e deixaram sua marca nos esportes de combate."
       entidades={getLendas()}
       mensagemVazia="Nenhuma lenda cadastrada ainda."
     />

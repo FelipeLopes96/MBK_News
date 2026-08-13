@@ -14,7 +14,7 @@ Na luta principal, Vitaly Rud parou Marcos Aguiló no oitavo assalto após três
 
 ## O padrão do restante do card
 
-Das seis lutas preliminares, quatro colocaram prospectos invictos da organização diante de adversários com cartéis negativos — um deles com sete derrotas nas últimas oito apresentações. Nenhuma passou do terceiro assalto. É a terceira vez em cinco eventos que a proporção se repete.
+Das seis lutas preliminares, quatro colocaram prospectos invictos da organização diante de adversários com cartéis negativos, um deles com sete derrotas nas últimas oito apresentações. Nenhuma passou do terceiro assalto. É a terceira vez em cinco eventos que a proporção se repete.
 
 A prática tem justificativa comercial conhecida: prospectos precisam de rounds e de vitórias antes de assumir risco real, e cards de televisão precisam de finalizações. O custo aparece depois, quando esses atletas chegam a combates competitivos sem nunca terem sido testados e a curva de aprendizado acontece em público.
 

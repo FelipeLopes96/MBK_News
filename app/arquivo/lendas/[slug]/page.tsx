@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import BlocoDeFontes from "@/app/components/BlocoDeFontes";
 import CabecalhoDeEntidade from "@/app/components/CabecalhoDeEntidade";
+import FichaDeEntidade from "@/app/components/FichaDeEntidade";
 import Header from "@/app/components/Header";
 import NewsletterForm from "@/app/components/NewsletterForm";
+import NotaDoEditor from "@/app/components/NotaDoEditor";
 import SecaoDaEntidade from "@/app/components/SecaoDaEntidade";
 import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
 import { getLenda, getLendas, getOrganizacao } from "@/lib/entidades";
@@ -51,10 +53,15 @@ export default async function LendaPage(
     .filter((organizacao) => organizacao !== undefined);
 
   const ficha = [
+    { rotulo: "Modalidade", valor: lenda.modalidade },
     { rotulo: "Categoria", valor: lenda.categoria },
     { rotulo: "Período", valor: lenda.periodo },
     { rotulo: "Cartel", valor: lenda.cartel },
-  ].filter((linha) => linha.valor);
+    {
+      rotulo: "Primeira luta profissional",
+      valor: lenda.primeiraLutaProfissional,
+    },
+  ];
 
   return (
     <div className="flex flex-1 flex-col bg-[#1A1A1A]">
@@ -93,38 +100,43 @@ export default async function LendaPage(
           </div>
         ) : null}
 
-        {ficha.length > 0 ? (
-          <dl className="mt-6 grid grid-cols-1 gap-4 rounded-lg border border-zinc-800 bg-[#242424] p-5 sm:grid-cols-3">
-            {ficha.map((linha) => (
-              <div key={linha.rotulo}>
-                <dt className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                  {linha.rotulo}
-                </dt>
-                <dd className="mt-1 text-sm font-medium text-white">
-                  {linha.valor}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        ) : null}
+        <FichaDeEntidade linhas={ficha} />
 
         <SecaoDaEntidade titulo="Títulos" vazia={lenda.titulos.length === 0}>
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {lenda.titulos.map((titulo) => (
               <li
-                key={titulo}
+                key={titulo.titulo}
                 className="flex gap-2 text-base leading-7 text-zinc-300"
               >
                 <span aria-hidden className="text-[#F97316]">
                   ▪
                 </span>
-                {titulo}
+                <span>
+                  {titulo.titulo}
+                  {titulo.local ? (
+                    <span className="text-zinc-400"> · {titulo.local}</span>
+                  ) : null}
+                  {/* A atribuição fica sob o título, e não ao lado, para o
+                      leitor ver de imediato de onde vem a informação. */}
+                  {titulo.qualificacao ? (
+                    <span className="mt-0.5 block text-xs leading-5 text-zinc-500">
+                      {titulo.qualificacao}
+                    </span>
+                  ) : null}
+                </span>
               </li>
             ))}
           </ul>
         </SecaoDaEntidade>
 
-        <SecaoDaEntidade titulo="História" vazia={!lenda.conteudo}>
+        {/* Com título próprio, a matéria tem manchete; sem ele, "História" é só
+            o rótulo da seção. */}
+        <SecaoDaEntidade
+          titulo={lenda.tituloDaHistoria ?? "História"}
+          variante={lenda.tituloDaHistoria ? "titulo" : "rotulo"}
+          vazia={!lenda.conteudo}
+        >
           <div className="prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-lg prose-li:leading-8 prose-li:text-zinc-300">
             <Markdown components={componentesDeMarkdown}>
               {lenda.conteudo}
@@ -166,6 +178,8 @@ export default async function LendaPage(
         </SecaoDaEntidade>
 
         <BlocoDeFontes fontes={lenda.fontes} />
+
+        <NotaDoEditor nota={lenda.notaDoEditor} />
 
         <div className="mt-12">
           <NewsletterForm />

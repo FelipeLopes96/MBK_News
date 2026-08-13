@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
+import type { PosicaoDaImagem } from "@/lib/conteudo";
 
 /**
  * Card em grade usado pelo Arquivo, pelo Arsenal e pelas entidades do Arquivo
@@ -13,6 +14,7 @@ export default function ConteudoCard({
   resumo,
   imagem,
   preload = false,
+  posicaoDaImagem,
 }: {
   href: string;
   titulo: string;
@@ -21,6 +23,8 @@ export default function ConteudoCard({
   resumo?: string;
   imagem?: string;
   preload?: boolean;
+  /** Enquadramento do corte, para as fotos que não sobrevivem ao corte central. */
+  posicaoDaImagem?: PosicaoDaImagem;
 }) {
   return (
     <Link
@@ -33,6 +37,7 @@ export default function ConteudoCard({
           alt={titulo}
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           preload={preload}
+          posicao={posicaoDaImagem}
         />
       </div>
 

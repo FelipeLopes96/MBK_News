@@ -28,15 +28,49 @@ export type CategoriaDeConteudo = {
   rotulo: string;
 };
 
+/**
+ * Parte da foto que deve sobreviver ao corte. As capas são exibidas em 16:9 com
+ * `object-cover`: numa foto vertical ou quadrada, o corte central come o topo e
+ * é comum decepar a cabeça do retratado — `topo` resolve esse caso.
+ */
+export type PosicaoDaImagem =
+  | "centro"
+  | "topo"
+  | "base"
+  | "esquerda"
+  | "direita";
+
+const POSICOES: PosicaoDaImagem[] = [
+  "centro",
+  "topo",
+  "base",
+  "esquerda",
+  "direita",
+];
+
 /** Imagem com os dados de atribuição exigidos na publicação. */
 export type ImagemComCredito = {
   url: string;
+  /** Enquadramento do corte. Ausente, o corte é centralizado. */
+  posicao?: PosicaoDaImagem;
   /** Quem fez a foto (fotógrafo ou agência). */
   credito?: string;
   /** Onde a imagem foi obtida (veículo, site oficial, banco de imagens). */
   fonte?: string;
   /** Termos de uso — ex.: "Getty Images", "CC BY 2.0", "Divulgação". */
   licenca?: string;
+};
+
+/**
+ * Dado que não pode ser publicado como número oficial porque a única fonte é
+ * quem o afirma — o cartel declarado pelo atleta, a data que ele mesmo estima.
+ * A `qualificacao` acompanha o valor onde ele aparecer: é o que separa o dado
+ * apurado do dado atribuído.
+ */
+export type ValorQualificado = {
+  valor: string;
+  /** Atribuição exibida junto do valor — ex.: "segundo o próprio atleta". */
+  qualificacao?: string;
 };
 
 /** Veículo consultado na apuração. Vira link quando tem `url`. */
@@ -70,6 +104,34 @@ export function normalizarLista(valor: unknown): string[] {
 }
 
 /**
+ * Aceita a string simples — quando o dado dispensa atribuição — ou o objeto
+ * { valor, qualificacao } quando ele só pode ser publicado atribuído.
+ */
+export function normalizarValorQualificado(
+  valor: unknown
+): ValorQualificado | undefined {
+  if (typeof valor === "string" || typeof valor === "number") {
+    const texto = textoOpcional(valor);
+    return texto ? { valor: texto } : undefined;
+  }
+
+  if (valor && typeof valor === "object") {
+    const campos = valor as Record<string, unknown>;
+    const texto = textoOpcional(campos.valor ?? campos.display ?? campos.texto);
+    if (!texto) {
+      return undefined;
+    }
+
+    return {
+      valor: texto,
+      qualificacao: textoOpcional(campos.qualificacao ?? campos.qualification),
+    };
+  }
+
+  return undefined;
+}
+
+/**
  * `imagem` aceita duas formas no frontmatter: a string simples usada nos
  * conteúdos antigos e o objeto com atribuição — url, credito, fonte, licenca.
  */
@@ -86,8 +148,11 @@ export function normalizarImagem(valor: unknown): ImagemComCredito | undefined {
       return undefined;
     }
 
+    const posicao = textoOpcional(campos.posicao);
+
     return {
       url,
+      posicao: POSICOES.find((valida) => valida === posicao),
       credito: textoOpcional(campos.credito),
       fonte: textoOpcional(campos.fonte),
       licenca: textoOpcional(campos.licenca),

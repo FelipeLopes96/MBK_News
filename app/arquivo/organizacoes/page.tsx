@@ -6,7 +6,7 @@ import { metadataDaPagina } from "@/lib/seo";
 export const metadata: Metadata = metadataDaPagina({
   titulo: "Organizações",
   descricao:
-    "As organizações que moldaram os esportes de combate — história, lendas e momentos decisivos de cada uma.",
+    "As organizações que moldaram os esportes de combate: história, lendas e momentos decisivos de cada uma.",
   caminho: "/arquivo/organizacoes",
 });
 

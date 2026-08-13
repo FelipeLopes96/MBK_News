@@ -10,7 +10,7 @@ destaque: false
 
 Sandro Vilar confirmou na segunda-feira que volta a lutar em 18 de outubro, contra adversário ainda não definido. Será sua primeira apresentação desde maio de 2023, quando perdeu o cinturão dos médios por nocaute técnico no décimo assalto e anunciou que se afastaria por tempo indeterminado.
 
-O retorno em si não surpreende — Vilar nunca formalizou aposentadoria e vinha treinando de forma intermitente desde o ano passado. O que merece atenção é o intervalo: 41 meses fora, entre os 35 e os 38 anos, na faixa etária em que o boxe historicamente cobra mais caro pela inatividade.
+O retorno em si não surpreende: Vilar nunca formalizou aposentadoria e vinha treinando de forma intermitente desde o ano passado. O que merece atenção é o intervalo: 41 meses fora, entre os 35 e os 38 anos, na faixa etária em que o boxe historicamente cobra mais caro pela inatividade.
 
 ## O que os números dizem sobre retornos assim
 

@@ -14,7 +14,7 @@ O caso mais grave envolveu Adama Cissé, que abandonou o processo a 2,3 kg do li
 
 ## Por que a mudança não avança
 
-A proposta de antecipar a pesagem para 36 horas antes do evento — em vez das 24 atuais — circula desde 2019 e tem apoio de boa parte das comissões médicas. O argumento é direto: mais tempo de reidratação reduz o risco neurológico e diminui a diferença de peso real no momento da luta.
+A proposta de antecipar a pesagem para 36 horas antes do evento (em vez das 24 atuais) circula desde 2019 e tem apoio de boa parte das comissões médicas. O argumento é direto: mais tempo de reidratação reduz o risco neurológico e diminui a diferença de peso real no momento da luta.
 
 A resistência vem da logística. Antecipar a pesagem obriga a organização a trazer os atletas para a cidade-sede um dia antes, aumenta custo de hospedagem e conflita com o formato de mídia dos eventos, construído em torno da pesagem como conteúdo de véspera.
 

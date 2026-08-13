@@ -4,11 +4,13 @@ import {
   normalizarImagem,
   normalizarLista,
   normalizarOrganizacoes,
+  normalizarValorQualificado,
   slugDoArquivo,
   textoOpcional,
   type ArquivoBruto,
   type Fonte,
   type ImagemComCredito,
+  type ValorQualificado,
 } from "@/lib/conteudo";
 
 /**
@@ -34,6 +36,12 @@ type Base = {
   resumo?: string;
   imagem?: ImagemComCredito;
   fontes: Fonte[];
+  /**
+   * Nota do editor: a voz do veículo sobre como a matéria foi apurada — vínculo
+   * pessoal com o personagem, método, limites da apuração. Não é parte do
+   * texto jornalístico e é exibida como nota, no fim da página.
+   */
+  notaDoEditor?: string;
   /** Corpo do .md, ainda em Markdown — a história/conteúdo da entidade. */
   conteudo: string;
 };
@@ -83,19 +91,38 @@ export type GrandeLuta = {
   resultado?: string;
 };
 
+/**
+ * Título conquistado por uma lenda. `qualificacao` existe porque boa parte dos
+ * títulos do kickboxing e do Muay Thai não tem registro público consolidado:
+ * quando a única fonte é o próprio atleta, o título é publicado com essa
+ * ressalva ao lado, em vez de entrar na página como dado oficial.
+ */
+export type TituloDeLenda = {
+  titulo: string;
+  /** Onde foi conquistado — ex.: "Rússia". */
+  local?: string;
+  qualificacao?: string;
+};
+
 export type Lenda = Base & {
   tipo: "lenda";
   apelido?: string;
   /** Slugs das organizações às quais a lenda está ligada. */
   organizacoes: string[];
+  /** Modalidade — ex.: "MMA", "Kickboxing / Muay Thai". */
+  modalidade?: string;
   /** Categoria de peso — ex.: "Peso-pesado". */
   categoria?: string;
   /** Período de atividade — ex.: "2000–2012". */
   periodo?: string;
-  /** Cartel — ex.: "40-6 (1 NC)". */
-  cartel?: string;
-  titulos: string[];
+  /** Cartel — ex.: "40-6 (1 NC)". Atribuído quando não há registro oficial. */
+  cartel?: ValorQualificado;
+  /** Estreia profissional, quando a data é conhecida ou estimada. */
+  primeiraLutaProfissional?: ValorQualificado;
+  titulos: TituloDeLenda[];
   grandesLutas: GrandeLuta[];
+  /** Título da seção de história, quando a matéria tem o seu próprio. */
+  tituloDaHistoria?: string;
   /** Texto de legado, exibido depois da história. */
   legado?: string;
 };
@@ -137,6 +164,7 @@ function base(bruto: ArquivoBruto, tipo: TipoDeEntidade): Base {
     resumo: textoOpcional(data.resumo ?? data.summary ?? data.description),
     imagem: normalizarImagem(data.imagem ?? data.image),
     fontes: normalizarFontes(data.fontes ?? data.sources),
+    notaDoEditor: textoOpcional(data.notaDoEditor ?? data.editorNote),
     conteudo,
   };
 }
@@ -162,6 +190,36 @@ function normalizarGrandesLutas(valor: unknown): GrandeLuta[] {
           evento: textoOpcional(campos.evento ?? campos.event),
           ano: textoOpcional(campos.ano ?? campos.year),
           resultado: textoOpcional(campos.resultado ?? campos.result),
+        },
+      ];
+    }
+
+    return [];
+  });
+}
+
+/** Aceita "Campeão Mundial" ou { titulo, local, qualificacao }. */
+function normalizarTitulos(valor: unknown): TituloDeLenda[] {
+  const lista = Array.isArray(valor) ? valor : [valor];
+
+  return lista.flatMap((item): TituloDeLenda[] => {
+    if (typeof item === "string") {
+      const titulo = item.trim();
+      return titulo ? [{ titulo }] : [];
+    }
+
+    if (item && typeof item === "object") {
+      const campos = item as Record<string, unknown>;
+      const titulo = textoOpcional(campos.titulo ?? campos.title);
+      if (!titulo) return [];
+
+      return [
+        {
+          titulo,
+          local: textoOpcional(campos.local ?? campos.location),
+          qualificacao: textoOpcional(
+            campos.qualificacao ?? campos.qualification
+          ),
         },
       ];
     }
@@ -207,11 +265,16 @@ function lerLendas(): Lenda[] {
         tipo: "lenda",
         apelido: textoOpcional(data.apelido ?? data.nickname),
         organizacoes: normalizarOrganizacoes(data),
+        modalidade: textoOpcional(data.modalidade ?? data.sport),
         categoria: textoOpcional(data.categoria ?? data.category),
         periodo: textoOpcional(data.periodo ?? data.period),
-        cartel: textoOpcional(data.cartel ?? data.record),
-        titulos: normalizarLista(data.titulos ?? data.titles),
+        cartel: normalizarValorQualificado(data.cartel ?? data.record),
+        primeiraLutaProfissional: normalizarValorQualificado(
+          data.primeiraLutaProfissional ?? data.professionalCareerStart
+        ),
+        titulos: normalizarTitulos(data.titulos ?? data.titles),
         grandesLutas: normalizarGrandesLutas(data.grandesLutas ?? data.keyFights),
+        tituloDaHistoria: textoOpcional(data.tituloDaHistoria),
         legado: textoOpcional(data.legado ?? data.legacy),
       } satisfies Lenda;
     })

@@ -14,8 +14,8 @@ A virada aconteceu nas duas últimas horas do evento, mas foi construída em mai
 
 ## A leitura da chave
 
-O regulamento da Copa Atlântico distribui pontos por colocação em cada categoria, com bônus reduzido para o absoluto. Isso favorece equipes com elenco distribuído sobre equipes com poucos atletas de elite — um detalhe que a Vila Nove, tradicionalmente forte nas categorias mais pesadas, vinha explorando ao inverso nos últimos anos.
+O regulamento da Copa Atlântico distribui pontos por colocação em cada categoria, com bônus reduzido para o absoluto. Isso favorece equipes com elenco distribuído sobre equipes com poucos atletas de elite, um detalhe que a Vila Nove, tradicionalmente forte nas categorias mais pesadas, vinha explorando ao inverso nos últimos anos.
 
 Na prática, a Ateneu trocou profundidade por amplitude. Nenhum dos seus atletas venceu a própria categoria no absoluto, e ainda assim a equipe somou pontuação em 11 das 14 chaves disputadas, contra 8 da adversária.
 
-O resultado deve influenciar as inscrições da próxima temporada. Duas equipes do top cinco já sinalizaram que revisarão o critério de distribuição de atletas, o que tende a reduzir a vantagem do modelo — que funciona melhor justamente quando poucos o adotam.
+O resultado deve influenciar as inscrições da próxima temporada. Duas equipes do top cinco já sinalizaram que revisarão o critério de distribuição de atletas, o que tende a reduzir a vantagem do modelo, que funciona melhor justamente quando poucos o adotam.

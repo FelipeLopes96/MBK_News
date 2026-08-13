@@ -3,7 +3,7 @@ title: "Reformulação do ranking dos penas expõe uma fila parada há 14 meses"
 slug: "ranking-penas-fila-parada"
 date: "2026-08-02"
 categoria: "mma"
-resumo: "A atualização mensal promoveu dois nomes e rebaixou três, mas o problema da divisão não está na ordem — está na ausência de lutas entre os cinco primeiros."
+resumo: "A atualização mensal promoveu dois nomes e rebaixou três, mas o problema da divisão não está na ordem: está na ausência de lutas entre os cinco primeiros."
 imagem: ""
 destaque: false
 ---
@@ -14,7 +14,7 @@ O movimento chama atenção menos pelos nomes do que pelo que ele revela. Nenhum
 
 ## Por que a fila travou
 
-Duas causas se somam. A primeira é contratual: três dos cinco primeiros renegociaram acordos no último ano e ficaram fora de ação durante o processo. A segunda é estratégica — com o campeão comprometido com uma defesa já marcada para outubro, os desafiantes imediatos têm pouco incentivo para aceitar um combate de alto risco que, se vencido, não garante a próxima chance.
+Duas causas se somam. A primeira é contratual: três dos cinco primeiros renegociaram acordos no último ano e ficaram fora de ação durante o processo. A segunda é estratégica: com o campeão comprometido com uma defesa já marcada para outubro, os desafiantes imediatos têm pouco incentivo para aceitar um combate de alto risco que, se vencido, não garante a próxima chance.
 
 O resultado é um ranking que se movimenta sem que a hierarquia real seja testada. Bouzid chega ao terceiro lugar com duas vitórias sobre adversários fora do top dez. Okafor cai três posições sem ter perdido uma luta.
 

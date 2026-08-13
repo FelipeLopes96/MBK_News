@@ -16,6 +16,6 @@ A escolha do adversário chama atenção porque contrariou a recomendação da p
 
 O raciocínio é de janela. Belmonte tem 34 anos e a divisão dos pesados é a que menos perdoa tempo perdido: dos dez primeiros colocados, sete têm mais de 33 anos e a rotatividade no topo é lenta. Uma luta de reaquecimento consumiria a data de setembro, empurraria a próxima para o começo de 2027 e o colocaria em disputa de ranking já aos 35.
 
-Vencer Moreau, por outro lado, o recoloca imediatamente na faixa de sexto a oitavo lugar — posição que ele ocupava antes da lesão. O risco é proporcional: uma derrota depois de dois anos parado, contra um adversário em atividade, é o tipo de resultado que organizações usam para decidir renovações de contrato.
+Vencer Moreau, por outro lado, o recoloca imediatamente na faixa de sexto a oitavo lugar, posição que ele ocupava antes da lesão. O risco é proporcional: uma derrota depois de dois anos parado, contra um adversário em atividade, é o tipo de resultado que organizações usam para decidir renovações de contrato.
 
-Moreau chega com três vitórias consecutivas, todas por nocaute, e nunca enfrentou alguém do calibre de Belmonte em seus melhores anos. Para ele, a leitura é inversa — é a chance de validar a sequência contra um nome de peso, com a ressalva de que vencer um lutador vindo de dois anos de inatividade sempre gera o questionamento sobre o que exatamente ficou provado.
+Moreau chega com três vitórias consecutivas, todas por nocaute, e nunca enfrentou alguém do calibre de Belmonte em seus melhores anos. Para ele, a leitura é inversa: é a chance de validar a sequência contra um nome de peso, com a ressalva de que vencer um lutador vindo de dois anos de inatividade sempre gera o questionamento sobre o que exatamente ficou provado.

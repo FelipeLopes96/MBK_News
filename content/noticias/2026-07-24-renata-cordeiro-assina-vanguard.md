@@ -14,7 +14,7 @@ A transferência era esperada desde março, quando Cordeiro venceu a terceira de
 
 ## O que muda em termos competitivos
 
-A Vanguard opera a categoria com um elenco cerca de três vezes maior e com uma campeã que não perde desde 2023. Cordeiro deve entrar no ranking em posição intermediária — organizações raramente conferem colocação alta a atletas vindos de circuitos menores, independentemente de títulos conquistados fora.
+A Vanguard opera a categoria com um elenco cerca de três vezes maior e com uma campeã que não perde desde 2023. Cordeiro deve entrar no ranking em posição intermediária: organizações raramente conferem colocação alta a atletas vindos de circuitos menores, independentemente de títulos conquistados fora.
 
 Isso significa, na prática, duas a três lutas antes de qualquer conversa sobre disputa de cinturão. Cordeiro tem 27 anos e cartel de 14-1, com a única derrota em sua terceira luta profissional, em 2021. O tempo joga a favor.
 

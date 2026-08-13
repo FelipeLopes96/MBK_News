@@ -39,6 +39,7 @@ export default function GradeDeEntidades({
           rotulo={rotuloDaEntidade(entidade, { comOrganizacao })}
           resumo={entidade.resumo}
           imagem={entidade.imagem?.url}
+          posicaoDaImagem={entidade.imagem?.posicao}
           preload={preloadPrimeiro && indice === 0}
         />
       ))}

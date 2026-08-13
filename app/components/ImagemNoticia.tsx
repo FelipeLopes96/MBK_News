@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { PosicaoDaImagem } from "@/lib/conteudo";
 
 type Props = {
   src?: string;
@@ -7,6 +8,18 @@ type Props = {
   sizes: string;
   preload?: boolean;
   className?: string;
+  /** Parte da foto preservada no corte. Ausente, o corte é centralizado. */
+  posicao?: PosicaoDaImagem;
+};
+
+// Escritas por extenso porque o Tailwind só gera as classes que encontra no
+// código — montar `object-${posicao}` deixaria todas de fora do CSS final.
+const classeDaPosicao: Record<PosicaoDaImagem, string> = {
+  centro: "object-center",
+  topo: "object-top",
+  base: "object-bottom",
+  esquerda: "object-left",
+  direita: "object-right",
 };
 
 /**
@@ -19,6 +32,7 @@ export default function ImagemNoticia({
   sizes,
   preload = false,
   className = "",
+  posicao,
 }: Props) {
   if (!src) {
     return (
@@ -41,7 +55,7 @@ export default function ImagemNoticia({
       fill
       sizes={sizes}
       preload={preload}
-      className={`object-cover ${className}`}
+      className={`object-cover ${posicao ? classeDaPosicao[posicao] : ""} ${className}`}
     />
   );
 }

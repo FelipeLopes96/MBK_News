@@ -11,7 +11,7 @@ Luva de boxe é um item em que a diferença entre o modelo certo e o errado apar
 
 Uma observação antes da lista: peso não é o mesmo que finalidade. Luvas de 16 oz servem para sparring, 12 a 14 oz para trabalho de saco e aparelhos, e as de competição seguem regulamento da federação. Comprar 16 oz "para tudo" é comum e não é ideal.
 
-## 1. Ferrante Pro Series 16oz — a melhor no geral
+## 1. Ferrante Pro Series 16oz: a melhor no geral
 
 **Faixa de preço:** R$ 720 a R$ 850
 
@@ -19,15 +19,15 @@ Couro legítimo, espuma de três densidades e o melhor fechamento de punho do te
 
 [Ver a Ferrante Pro Series](#afiliado)
 
-## 2. Kestrel Trainer 14oz — melhor custo-benefício
+## 2. Kestrel Trainer 14oz: melhor custo-benefício
 
 **Faixa de preço:** R$ 380 a R$ 450
 
-Couro sintético de qualidade alta, com desempenho de proteção próximo ao de modelos que custam o dobro. Ideal para quem treina três vezes por semana e não faz sparring pesado. A crítica principal é o forro interno, que começa a soltar depois de uns seis meses de uso intenso — não compromete a proteção, mas incomoda.
+Couro sintético de qualidade alta, com desempenho de proteção próximo ao de modelos que custam o dobro. Ideal para quem treina três vezes por semana e não faz sparring pesado. A crítica principal é o forro interno, que começa a soltar depois de uns seis meses de uso intenso, que não compromete a proteção, mas incomoda.
 
 [Ver a Kestrel Trainer](#afiliado)
 
-## 3. Vantoro Heritage 16oz — a escolha para sparring
+## 3. Vantoro Heritage 16oz: a escolha para sparring
 
 **Faixa de preço:** R$ 900 a R$ 1.100
 
@@ -35,15 +35,15 @@ A espuma mais macia do teste, o que é uma qualidade quando o objetivo é preser
 
 [Ver a Vantoro Heritage](#afiliado)
 
-## 4. Boreal Strike 12oz — para trabalho de saco e aparelhos
+## 4. Boreal Strike 12oz: para trabalho de saco e aparelhos
 
 **Faixa de preço:** R$ 320 a R$ 400
 
-Compacta, com espuma densa e pouco volume, feita para quem quer sentir o golpe. O punho é curto, o que agrada quem prefere mobilidade e desagrada quem já teve lesão. Não use para sparring — a densidade que funciona no saco é agressiva demais contra outra pessoa.
+Compacta, com espuma densa e pouco volume, feita para quem quer sentir o golpe. O punho é curto, o que agrada quem prefere mobilidade e desagrada quem já teve lesão. Não use para sparring, porque a densidade que funciona no saco é agressiva demais contra outra pessoa.
 
 [Ver a Boreal Strike](#afiliado)
 
-## 5. Aldana Competition 10oz — para quem compete
+## 5. Aldana Competition 10oz: para quem compete
 
 **Faixa de preço:** R$ 640 a R$ 780
 
@@ -53,4 +53,4 @@ Modelo de competição homologado, leve e com acabamento impecável. Só faz sen
 
 ## Como escolher
 
-Se você vai comprar um par só, pegue 14 oz de um modelo intermediário — cobre a maior parte das situações sem ser ruim em nenhuma. Se treina com regularidade e faz sparring, dois pares (um de 16 oz macio e um de 12 oz denso) duram mais do que um par único usado para tudo, e saem mais barato no longo prazo porque cada um trabalha na função certa.
+Se você vai comprar um par só, pegue 14 oz de um modelo intermediário, que cobre a maior parte das situações sem ser ruim em nenhuma. Se treina com regularidade e faz sparring, dois pares (um de 16 oz macio e um de 12 oz denso) duram mais do que um par único usado para tudo, e saem mais barato no longo prazo porque cada um trabalha na função certa.

@@ -28,7 +28,7 @@ export async function generateMetadata(
   }
 
   return {
-    title: `${categoria.rotulo} — página ${n} | O Corner`,
+    title: `${categoria.rotulo}, página ${n} | O Corner`,
     description: `Últimas notícias, análises e bastidores de ${categoria.rotulo} no O Corner.`,
   };
 }

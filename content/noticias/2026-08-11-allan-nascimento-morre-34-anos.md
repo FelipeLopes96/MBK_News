@@ -51,7 +51,7 @@ O lutador passou boa parte da carreira entre academias, viagens, camps e lutas. 
 
 Não há, neste momento, outras informações oficiais que expliquem as circunstâncias médicas da morte além do relato de um aparente ataque cardíaco. Por isso, qualquer tentativa de relacionar o falecimento a treinamento, corte de peso ou outros fatores seria apenas especulação.
 
-O que fica confirmado é mais simples — e bastante triste.
+O que fica confirmado é mais simples, e bastante triste.
 
 Allan Nascimento entrou no UFC em 2021 querendo provar que seu trabalho havia chegado ao maior palco do esporte. Saiu dele quase cinco anos depois com 29 lutas profissionais no cartel e uma carreira construída praticamente inteira dentro do MMA.
 

@@ -24,7 +24,7 @@ export default function ArquivoPage() {
           Arquivo do Corner
         </h1>
         <p className="mt-2 text-zinc-400">
-          Histórias, guias e explicações sobre esportes de combate — conteúdo
+          Histórias, guias e explicações sobre esportes de combate: conteúdo
           que não perde a validade.
         </p>
 

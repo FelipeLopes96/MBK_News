@@ -12,10 +12,10 @@ Os superleves terão um campeão unificado pela primeira vez desde 2023. O Conse
 
 O impasse durava três anos e tinha origem regulatória. Ambas as entidades exigiam que seus campeões cumprissem defesas obrigatórias contra desafiantes designados antes de qualquer unificação, e os calendários nunca coincidiram: sempre que um estava liberado, o outro tinha compromisso pendente.
 
-## A saída — e o precedente que ela abre
+## A saída, e o precedente que ela abre
 
 A solução foi a criação de uma taxa de dispensa. Cada entidade aceitou adiar sua defesa obrigatória mediante pagamento de um percentual da bolsa do evento, com garantia de que o vencedor cumprirá ambas as pendências em 2027, em ordem definida por sorteio.
 
-O mecanismo destrava esta luta, mas transforma a obrigatoriedade em algo negociável por dinheiro. Críticos apontam que desafiantes designados — normalmente atletas sem poder de negociação, que chegaram à posição por mérito de ranking — passam a depender de acordo comercial entre terceiros para exercer um direito esportivo.
+O mecanismo destrava esta luta, mas transforma a obrigatoriedade em algo negociável por dinheiro. Críticos apontam que desafiantes designados (normalmente atletas sem poder de negociação, que chegaram à posição por mérito de ranking) passam a depender de acordo comercial entre terceiros para exercer um direito esportivo.
 
 Roca, 30 anos, defende o cinturão do CMBU pela quinta vez. Petrelli, 28, é campeão da AIB desde 2024 e vem de duas defesas. Nenhum dos dois perdeu como profissional, o que torna dezembro a primeira derrota garantida na carreira de um deles.

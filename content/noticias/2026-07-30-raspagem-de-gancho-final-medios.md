@@ -14,7 +14,7 @@ O movimento em si é conhecido: gancho profundo na perna de apoio, controle do p
 
 ## Por que isso resolve um problema conhecido
 
-Guardeiros que enfrentam adversários mais pesados costumam ter duas opções ruins: sustentar a guarda e perder a disputa por desgaste, ou arriscar uma inversão que, se falhar, entrega a passagem. A entrada de Quintela reduz esse dilema porque a falha não custa posição — o atleta retorna à guarda fechada em vez de expor as costas.
+Guardeiros que enfrentam adversários mais pesados costumam ter duas opções ruins: sustentar a guarda e perder a disputa por desgaste, ou arriscar uma inversão que, se falhar, entrega a passagem. A entrada de Quintela reduz esse dilema porque a falha não custa posição: o atleta retorna à guarda fechada em vez de expor as costas.
 
 O contexto ajuda a explicar a adoção rápida. A federação alterou em janeiro o critério de tempo de controle para configurar passagem, e o ajuste aumentou o valor de sequências curtas de inversão. Movimentos que antes não compensavam o risco passaram a compensar.
 

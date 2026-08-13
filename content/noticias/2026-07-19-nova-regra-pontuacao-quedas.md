@@ -16,6 +16,6 @@ Pelo texto aprovado, o controle no solo só influencia a nota do round quando ac
 
 A discussão vinha se acumulando há pelo menos três anos. Levantamentos de decisões controversas apontavam um padrão recorrente: rounds em que um atleta absorvia mais golpes significativos, mas vencia nos cartões por ter conseguido uma queda nos segundos finais. O critério anterior não distinguia entre controle produtivo e controle estático.
 
-A crítica ao novo texto vem principalmente de treinadores de wrestling, que argumentam que a queda é, em si, uma demonstração de imposição física e que o critério de dano favorece estruturalmente quem luta em pé. É uma objeção legítima e a redação da diretriz não a resolve por completo — ela transfere para o árbitro a decisão sobre o que constitui progressão suficiente.
+A crítica ao novo texto vem principalmente de treinadores de wrestling, que argumentam que a queda é, em si, uma demonstração de imposição física e que o critério de dano favorece estruturalmente quem luta em pé. É uma objeção legítima e a redação da diretriz não a resolve por completo: ela transfere para o árbitro a decisão sobre o que constitui progressão suficiente.
 
 Na prática, o efeito mais provável no curto prazo é o aumento de rounds julgados 10-10 e de decisões divididas, enquanto os julgadores calibram a leitura. Organizações que operam sob outras comissões não são obrigadas a adotar o critério, o que deve produzir, ao menos até o meio de 2027, um cenário em que a mesma luta poderia ser pontuada de formas diferentes dependendo do estado em que ocorre.

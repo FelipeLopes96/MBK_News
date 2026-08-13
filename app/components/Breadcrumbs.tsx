@@ -12,7 +12,7 @@ export default function Breadcrumbs({ trilha }: { trilha: Migalha[] }) {
 
   return (
     <nav aria-label="Trilha de navegação">
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-zinc-500">
+      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-zinc-500">
         {trilha.map((migalha, indice) => {
           const ultima = indice === trilha.length - 1;
 

@@ -14,7 +14,7 @@ Diego Sanhueza assume a vaga e faz sua estreia na organização diante de Bruno 
 
 ## O cálculo de risco para o substituto
 
-Aceitar uma luta em cima da hora é um clássico dilema de carreira. A visibilidade de uma estreia em card principal raramente aparece de novo tão cedo, mas o custo de uma derrota nessas condições é real — organizações tendem a tratar o resultado como resultado, não como circunstância, e a segunda oportunidade costuma vir contra um adversário mais duro e com menos destaque.
+Aceitar uma luta em cima da hora é um clássico dilema de carreira. A visibilidade de uma estreia em card principal raramente aparece de novo tão cedo, mas o custo de uma derrota nessas condições é real: organizações tendem a tratar o resultado como resultado, não como circunstância, e a segunda oportunidade costuma vir contra um adversário mais duro e com menos destaque.
 
 Sanhueza chega com sete vitórias consecutivas no circuito regional sul-americano, seis delas antes do segundo round. É um perfil de finalizador que historicamente se adapta melhor a avisos curtos do que lutadores que dependem de plano de jogo detalhado, o que ajuda a explicar a escolha da organização.
 

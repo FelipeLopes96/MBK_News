@@ -18,4 +18,4 @@ Vantagem é, há duas décadas, o ponto de atrito mais constante do jiu-jitsu es
 
 O novo critério deve reduzir esse comportamento. Uma tentativa sem deslocamento real deixa de gerar retorno, o que remove o incentivo para o que a comunidade chama de "vantagem de fachada".
 
-O efeito colateral previsível é o aumento de combates decididos no critério final — no jiu-jitsu, geralmente a penalidade acumulada ou a decisão do árbitro sobre agressividade. A CIJE reconheceu o risco na nota técnica e afirmou que acompanhará os primeiros seis meses antes de considerar ajustes adicionais. Federações nacionais têm até janeiro para decidir se adotam o texto em competições próprias.
+O efeito colateral previsível é o aumento de combates decididos no critério final: no jiu-jitsu, geralmente a penalidade acumulada ou a decisão do árbitro sobre agressividade. A CIJE reconheceu o risco na nota técnica e afirmou que acompanhará os primeiros seis meses antes de considerar ajustes adicionais. Federações nacionais têm até janeiro para decidir se adotam o texto em competições próprias.

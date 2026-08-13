@@ -44,6 +44,7 @@ export default function CabecalhoDeEntidade({
               alt={titulo}
               sizes="(min-width: 768px) 768px, 100vw"
               preload
+              posicao={imagem.posicao}
             />
           </div>
           <CreditoDeImagem imagem={imagem} />
