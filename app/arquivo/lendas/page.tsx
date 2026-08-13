@@ -18,6 +18,7 @@ export default function LendasPage() {
       descricao="Os atletas que definiram eras e deixaram sua marca nos esportes de combate."
       entidades={getLendas()}
       mensagemVazia="Nenhuma lenda cadastrada ainda."
+      filtroPorOrganizacao={{ singular: "lenda", plural: "lendas" }}
     />
   );
 }

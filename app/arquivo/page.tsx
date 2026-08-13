@@ -24,14 +24,13 @@ export default function ArquivoPage() {
           Arquivo do Corner
         </h1>
         <p className="mt-2 text-zinc-400">
-          Histórias, guias e explicações sobre esportes de combate: conteúdo
-          que não perde a validade.
+          Histórias, guias e explicações sobre esportes de combate.
         </p>
 
         <ExplorarOArquivo />
 
         <h2 className="mt-12 text-xs font-bold uppercase tracking-widest text-zinc-500">
-          Conteúdos do Arquivo
+          Entendendo o Jogo
         </h2>
 
         {artigos.length === 0 ? (

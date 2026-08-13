@@ -1,5 +1,6 @@
 import Link from "next/link";
-import MenuMobile from "@/app/components/MenuMobile";
+import MenuMobile, { type LinkDoMenu } from "@/app/components/MenuMobile";
+import { secoesDoArquivo } from "@/lib/navegacao";
 import { categorias } from "@/lib/noticias";
 
 const secoes = [
@@ -7,14 +8,20 @@ const secoes = [
   { href: "/arsenal", rotulo: "Arsenal" },
 ];
 
-/** Mesma navegação da barra, em lista única — é o que o menu mobile mostra. */
-const linksDoMenu = [
+/**
+ * Mesma navegação da barra, em lista única — é o que o menu mobile mostra. O
+ * Arquivo leva suas sub-seções, que o menu expande no lugar em vez de exigir
+ * uma parada na página do Arquivo para escolher.
+ */
+const linksDoMenu: LinkDoMenu[] = [
   { href: "/", rotulo: "Notícias" },
   ...categorias.map((categoria) => ({
     href: `/${categoria.slug}`,
     rotulo: categoria.rotulo,
   })),
-  ...secoes,
+  ...secoes.map((secao) =>
+    secao.href === "/arquivo" ? { ...secao, subitens: secoesDoArquivo } : secao
+  ),
 ];
 
 export default function Header() {

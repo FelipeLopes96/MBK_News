@@ -37,7 +37,7 @@ export default function ExplorarOArquivo() {
   return (
     <section className="mt-8">
       <h2 className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-        Explorar o Arquivo
+        Além do Octógono
       </h2>
 
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">

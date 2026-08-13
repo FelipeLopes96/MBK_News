@@ -364,6 +364,75 @@ export function nomeDaOrganizacao(slug: string): string {
   return getOrganizacao(slug)?.nome ?? slug;
 }
 
+/** Prefixo de rota por tipo de entidade. */
+const rotaDoTipo: Record<TipoDeEntidade, string> = {
+  organizacao: "/arquivo/organizacoes",
+  lenda: "/arquivo/lendas",
+  momento: "/arquivo/momentos",
+};
+
+/**
+ * Versão enxuta de uma entidade, pronta para um card.
+ *
+ * Existe porque a grade filtrável roda no cliente: `Entidade` carrega o corpo
+ * inteiro do .md e depende de `getOrganizacao` (que lê o disco), então o que
+ * cruza a fronteira é esta forma — sem o texto e com o rótulo já resolvido.
+ */
+export type CardDeEntidade = {
+  slug: string;
+  href: string;
+  nome: string;
+  rotulo: string;
+  resumo?: string;
+  imagem?: ImagemComCredito;
+  /** Slugs canônicos das organizações, que é o que o filtro compara. */
+  organizacoes: string[];
+};
+
+/** Slugs canônicos das organizações citadas por uma entidade. */
+function organizacoesCanonicas(entidade: Entidade): string[] {
+  if (entidade.tipo === "organizacao") {
+    return [entidade.slug];
+  }
+
+  return entidade.organizacoes
+    .map((referencia) => getOrganizacao(referencia)?.slug)
+    .filter((slug): slug is string => slug !== undefined);
+}
+
+export function paraCardDeEntidade(
+  entidade: Entidade,
+  opcoes?: { comOrganizacao?: boolean }
+): CardDeEntidade {
+  return {
+    slug: entidade.slug,
+    href: `${rotaDoTipo[entidade.tipo]}/${entidade.slug}`,
+    nome: entidade.nome,
+    rotulo: rotuloDaEntidade(entidade, opcoes),
+    resumo: entidade.resumo,
+    imagem: entidade.imagem,
+    organizacoes: organizacoesCanonicas(entidade),
+  };
+}
+
+/**
+ * Organizações que aparecem entre as entidades recebidas, na ordem em que estão
+ * cadastradas. Serve de fonte para os filtros: só entra organização que tem
+ * pelo menos uma entidade, então nenhum filtro leva a uma grade vazia.
+ */
+export function organizacoesPresentes(
+  entidades: Entidade[]
+): { slug: string; rotulo: string }[] {
+  const presentes = new Set(entidades.flatMap(organizacoesCanonicas));
+
+  return getOrganizacoes()
+    .filter((organizacao) => presentes.has(organizacao.slug))
+    .map((organizacao) => ({
+      slug: organizacao.slug,
+      rotulo: organizacao.nome,
+    }));
+}
+
 /** Rótulo curto usado nos cards, por tipo de entidade. */
 export const rotuloDoTipo: Record<TipoDeEntidade, string> = {
   organizacao: "Organização",

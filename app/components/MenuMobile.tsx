@@ -3,7 +3,17 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export type LinkDoMenu = { href: string; rotulo: string };
+export type LinkDoMenu = {
+  href: string;
+  rotulo: string;
+  /** Sub-seções, que o item passa a poder expandir sem sair do menu. */
+  subitens?: LinkDoMenu[];
+};
+
+/** Slug utilizável como id de elemento, para ligar o botão à lista que ele abre. */
+function idDoGrupo(href: string): string {
+  return `submenu-${href.replace(/\W+/g, "-").replace(/^-|-$/g, "")}`;
+}
 
 /**
  * Botão de hambúrguer + menu fullscreen para telas abaixo de lg.
@@ -12,6 +22,14 @@ export type LinkDoMenu = { href: string; rotulo: string };
  */
 export default function MenuMobile({ links }: { links: LinkDoMenu[] }) {
   const [aberto, setAberto] = useState(false);
+  const [expandidos, setExpandidos] = useState<string[]>([]);
+
+  const alternarGrupo = (href: string) =>
+    setExpandidos((atuais) =>
+      atuais.includes(href)
+        ? atuais.filter((item) => item !== href)
+        : [...atuais, href]
+    );
 
   // Enquanto o menu cobre a tela, o body não deve rolar por trás dele.
   // O Esc fecha, como em qualquer diálogo.
@@ -88,16 +106,69 @@ export default function MenuMobile({ links }: { links: LinkDoMenu[] }) {
           </div>
 
           <nav className="flex flex-col px-6 pb-10">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setAberto(false)}
-                className="border-b border-zinc-800 py-5 text-xl font-semibold text-white transition-colors hover:text-[#F97316]"
-              >
-                {link.rotulo}
-              </Link>
-            ))}
+            {links.map((link) => {
+              const expandido = expandidos.includes(link.href);
+              const id = idDoGrupo(link.href);
+
+              return (
+                <div key={link.href} className="border-b border-zinc-800">
+                  {/* O rótulo continua sendo link para a própria seção; quem
+                      expande é o botão ao lado. Um elemento só, fazendo as duas
+                      coisas, deixaria de ser navegável por teclado e leitor. */}
+                  <div className="flex items-center justify-between gap-2">
+                    <Link
+                      href={link.href}
+                      onClick={() => setAberto(false)}
+                      className="flex-1 py-5 text-xl font-semibold text-white transition-colors hover:text-[#F97316]"
+                    >
+                      {link.rotulo}
+                    </Link>
+
+                    {link.subitens?.length ? (
+                      <button
+                        type="button"
+                        onClick={() => alternarGrupo(link.href)}
+                        aria-expanded={expandido}
+                        aria-controls={id}
+                        aria-label={`${expandido ? "Recolher" : "Expandir"} ${link.rotulo}`}
+                        className="shrink-0 p-3 text-zinc-400 transition-colors hover:text-[#F97316] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316]"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          className={`h-5 w-5 transition-transform ${expandido ? "rotate-180" : ""}`}
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </button>
+                    ) : null}
+                  </div>
+
+                  {link.subitens?.length && expandido ? (
+                    <ul
+                      id={id}
+                      className="mb-4 ml-1 flex flex-col border-l border-zinc-800 pl-5"
+                    >
+                      {link.subitens.map((subitem) => (
+                        <li key={subitem.href}>
+                          <Link
+                            href={subitem.href}
+                            onClick={() => setAberto(false)}
+                            className="block py-3 text-lg text-zinc-300 transition-colors hover:text-[#F97316]"
+                          >
+                            {subitem.rotulo}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              );
+            })}
           </nav>
         </div>
       )}
