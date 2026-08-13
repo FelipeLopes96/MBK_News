@@ -24,8 +24,16 @@ export default function ArsenalPage() {
           Rankings e análises de equipamento.
         </p>
 
+        {/* Enquanto não houver nenhum .md em content/arsenal, a seção fica em
+            espera. Basta publicar o primeiro arquivo para a grade voltar. */}
         {reviews.length === 0 ? (
-          <p className="mt-8 text-zinc-400">Nenhuma análise publicada ainda.</p>
+          <div className="mt-16 flex flex-col items-center justify-center rounded-lg border border-zinc-800 px-6 py-20 text-center">
+            <p className="text-2xl font-semibold text-white">Em breve</p>
+            <p className="mt-3 max-w-md text-zinc-400">
+              Estamos preparando as primeiras análises de equipamento. Volte
+              em breve para conferir.
+            </p>
+          </div>
         ) : (
           <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {reviews.map((review, indice) => (
