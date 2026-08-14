@@ -8,7 +8,7 @@ fontes:
   - "IBJJF"
   - "FloGrappling"
 imagem:
-  url: 
+  url: "/noticias/ibjjf-the-crown.jpg"
   credito: ""
   fonte: 
   licenca: ""

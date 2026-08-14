@@ -8,7 +8,7 @@ fontes:
   - "ESPN"
   - "BoxingScene"
 imagem:
-  url: 
+  url: "/noticias/RYAN_GARCIA.jpg"
   credito: ""
   fonte: 
   licenca: ""

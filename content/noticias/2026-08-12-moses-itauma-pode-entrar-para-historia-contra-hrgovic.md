@@ -9,7 +9,7 @@ fontes:
   - "MMA Mania"
   - "TalkSport"
 imagem:
-  url: 
+  url: "/noticias/itauma-x-hrgovic.jpg"
   credito: ""
   fonte: 
   licenca: ""

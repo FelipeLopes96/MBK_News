@@ -8,7 +8,7 @@ fontes:
   - "UFC"
   - "MMA Fighting"
 imagem:
-  url: 
+  url: "/noticias/dern-x-robertson.jpg"
   credito: ""
   fonte: 
   licenca: ""

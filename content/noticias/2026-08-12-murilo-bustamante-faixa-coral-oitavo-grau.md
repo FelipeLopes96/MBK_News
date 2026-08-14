@@ -8,7 +8,7 @@ fontes:
   - "Jits Magazine"
   - "BJJ Beat"
 imagem:
-  url: 
+  url: "/noticias/murilo-bustamante.jpg"
   credito: ""
   fonte: 
   licenca: ""
