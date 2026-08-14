@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import Footer from "@/app/components/Footer";
 import { NOME_DO_SITE, urlDoSite } from "@/lib/seo";
 import "./globals.css";
@@ -45,6 +46,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-[#1A1A1A] text-white">
         {children}
         <Footer />
+        {/* Web Analytics da Vercel. Fica no layout raiz para valer em todas as
+            rotas; o script só é injetado em produção. */}
+        <Analytics />
       </body>
     </html>
   );
