@@ -34,10 +34,20 @@ export default function FormularioBeehiiv() {
 
   // O loader monta <div style="overflow:hidden;height:0"><iframe style="height:2000px">
   // e conta com uma mensagem `beehiiv:styles` vinda de dentro do iframe para
-  // ajustar as duas alturas. Essa mensagem nunca chega neste formulário: o
-  // wrapper fica em 0 (o form some) e o iframe fica nos 2000px iniciais (o
-  // vazio branco). Como os estilos do loader são inline, só sobrescrevemos com
-  // `!`. Alturas fixas porque, sem a mensagem, não há como saber a real.
+  // ajustar as duas alturas. Essa mensagem nunca chega neste formulário, então
+  // dimensionamos pelo tamanho real do conteúdo, medido no próprio formulário.
+  //
+  // O <form> vem do Beehiiv com `width: max-content; max-width: 100%` dentro de
+  // um <body> `display: block`, sem centralização. Ou seja: ele não acompanha a
+  // largura do iframe — fica com a largura natural do conteúdo (212px) colado
+  // na borda esquerda. Por isso o iframe recebe exatamente essa largura e é
+  // centralizado aqui: assim o formulário ocupa o iframe inteiro e fica no meio
+  // do card, sem precisar mexer em nada de dentro do iframe.
+  //
+  // O `max-w-full` mantém o comportamento em cards mais estreitos que 212px:
+  // como o form tem `max-width: 100%`, ele encolhe junto e continua preenchendo.
+  // As classes precisam ser literais: o Tailwind varre o código-fonte e não
+  // enxerga nome de classe montado por interpolação.
   return (
     <div
       ref={container}
@@ -46,11 +56,10 @@ export default function FormularioBeehiiv() {
         // Reabre os wrappers que o loader colapsou — são dois divs aninhados,
         // e é o de dentro que fica com height:0.
         "[&_div]:h-auto! [&_div]:overflow-visible!",
-        // Altura do iframe. Medidas do conteúdo real: ~223px no card estreito
-        // e ~215px no largo; o resto é folga. Se o layout do formulário mudar
-        // no Beehiiv (ex.: campo acima do botão), reveja estes dois valores.
-        "[&_iframe]:h-[280px]! @sm:[&_iframe]:h-[240px]!",
-        "[&_iframe]:w-full! [&_iframe]:max-w-full",
+        // 212px = largura natural do form. 160px = os 152px medidos do
+        // conteúdo vertical (campo + gap + botão) com 8px de folga.
+        "[&_iframe]:w-[212px]! [&_iframe]:h-[160px]!",
+        "[&_iframe]:mx-auto! [&_iframe]:max-w-full",
       ].join(" ")}
     />
   );
