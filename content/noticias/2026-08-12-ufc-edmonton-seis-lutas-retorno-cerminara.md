@@ -8,7 +8,7 @@ fontes:
   - "MMA Fighting"
   - "UFC"
 imagem:
-  url: 
+  url: "/noticias/ufc-edmonton.jpeg"
   credito: ""
   fonte: 
   licenca: ""

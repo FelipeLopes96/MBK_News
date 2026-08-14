@@ -9,7 +9,7 @@ fontes:
   - "MMA Fighting"
   - "ESPN"
 imagem:
-  url: 
+  url: "/noticias/contender-series.jpg"
   credito: ""
   fonte: 
   licenca: ""

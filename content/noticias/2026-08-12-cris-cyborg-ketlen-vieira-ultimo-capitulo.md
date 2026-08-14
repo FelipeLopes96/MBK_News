@@ -9,7 +9,7 @@ fontes:
   - "Sherdog"
   - "Cris Cyborg"
 imagem:
-  url: 
+  url: "/noticias/Cris_Cyborg.jpg"
   credito: ""
   fonte: 
   licenca: ""

@@ -8,7 +8,7 @@ fontes:
   - "ESPN"
   - "WBC"
 imagem:
-  url: 
+  url: "/noticias/Zepeda.jpg"
   credito: ""
   fonte: 
   licenca: ""

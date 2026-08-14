@@ -7,7 +7,7 @@ resumo: "Usman Nurmagomedov encerrou seu contrato com a PFL, mas uma cláusula d
 fontes:
   - "Times of India"
 imagem:
-  url: 
+  url: "/noticias/Usman_Nurmagomedov.jpg"
   credito: ""
   fonte: 
   licenca: ""

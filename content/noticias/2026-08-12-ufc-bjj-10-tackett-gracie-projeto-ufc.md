@@ -8,7 +8,7 @@ fontes:
   - "UFC"
   - "MMA Mania"
 imagem:
-  url: 
+  url: "/noticias/ufc-bjj-10.jpg"
   credito: ""
   fonte: 
   licenca: ""

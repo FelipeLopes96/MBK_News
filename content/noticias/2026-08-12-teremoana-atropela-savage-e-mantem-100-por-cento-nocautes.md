@@ -9,7 +9,7 @@ fontes:
   - "News.com.au"
   - "Fightnews"
 imagem:
-  url: 
+  url: "/noticias/teremoana.jpg"
   credito: ""
   fonte: 
   licenca: ""
