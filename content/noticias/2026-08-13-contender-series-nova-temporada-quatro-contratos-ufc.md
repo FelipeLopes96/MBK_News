@@ -18,7 +18,7 @@ destaque: false
 
 O Contender Series voltou — e quatro lutadores já garantiram seu lugar no UFC.
 
-A primeira semana da 10ª temporada aconteceu na terça-feira, em Las Vegas, e terminou com quatro contratos distribuídos por Dana White. :contentReference[oaicite:12]{index=12}
+A primeira semana da 10ª temporada aconteceu na terça-feira, em Las Vegas, e terminou com quatro contratos distribuídos por Dana White.
 
 Entre os destaques esteve Bilal Hasan, que precisou de apenas 45 segundos para vencer Mridul Saikia por nocaute técnico.
 

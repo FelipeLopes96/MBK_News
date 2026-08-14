@@ -17,7 +17,7 @@ destaque: false
 
 Ryan Garcia e Conor Benn já sabem quando vão resolver essa história.
 
-Os dois se enfrentam em 12 de setembro, em Las Vegas, pelo cinturão dos meio-médios do WBC. Será a primeira defesa de Garcia desde que conquistou o título contra Mario Barrios. :contentReference[oaicite:2]{index=2}
+Os dois se enfrentam em 12 de setembro, em Las Vegas, pelo cinturão dos meio-médios do WBC. Será a primeira defesa de Garcia desde que conquistou o título contra Mario Barrios.
 
 ## Garcia tem o cinturão. Benn tem pressa.
 

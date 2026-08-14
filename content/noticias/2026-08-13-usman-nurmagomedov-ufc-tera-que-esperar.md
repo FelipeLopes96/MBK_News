@@ -18,7 +18,7 @@ Usman Nurmagomedov terminou seu contrato com a PFL invicto e agora é um dos nom
 
 Só existe um problema: o UFC ainda não pode negociar oficialmente com ele.
 
-Segundo seu empresário, Ali Abdelaziz, a PFL tem uma janela de 90 dias de negociação exclusiva após o fim do contrato. O período deve terminar no início de outubro. :contentReference[oaicite:10]{index=10}
+Segundo seu empresário, Ali Abdelaziz, a PFL tem uma janela de 90 dias de negociação exclusiva após o fim do contrato. O período deve terminar no início de outubro.
 
 ## A PFL ainda pode segurar o campeão
 
