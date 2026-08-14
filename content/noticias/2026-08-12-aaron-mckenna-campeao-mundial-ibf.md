@@ -9,7 +9,7 @@ fontes:
   - "RTÉ"
   - "ESPN"
 imagem:
-  url: 
+  url: "/noticias/AaronMcKenna.webp"
   credito: ""
   fonte: 
   licenca: ""

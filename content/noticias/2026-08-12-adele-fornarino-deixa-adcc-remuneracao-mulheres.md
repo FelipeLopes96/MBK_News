@@ -8,7 +8,7 @@ fontes:
   - "BJJEE"
   - "Jiu Jitsu Style"
 imagem:
-  url: 
+  url: "/noticias/adele-fornarino.jpg"
   credito: ""
   fonte: 
   licenca: ""

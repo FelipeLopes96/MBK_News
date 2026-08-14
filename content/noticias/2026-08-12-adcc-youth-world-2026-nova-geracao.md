@@ -8,7 +8,7 @@ fontes:
   - "Jits.gg"
   - "FloGrappling"
 imagem:
-  url: 
+  url: "/noticias/adcc-youth-world-2026.jpg"
   credito: ""
   fonte: 
   licenca: ""

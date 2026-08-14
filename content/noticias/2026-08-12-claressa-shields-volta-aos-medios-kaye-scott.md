@@ -8,7 +8,7 @@ fontes:
   - "ESPN"
   - "Reuters"
 imagem:
-  url: 
+  url: "/noticias/claressa-shields.jpg"
   credito: ""
   fonte: 
   licenca: ""
