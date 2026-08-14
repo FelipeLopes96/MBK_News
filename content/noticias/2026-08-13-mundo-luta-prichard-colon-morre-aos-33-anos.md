@@ -10,14 +10,14 @@ fontes:
   - "UOL"
   - "Times of India"
 imagem:
-  url: "/noticias/prichard-colon.jpg"
+  url: "/noticias/prichard colon2.jpg"
   credito: ""
   fonte: ""
   licenca: ""
 destaque: true
 ---
 
-O mundo da luta está de luto. Prichard Colón morreu nesta quinta-feira, 13 de agosto, aos 33 anos, quase 11 anos depois de sofrer uma grave lesão cerebral durante a última luta de sua carreira profissional. A morte foi confirmada por seu pai, Richard Colón. A causa exata da morte não foi divulgada. {index=1}
+O mundo da luta está de luto. Prichard Colón morreu nesta quinta-feira, 13 de agosto, aos 33 anos, quase 11 anos depois de sofrer uma grave lesão cerebral durante a última luta de sua carreira profissional. A morte foi confirmada por seu pai, Richard Colón. A causa exata da morte não foi divulgada. 
 
 Colón era uma das grandes promessas do boxe porto-riquenho. Em outubro de 2015, entrou no ringue para enfrentar Terrel Williams com um cartel invicto de 16 vitórias, sendo 13 por nocaute. O que deveria ser mais um passo na carreira acabou mudando sua vida.
 
