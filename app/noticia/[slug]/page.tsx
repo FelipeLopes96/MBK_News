@@ -6,7 +6,6 @@ import BlocoDeFontes from "@/app/components/BlocoDeFontes";
 import CreditoDeImagem from "@/app/components/CreditoDeImagem";
 import Header from "@/app/components/Header";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
-import NewsletterForm from "@/app/components/NewsletterForm";
 import {
   classeDoCorpoDaMateria,
   componentesDeMarkdown,
@@ -88,10 +87,6 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
         </div>
 
         <BlocoDeFontes fontes={noticia.fontes} />
-
-        <div className="mt-12">
-          <NewsletterForm />
-        </div>
 
         <Link
           href="/"

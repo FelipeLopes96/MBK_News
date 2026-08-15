@@ -6,7 +6,6 @@ import BlocoDeFontes from "@/app/components/BlocoDeFontes";
 import CabecalhoDeEntidade from "@/app/components/CabecalhoDeEntidade";
 import FichaDeEntidade from "@/app/components/FichaDeEntidade";
 import Header from "@/app/components/Header";
-import NewsletterForm from "@/app/components/NewsletterForm";
 import NotaDoEditor from "@/app/components/NotaDoEditor";
 import SecaoDaEntidade from "@/app/components/SecaoDaEntidade";
 import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
@@ -180,10 +179,6 @@ export default async function LendaPage(
         <BlocoDeFontes fontes={lenda.fontes} />
 
         <NotaDoEditor nota={lenda.notaDoEditor} />
-
-        <div className="mt-12">
-          <NewsletterForm />
-        </div>
       </main>
     </div>
   );

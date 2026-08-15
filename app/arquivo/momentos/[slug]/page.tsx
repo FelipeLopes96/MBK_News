@@ -5,7 +5,6 @@ import Markdown from "react-markdown";
 import BlocoDeFontes from "@/app/components/BlocoDeFontes";
 import CabecalhoDeEntidade from "@/app/components/CabecalhoDeEntidade";
 import Header from "@/app/components/Header";
-import NewsletterForm from "@/app/components/NewsletterForm";
 import SecaoDaEntidade from "@/app/components/SecaoDaEntidade";
 import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
 import { formatarData } from "@/lib/conteudo";
@@ -119,10 +118,6 @@ export default async function MomentoPage(
         </SecaoDaEntidade>
 
         <BlocoDeFontes fontes={momento.fontes} />
-
-        <div className="mt-12">
-          <NewsletterForm />
-        </div>
       </main>
     </div>
   );

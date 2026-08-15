@@ -2,7 +2,6 @@ import EventosSidebar from "@/app/components/EventosSidebar";
 import Header from "@/app/components/Header";
 import HeroDestaque from "@/app/components/HeroDestaque";
 import ListaCompacta from "@/app/components/ListaCompacta";
-import NewsletterForm from "@/app/components/NewsletterForm";
 import NoticiaCard from "@/app/components/NoticiaCard";
 import { getTodos as getArtigosDoArquivo } from "@/lib/arquivo";
 import { getTodos as getReviewsDoArsenal } from "@/lib/arsenal";
@@ -90,10 +89,6 @@ export default function Home() {
                 baseHref="/arsenal"
                 verTodosHref="/arsenal"
               />
-            </div>
-
-            <div className="order-9 sm:col-span-2">
-              <NewsletterForm />
             </div>
           </aside>
         </div>

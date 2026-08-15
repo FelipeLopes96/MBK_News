@@ -6,7 +6,6 @@ import CabecalhoDeEntidade from "@/app/components/CabecalhoDeEntidade";
 import ConteudoCard from "@/app/components/ConteudoCard";
 import GradeDeEntidades from "@/app/components/GradeDeEntidades";
 import Header from "@/app/components/Header";
-import NewsletterForm from "@/app/components/NewsletterForm";
 import SecaoDaEntidade from "@/app/components/SecaoDaEntidade";
 import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
 import { getPorOrganizacao, rotuloDaCategoria } from "@/lib/arquivo";
@@ -156,10 +155,6 @@ export default async function OrganizacaoPage(
         </SecaoDaEntidade>
 
         <BlocoDeFontes fontes={organizacao.fontes} />
-
-        <div className="mt-12">
-          <NewsletterForm />
-        </div>
       </main>
     </div>
   );
