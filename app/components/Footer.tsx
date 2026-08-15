@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { categorias } from "@/lib/noticias";
 
@@ -11,11 +12,14 @@ export default function Footer() {
     <footer className="border-t border-zinc-800 bg-[#111111]">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <Link
-            href="/"
-            className="text-xl font-extrabold tracking-tight text-[#F97316]"
-          >
-            O Corner
+          <Link href="/" className="inline-block">
+            <Image
+              src="/logo.png"
+              alt="O Corner"
+              width={181}
+              height={47}
+              className="h-7 w-auto"
+            />
           </Link>
           <p className="mt-2 text-sm text-zinc-500">
             A referência digital em esportes de combate.
