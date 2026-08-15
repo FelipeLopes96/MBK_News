@@ -97,17 +97,30 @@ export function getNoticiaDestaque(): Noticia | undefined {
   return todas.find((noticia) => noticia.destaque) ?? todas[0];
 }
 
+function contarPaginas(noticias: Noticia[]): number {
+  return Math.max(1, Math.ceil(noticias.length / NOTICIAS_POR_PAGINA));
+}
+
+function fatiarPagina(noticias: Noticia[], pagina: number): Noticia[] {
+  const inicio = (pagina - 1) * NOTICIAS_POR_PAGINA;
+  return noticias.slice(inicio, inicio + NOTICIAS_POR_PAGINA);
+}
+
 export function getTotalDePaginas(categoria: string): number {
-  const total = getNoticiasPorCategoria(categoria).length;
-  return Math.max(1, Math.ceil(total / NOTICIAS_POR_PAGINA));
+  return contarPaginas(getNoticiasPorCategoria(categoria));
 }
 
 export function getNoticiasDaPagina(categoria: string, pagina: number): Noticia[] {
-  const inicio = (pagina - 1) * NOTICIAS_POR_PAGINA;
-  return getNoticiasPorCategoria(categoria).slice(
-    inicio,
-    inicio + NOTICIAS_POR_PAGINA
-  );
+  return fatiarPagina(getNoticiasPorCategoria(categoria), pagina);
+}
+
+/** Mesma paginação, mas sobre o acervo inteiro — alimenta /noticias. */
+export function getTotalDePaginasGeral(): number {
+  return contarPaginas(getTodasNoticias());
+}
+
+export function getNoticiasDaPaginaGeral(pagina: number): Noticia[] {
+  return fatiarPagina(getTodasNoticias(), pagina);
 }
 
 export function buscarCategoria(slug: string): Categoria | undefined {

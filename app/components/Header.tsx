@@ -15,7 +15,7 @@ const secoes = [
  * uma parada na página do Arquivo para escolher.
  */
 const linksDoMenu: LinkDoMenu[] = [
-  { href: "/", rotulo: "Notícias" },
+  { href: "/noticias", rotulo: "Notícias" },
   ...categorias.map((categoria) => ({
     href: `/${categoria.slug}`,
     rotulo: categoria.rotulo,
@@ -54,7 +54,10 @@ export default function Header() {
 
         {/* Abaixo de lg os links não cabem na linha: viram o menu de hambúrguer. */}
         <nav className="hidden shrink-0 items-center gap-5 text-sm font-medium lg:flex lg:text-base">
-          <Link href="/" className="transition-colors hover:text-[#F97316]">
+          <Link
+            href="/noticias"
+            className="transition-colors hover:text-[#F97316]"
+          >
             Notícias
           </Link>
           {categorias.map((categoria) => (

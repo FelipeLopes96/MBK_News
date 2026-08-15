@@ -27,6 +27,13 @@ export default function Footer() {
         </div>
 
         <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {/* Mesma ordem do Header: o acervo geral antes das categorias. */}
+          <Link
+            href="/noticias"
+            className="text-zinc-400 transition-colors hover:text-[#F97316]"
+          >
+            Notícias
+          </Link>
           {categorias.map((categoria) => (
             <Link
               key={categoria.slug}

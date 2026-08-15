@@ -1,17 +1,25 @@
+import Link from "next/link";
 import EventosSidebar from "@/app/components/EventosSidebar";
 import Header from "@/app/components/Header";
 import HeroDestaque from "@/app/components/HeroDestaque";
 import ListaCompacta from "@/app/components/ListaCompacta";
+import { BASE_DE_NOTICIAS } from "@/app/components/ListaDeNoticias";
 import NoticiaCard from "@/app/components/NoticiaCard";
 import { getTodos as getArtigosDoArquivo } from "@/lib/arquivo";
 import { getTodos as getReviewsDoArsenal } from "@/lib/arsenal";
 import { getNoticiaDestaque, getTodasNoticias } from "@/lib/noticias";
 
+/**
+ * Teto de cards abaixo do hero. Sem ele a home cresceria junto com o acervo;
+ * o que passa daqui vive em /noticias, que pagina o histórico completo.
+ */
+const NOTICIAS_NA_HOME = 9;
+
 export default function Home() {
   const destaque = getNoticiaDestaque();
-  const ultimas = getTodasNoticias().filter(
-    (noticia) => noticia.slug !== destaque?.slug
-  );
+  const ultimas = getTodasNoticias()
+    .filter((noticia) => noticia.slug !== destaque?.slug)
+    .slice(0, NOTICIAS_NA_HOME);
   const reviews = getReviewsDoArsenal().slice(0, 3);
 
   // No mobile os cards da sidebar entram no meio das notícias; no desktop os
@@ -20,7 +28,7 @@ export default function Home() {
   const blocosDeNoticias = [
     { noticias: ultimas.slice(0, 3), ordem: "order-3" },
     { noticias: ultimas.slice(3, 6), ordem: "order-5" },
-    { noticias: ultimas.slice(6), ordem: "order-8" },
+    { noticias: ultimas.slice(6, 9), ordem: "order-8" },
   ];
 
   return (
@@ -61,6 +69,21 @@ export default function Home() {
               <p className="order-3 text-zinc-400 sm:col-span-2">
                 Nenhuma notícia publicada ainda.
               </p>
+            )}
+
+            {/*
+              Fecha a coluna principal. Fica depois do último bloco de cards
+              (order-8) e, no mobile, depois da sidebar inteira — daí o order-9.
+            */}
+            {ultimas.length > 0 && (
+              <div className="order-9 mt-2 flex justify-center sm:col-span-2">
+                <Link
+                  href={BASE_DE_NOTICIAS}
+                  className="rounded-md border border-zinc-800 bg-[#242424] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+                >
+                  Ver todas as notícias →
+                </Link>
+              </div>
             )}
           </div>
 

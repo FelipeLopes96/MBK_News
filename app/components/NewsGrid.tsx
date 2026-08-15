@@ -10,18 +10,16 @@ export default function NewsGrid({
   noticias,
   colunas = 3,
   preloadPrimeira = false,
+  mensagemVazia = "Nenhuma notícia publicada nesta categoria ainda.",
 }: {
   noticias: Noticia[];
   colunas?: 2 | 3;
   /** Marca a primeira imagem como LCP — use apenas quando o grid abre a página. */
   preloadPrimeira?: boolean;
+  mensagemVazia?: string;
 }) {
   if (noticias.length === 0) {
-    return (
-      <p className="mt-8 text-zinc-400">
-        Nenhuma notícia publicada nesta categoria ainda.
-      </p>
-    );
+    return <p className="mt-8 text-zinc-400">{mensagemVazia}</p>;
   }
 
   return (
