@@ -37,6 +37,7 @@ export const categorias: Categoria[] = [
   { slug: "mma", rotulo: "MMA" },
   { slug: "boxe", rotulo: "Boxe" },
   { slug: "jiu-jitsu", rotulo: "Jiu-Jitsu" },
+  { slug: "muay-thai", rotulo: "Muay Thai" },
 ];
 
 export const NOTICIAS_POR_PAGINA = 9;

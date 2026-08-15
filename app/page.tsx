@@ -12,6 +12,7 @@ export default function Home() {
   const ultimas = getTodasNoticias().filter(
     (noticia) => noticia.slug !== destaque?.slug
   );
+  const reviews = getReviewsDoArsenal().slice(0, 3);
 
   // No mobile os cards da sidebar entram no meio das notícias; no desktop os
   // três blocos voltam a ser um grid contínuo. Daí cada bloco carregar a classe
@@ -82,14 +83,22 @@ export default function Home() {
               />
             </div>
 
-            <div className="order-7 sm:col-span-2">
-              <ListaCompacta
-                titulo="Arsenal"
-                itens={getReviewsDoArsenal().slice(0, 3)}
-                baseHref="/arsenal"
-                verTodosHref="/arsenal"
-              />
-            </div>
+            {/*
+              Sem review publicada, `ListaCompacta` não renderiza nada — mas o
+              wrapper continuaria contando como filho do flex e somando um
+              `gap-6` de espaço morto no fim da coluna. Por isso a condição fica
+              aqui fora, não dentro do componente.
+            */}
+            {reviews.length > 0 && (
+              <div className="order-7 sm:col-span-2">
+                <ListaCompacta
+                  titulo="Arsenal"
+                  itens={reviews}
+                  baseHref="/arsenal"
+                  verTodosHref="/arsenal"
+                />
+              </div>
+            )}
           </aside>
         </div>
       </main>

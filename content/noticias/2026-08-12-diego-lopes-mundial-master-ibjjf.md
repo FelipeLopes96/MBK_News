@@ -8,7 +8,7 @@ fontes:
   - "IBJJF"
   - "BJJ Beat"
 imagem:
-  url: "/noticias/diego-lopes-ibjjf.jpg"
+  url: "/noticias/diego-lopes-ibjjf.jpeg"
   credito: ""
   fonte: 
   licenca: ""
