@@ -7,7 +7,10 @@ import CreditoDeImagem from "@/app/components/CreditoDeImagem";
 import Header from "@/app/components/Header";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
 import NewsletterForm from "@/app/components/NewsletterForm";
-import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
+import {
+  classeDoCorpoDaMateria,
+  componentesDeMarkdown,
+} from "@/app/components/markdownDeConteudo";
 import {
   formatarData,
   getNoticiaPorSlug,
@@ -53,6 +56,7 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
             src={noticia.imagem?.url}
             alt={noticia.title}
             sizes="(min-width: 768px) 768px, 100vw"
+            posicao={noticia.imagem?.posicao}
             preload
           />
         </div>
@@ -77,7 +81,7 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
           {noticia.title}
         </h1>
 
-        <div className="prose prose-invert mt-8 max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-zinc-300">
+        <div className={`mt-8 ${classeDoCorpoDaMateria}`}>
           <Markdown components={componentesDeMarkdown}>
             {noticia.conteudo}
           </Markdown>

@@ -13,6 +13,15 @@ import CreditoDeImagem from "@/app/components/CreditoDeImagem";
  * ![alt](/noticias/arquivo.jpg "legenda|https://origem-da-foto") — a legenda
  * fica na figcaption e a URL vira a linha de crédito, igual à foto de capa.
  */
+/**
+ * Tipografia do corpo da matéria. Exportada porque a prévia do painel precisa
+ * renderizar com exatamente as mesmas classes — se as duas divergirem, a prévia
+ * deixa de valer como prévia. O espaçamento externo fica no chamador: é posição
+ * na página, não tipografia.
+ */
+export const classeDoCorpoDaMateria =
+  "prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-zinc-300";
+
 export const componentesDeMarkdown: Components = {
   // Uma imagem sozinha na linha é um parágrafo com um único filho no Markdown.
   // Como trocamos a imagem por um <figure>, o <p> em volta seria HTML inválido

@@ -26,6 +26,7 @@ export default function NoticiaCard({
           src={noticia.imagem?.url}
           alt={noticia.title}
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 33vw"
+          posicao={noticia.imagem?.posicao}
           preload={preload}
         />
       </div>

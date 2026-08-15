@@ -22,6 +22,7 @@ export default function HeroDestaque({
           src={noticia.imagem?.url}
           alt={noticia.title}
           sizes="(min-width: 1024px) 66vw, 100vw"
+          posicao={noticia.imagem?.posicao}
           preload
         />
 
