@@ -4,7 +4,7 @@ slug: "como-surgiu-o-brazilian-jiu-jitsu"
 date: "2026-05-14"
 categoria: "historia"
 resumo: "De uma arte japonesa adaptada no Norte do Brasil a um sistema global de combate no chão: a trajetória de uma modalidade que se definiu testando as próprias hipóteses em público."
-imagem: ""
+imagem: "/noticias/historia-do-jiu-jitsu.jpg"
 ---
 
 O Brazilian jiu-jitsu não foi inventado em um momento específico. Ele resultou de um processo de adaptação que durou décadas, começou com a chegada do judô e do jiu-jitsu japonês ao Brasil no início do século XX e se consolidou porque seus praticantes fizeram uma escolha metodológica incomum: testar tudo em combate real, publicamente, contra praticantes de outras modalidades.

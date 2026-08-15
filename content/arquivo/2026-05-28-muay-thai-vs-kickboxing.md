@@ -4,7 +4,7 @@ slug: "muay-thai-vs-kickboxing"
 date: "2026-05-28"
 categoria: "explicacao"
 resumo: "As duas modalidades usam socos e chutes, mas divergem em armas permitidas, critério de pontuação e até no ritmo esperado de um combate. Entender isso muda a forma de assistir."
-imagem: ""
+imagem: "/noticias/diferencas-muay-thai-kickboxing.png"
 ---
 
 Para quem está começando a acompanhar esportes de combate, muay thai e kickboxing parecem a mesma coisa com nomes diferentes. Ambos acontecem em um ringue, permitem socos e chutes e terminam por nocaute ou decisão. As diferenças, no entanto, são estruturais, e explicam por que um lutador de alto nível em uma modalidade não é automaticamente competitivo na outra.
