@@ -12,7 +12,8 @@ fontes:
       https://cagesidepress.com/2026/08/14/ufc-330s-edson-barboza-maybe-time-cites-family
   - MMA Fighting
 imagem:
-  url: /noticias/edson-barboza-admite-que-ufc-330-pode-ser-sua-ultima-luta.jpg
+  url: /noticias/edson-barboza-admite-que-ufc-330-pode-ser-sua-ultima-luta.webp
+  posicao: topo
   fonte: ESPN Brasil
 destaque: false
 ---
