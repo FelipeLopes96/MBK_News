@@ -1,37 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
-import MenuMobile, { type LinkDoMenu } from "@/app/components/MenuMobile";
-import { secoesDoArquivo } from "@/lib/navegacao";
+import CampoDeBusca from "@/app/components/CampoDeBusca";
+import MenuMobile from "@/app/components/MenuMobile";
+import Navegacao from "@/app/components/Navegacao";
+import { secoesPrincipais } from "@/lib/navegacao";
 import { categorias } from "@/lib/noticias";
 
-const secoes = [
-  { href: "/arquivo", rotulo: "Arquivo" },
-  { href: "/arsenal", rotulo: "Arsenal" },
-];
-
 /**
- * Mesma navegação da barra, em lista única — é o que o menu mobile mostra. O
- * Arquivo leva suas sub-seções, que o menu expande no lugar em vez de exigir
- * uma parada na página do Arquivo para escolher.
+ * Cabeçalho do portal, em duas faixas.
+ *
+ * A faixa de cima é a marca e a busca; a de baixo, as seções. Numa linha só,
+ * onze seções brigariam com o logo pelo espaço horizontal — é o formato que
+ * jornal usa justamente porque a navegação de um portal não cabe ao lado da
+ * marca. No mobile a segunda faixa não existe: as seções vão para o menu.
+ *
+ * Server Component: as categorias vêm do disco aqui e descem prontas para os
+ * dois componentes de cliente.
  */
-const linksDoMenu: LinkDoMenu[] = [
-  { href: "/noticias", rotulo: "Notícias" },
-  ...categorias.map((categoria) => ({
-    href: `/${categoria.slug}`,
-    rotulo: categoria.rotulo,
-  })),
-  ...secoes.map((secao) =>
-    secao.href === "/arquivo" ? { ...secao, subitens: secoesDoArquivo } : secao
-  ),
-];
-
 export default function Header() {
+  const secoes = secoesPrincipais(categorias);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-linha bg-fundo text-texto">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-        {/* A tagline saiu daqui: com nove seções na barra, o espaço horizontal é
-            todo da navegação. Ela continua no Footer. */}
-        <Link href="/" className="shrink-0">
+    <header className="sticky top-0 z-50 border-b border-linha bg-fundo/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-3">
+        <Link
+          href="/"
+          className="shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marca"
+        >
           <Image
             src="/marca/mbk-news.png"
             alt="MBK News"
@@ -40,43 +35,26 @@ export default function Header() {
             // Está na barra fixa de toda página: carregar junto com o topo
             // evita o logo aparecendo depois do resto do cabeçalho.
             loading="eager"
-            className="h-9 w-auto"
+            className="h-8 w-auto sm:h-9"
           />
         </Link>
 
-        {/* Abaixo de lg os links não cabem na linha: viram o menu de hambúrguer. */}
-        <nav className="hidden shrink-0 items-center gap-5 text-sm font-medium lg:flex lg:text-base">
-          <Link
-            href="/noticias"
-            className="transition-colors hover:text-marca-clara"
-          >
-            Notícias
-          </Link>
-          {categorias.map((categoria) => (
-            <Link
-              key={categoria.slug}
-              href={`/${categoria.slug}`}
-              className="transition-colors hover:text-marca-clara"
-            >
-              {categoria.rotulo}
-            </Link>
-          ))}
+        <div className="ml-auto flex items-center gap-2">
+          {/* Abaixo de lg a busca vive dentro do menu, onde há largura. */}
+          <div className="hidden lg:block">
+            <CampoDeBusca />
+          </div>
 
-          <span aria-hidden="true" className="h-4 w-px bg-linha-forte" />
-
-          {secoes.map((secao) => (
-            <Link
-              key={secao.href}
-              href={secao.href}
-              className="transition-colors hover:text-marca-clara"
-            >
-              {secao.rotulo}
-            </Link>
-          ))}
-        </nav>
-
-        <MenuMobile links={linksDoMenu} />
+          <MenuMobile secoes={secoes} />
+        </div>
       </div>
+
+      <nav
+        aria-label="Seções do MBK News"
+        className="hidden border-t border-linha lg:block"
+      >
+        <Navegacao itens={secoes} />
+      </nav>
     </header>
   );
 }

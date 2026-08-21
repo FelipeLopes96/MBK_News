@@ -1,5 +1,5 @@
-import Header from "@/app/components/Header";
 import NewsGrid from "@/app/components/NewsGrid";
+import Container from "@/app/components/Container";
 import Paginacao from "@/app/components/Paginacao";
 import {
   getNoticiasDaPagina,
@@ -18,20 +18,16 @@ export default function ListaDeCategoria({
   const noticias = getNoticiasDaPagina(categoria.slug, pagina);
 
   return (
-    <div className="flex flex-1 flex-col bg-fundo">
-      <Header />
+    <Container>
+      <h1 className="text-3xl font-bold tracking-tight text-texto">
+        {categoria.rotulo}
+      </h1>
+      <p className="mt-2 text-texto-suave">
+        Tudo o que rolou no mundo do {categoria.rotulo}.
+      </p>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight text-texto">
-          {categoria.rotulo}
-        </h1>
-        <p className="mt-2 text-texto-suave">
-          Tudo o que rolou no mundo do {categoria.rotulo}.
-        </p>
-
-        <NewsGrid noticias={noticias} colunas={3} preloadPrimeira />
-        <Paginacao base={`/${categoria.slug}`} pagina={pagina} total={total} />
-      </main>
-    </div>
+      <NewsGrid noticias={noticias} colunas={3} preloadPrimeira />
+      <Paginacao base={`/${categoria.slug}`} pagina={pagina} total={total} />
+    </Container>
   );
 }

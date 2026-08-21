@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import Footer from "@/app/components/Footer";
 import { NOME_DO_SITE, TAGLINE, urlDoSite } from "@/lib/seo";
 import "./globals.css";
 
@@ -48,10 +47,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt-BR"
       className={`${inter.variable} ${manchete.variable} h-full antialiased`}
     >
-      {/* Fundo e cor de texto vêm do `@layer base` do globals.css. */}
+      {/* Fundo e cor de texto vêm do `@layer base` do globals.css. A casca do
+          portal — Header e Footer — mora no layout do route group `(site)`,
+          para o painel editorial não herdá-la. */}
       <body className="flex min-h-full flex-col">
         {children}
-        <Footer />
         {/* Web Analytics da Vercel. Fica no layout raiz para valer em todas as
             rotas; o script só é injetado em produção. */}
         <Analytics />

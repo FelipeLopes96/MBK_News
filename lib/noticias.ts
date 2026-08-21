@@ -159,13 +159,6 @@ export function rotuloDaCategoria(slug: string): string {
   return buscarCategoria(slug)?.rotulo ?? slug;
 }
 
-const formatadorDeData = new Intl.DateTimeFormat("pt-BR", {
-  day: "2-digit",
-  month: "long",
-  year: "numeric",
-  timeZone: "UTC",
-});
-
-export function formatarData(data: string): string {
-  return formatadorDeData.format(new Date(data));
-}
+// Reexportado por conveniência de quem já importa daqui. Componente de cliente
+// deve importar de `@/lib/datas`: este módulo lê disco.
+export { formatarData } from "@/lib/datas";
