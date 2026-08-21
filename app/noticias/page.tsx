@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import ListaDeNoticias from "@/app/components/ListaDeNoticias";
+import ListaDeNoticias, {
+  DESCRICAO_DO_ACERVO,
+} from "@/app/components/ListaDeNoticias";
 import { metadataDaPagina } from "@/lib/seo";
 
 export const metadata: Metadata = metadataDaPagina({
   titulo: "Todas as Notícias",
-  descricao:
-    "O acervo completo de notícias do O Corner: MMA, boxe, jiu-jitsu e muay thai, da mais recente para a mais antiga.",
+  descricao: DESCRICAO_DO_ACERVO,
   caminho: "/noticias",
 });
 

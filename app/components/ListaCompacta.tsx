@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SectionHeader from "@/app/components/SectionHeader";
 import type { ItemDeConteudo } from "@/lib/conteudo";
 
 /** Card de sidebar: só os títulos, como lista de links. */
@@ -17,25 +18,19 @@ export default function ListaCompacta({
   if (itens.length === 0) return null;
 
   return (
-    <section className="rounded-lg border border-zinc-800 bg-[#242424] p-6">
-      <div className="flex items-baseline justify-between gap-3">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-white">
-          {titulo}
-        </h2>
-        <Link
-          href={verTodosHref}
-          className="text-xs font-medium text-[#F97316] hover:underline"
-        >
-          Ver todos
-        </Link>
-      </div>
+    <section className="rounded-lg border border-linha bg-superficie p-6">
+      <SectionHeader
+        titulo={titulo}
+        variante="modulo"
+        acao={{ rotulo: "Ver todos", href: verTodosHref }}
+      />
 
-      <ul className="mt-4 divide-y divide-zinc-800">
+      <ul className="mt-4 divide-y divide-linha">
         {itens.map((item) => (
           <li key={item.slug} className="py-3 first:pt-0 last:pb-0">
             <Link
               href={`${baseHref}/${item.slug}`}
-              className="text-sm font-medium leading-snug text-zinc-300 transition-colors hover:text-[#F97316]"
+              className="text-sm font-medium leading-snug text-texto-corpo transition-colors hover:text-marca-clara"
             >
               {item.title}
             </Link>

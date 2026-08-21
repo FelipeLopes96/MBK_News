@@ -16,10 +16,10 @@ export default async function AdminPage() {
     <main className="mx-auto w-full max-w-3xl px-6 py-10">
       <header className="mb-10 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white">
+          <h1 className="text-2xl font-extrabold tracking-tight text-texto">
             Nova notícia
           </h1>
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-texto-fraco">
             Publicar cria um commit no repositório. A Vercel republica o site em
             seguida.
           </p>
@@ -28,7 +28,7 @@ export default async function AdminPage() {
         <form action={sair}>
           <button
             type="submit"
-            className="whitespace-nowrap text-sm text-zinc-500 hover:text-zinc-300"
+            className="whitespace-nowrap text-sm text-texto-fraco hover:text-texto-corpo"
           >
             Sair
           </button>

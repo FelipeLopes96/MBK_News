@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import ListaDeNoticias from "@/app/components/ListaDeNoticias";
+import ListaDeNoticias, {
+  DESCRICAO_DO_ACERVO,
+} from "@/app/components/ListaDeNoticias";
 import { getTotalDePaginasGeral } from "@/lib/noticias";
 import { metadataDaPagina } from "@/lib/seo";
 
@@ -22,8 +24,7 @@ export async function generateMetadata(
 
   return metadataDaPagina({
     titulo: `Todas as Notícias, página ${n}`,
-    descricao:
-      "O acervo completo de notícias do O Corner: MMA, boxe, jiu-jitsu e muay thai, da mais recente para a mais antiga.",
+    descricao: DESCRICAO_DO_ACERVO,
     caminho: `/noticias/pagina/${n}`,
   });
 }

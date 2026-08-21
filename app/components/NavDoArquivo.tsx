@@ -15,7 +15,7 @@ export default function NavDoArquivo() {
   const caminho = usePathname();
 
   return (
-    <nav aria-label="Seções do Arquivo" className="mt-5 border-b border-zinc-800">
+    <nav aria-label="Seções do Arquivo" className="mt-5 border-b border-linha">
       <ul className="flex flex-wrap gap-x-6">
         {secoesDoArquivo.map((secao) => {
           // Também marca a aba nas páginas internas da seção, ex.:
@@ -28,10 +28,10 @@ export default function NavDoArquivo() {
               <Link
                 href={secao.href}
                 aria-current={ativa ? "page" : undefined}
-                className={`-mb-px inline-block border-b-2 pb-3 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316] ${
+                className={`-mb-px inline-block border-b-2 pb-3 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca ${
                   ativa
-                    ? "border-[#F97316] text-white"
-                    : "border-transparent text-zinc-400 hover:text-white"
+                    ? "border-marca text-texto"
+                    : "border-transparent text-texto-suave hover:text-texto"
                 }`}
               >
                 {secao.rotulo}

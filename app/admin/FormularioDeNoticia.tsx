@@ -27,9 +27,9 @@ type Props = {
 const estadoInicial: EstadoDaPublicacao = { erros: [] };
 
 const campo =
-  "w-full rounded-md border border-zinc-700 bg-[#1A1A1A] px-3 py-2 text-white outline-none focus:border-[#F97316]";
-const rotulo = "text-sm font-semibold text-zinc-300";
-const dica = "text-xs text-zinc-500";
+  "w-full rounded-md border border-linha-forte bg-fundo px-3 py-2 text-texto outline-none focus:border-marca";
+const rotulo = "text-sm font-semibold text-texto-corpo";
+const dica = "text-xs text-texto-fraco";
 
 // Espelham `classeDaPosicao` de ImagemNoticia — o Tailwind só gera as classes
 // que encontra escritas por extenso no código.
@@ -140,19 +140,19 @@ export default function FormularioDeNoticia({
     return (
       <div className="rounded-lg border border-emerald-800 bg-emerald-950/40 p-6">
         <h2 className="text-lg font-bold text-emerald-300">Matéria publicada</h2>
-        <p className="mt-2 text-sm text-zinc-300">
+        <p className="mt-2 text-sm text-texto-corpo">
           O commit foi criado em{" "}
-          <code className="text-zinc-400">{estado.sucesso.caminho}</code>. A
+          <code className="text-texto-suave">{estado.sucesso.caminho}</code>. A
           Vercel republica o site sozinha — em cerca de um minuto a matéria
           estará em{" "}
-          <code className="text-zinc-400">/noticia/{estado.sucesso.slug}</code>.
+          <code className="text-texto-suave">/noticia/{estado.sucesso.slug}</code>.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a
             href={estado.sucesso.urlDoCommit}
             target="_blank"
             rel="noreferrer"
-            className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-300 hover:border-[#F97316]"
+            className="rounded-md border border-linha-forte px-4 py-2 text-sm text-texto-corpo hover:border-marca"
           >
             Ver o commit
           </a>
@@ -162,7 +162,7 @@ export default function FormularioDeNoticia({
               limpar();
               setSucessoDispensado(estado.sucesso!.slug);
             }}
-            className="rounded-md bg-[#F97316] px-4 py-2 text-sm font-semibold text-black hover:opacity-90"
+            className="rounded-md bg-marca px-4 py-2 text-sm font-semibold text-texto hover:opacity-90"
           >
             Escrever outra
           </button>
@@ -189,7 +189,7 @@ export default function FormularioDeNoticia({
         </div>
       )}
 
-      <div className="flex gap-1 self-start rounded-md border border-zinc-800 p-1">
+      <div className="flex gap-1 self-start rounded-md border border-linha p-1">
         {(["escrever", "previa"] as const).map((opcao) => (
           <button
             key={opcao}
@@ -198,8 +198,8 @@ export default function FormularioDeNoticia({
             aria-pressed={modo === opcao}
             className={`rounded px-4 py-1.5 text-sm font-semibold transition-colors ${
               modo === opcao
-                ? "bg-[#F97316] text-black"
-                : "text-zinc-400 hover:text-zinc-200"
+                ? "bg-marca text-texto"
+                : "text-texto-suave hover:text-texto"
             }`}
           >
             {opcao === "escrever" ? "Escrever" : "Prévia"}
@@ -214,7 +214,7 @@ export default function FormularioDeNoticia({
       */}
       <div className={modo === "escrever" ? "flex flex-col gap-10" : "hidden"}>
       <section className="flex flex-col gap-4">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-[#F97316]">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-marca-clara">
           A matéria
         </h2>
 
@@ -282,7 +282,7 @@ export default function FormularioDeNoticia({
               name="destaque"
               checked={destaque}
               onChange={(evento) => setDestaque(evento.target.checked)}
-              className="size-4 accent-[#F97316]"
+              className="size-4 accent-marca"
             />
             <span className={rotulo}>Manchete da home</span>
           </label>
@@ -319,7 +319,7 @@ export default function FormularioDeNoticia({
       </section>
 
       <section className="flex flex-col gap-4">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-[#F97316]">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-marca-clara">
           A capa
         </h2>
 
@@ -331,7 +331,7 @@ export default function FormularioDeNoticia({
             name="imagem"
             accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
             onChange={(evento) => escolherImagem(evento.target.files?.[0])}
-            className={`${campo} file:mr-3 file:rounded file:border-0 file:bg-zinc-800 file:px-3 file:py-1 file:text-zinc-300`}
+            className={`${campo} file:mr-3 file:rounded file:border-0 file:bg-superficie-alta file:px-3 file:py-1 file:text-texto-corpo`}
           />
           <span className={dica}>
             Até 6 MB. Sobe junto com a matéria, no mesmo commit.
@@ -339,7 +339,7 @@ export default function FormularioDeNoticia({
         </label>
 
         {previa && (
-          <div className="relative aspect-video w-full max-w-md overflow-hidden rounded-md border border-zinc-800">
+          <div className="relative aspect-video w-full max-w-md overflow-hidden rounded-md border border-linha">
             {/* Prévia local do arquivo escolhido: `next/image` não serve para
                 blob URL, e aqui só queremos conferir o enquadramento. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -423,7 +423,7 @@ export default function FormularioDeNoticia({
       </section>
 
       <section className="flex flex-col gap-4">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-[#F97316]">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-marca-clara">
           Fontes da apuração
         </h2>
 
@@ -456,7 +456,7 @@ export default function FormularioDeNoticia({
                     : atuais.filter((_, i) => i !== indice)
                 )
               }
-              className="rounded-md border border-zinc-700 px-3 py-2 text-sm text-zinc-400 hover:border-red-800 hover:text-red-300"
+              className="rounded-md border border-linha-forte px-3 py-2 text-sm text-texto-suave hover:border-red-800 hover:text-red-300"
             >
               Remover
             </button>
@@ -468,7 +468,7 @@ export default function FormularioDeNoticia({
           onClick={() =>
             setFontes((atuais) => [...atuais, { rotulo: "", url: "" }])
           }
-          className="self-start rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-300 hover:border-[#F97316]"
+          className="self-start rounded-md border border-linha-forte px-4 py-2 text-sm text-texto-corpo hover:border-marca"
         >
           Adicionar fonte
         </button>
@@ -501,11 +501,11 @@ export default function FormularioDeNoticia({
         />
       )}
 
-      <div className="sticky bottom-0 -mx-6 flex items-center gap-4 border-t border-zinc-800 bg-[#141414]/95 px-6 py-4 backdrop-blur">
+      <div className="sticky bottom-0 -mx-6 flex items-center gap-4 border-t border-linha bg-fundo/95 px-6 py-4 backdrop-blur">
         <button
           type="submit"
           disabled={enviando}
-          className="rounded-md bg-[#F97316] px-6 py-2.5 font-semibold text-black transition-opacity hover:opacity-90 disabled:opacity-50"
+          className="rounded-md bg-marca px-6 py-2.5 font-semibold text-texto transition-opacity hover:opacity-90 disabled:opacity-50"
         >
           {enviando ? "Publicando..." : "Publicar"}
         </button>
@@ -513,7 +513,7 @@ export default function FormularioDeNoticia({
           type="button"
           onClick={limpar}
           disabled={enviando}
-          className="text-sm text-zinc-500 hover:text-zinc-300 disabled:opacity-50"
+          className="text-sm text-texto-fraco hover:text-texto-corpo disabled:opacity-50"
         >
           Limpar
         </button>

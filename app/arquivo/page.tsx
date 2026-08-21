@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import ConteudoCard from "@/app/components/ConteudoCard";
 import ExplorarOArquivo from "@/app/components/ExplorarOArquivo";
 import Header from "@/app/components/Header";
+import SectionHeader from "@/app/components/SectionHeader";
 import { getTodos, rotuloDaCategoria } from "@/lib/arquivo";
 import { metadataDaPagina } from "@/lib/seo";
 
 export const metadata: Metadata = metadataDaPagina({
-  titulo: "Arquivo do Corner",
+  titulo: "Arquivo MBK News",
   descricao:
-    "Histórias, guias e explicações sobre esportes de combate. Conteúdo de longa duração do O Corner.",
+    "Histórias, guias e explicações sobre esportes de combate. O acervo de longa duração do MBK News.",
   caminho: "/arquivo",
 });
 
@@ -16,25 +17,27 @@ export default function ArquivoPage() {
   const artigos = getTodos();
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+    <div className="flex flex-1 flex-col bg-fundo">
       <Header />
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight text-white">
-          Arquivo do Corner
+        <h1 className="text-3xl font-bold tracking-tight text-texto">
+          Arquivo MBK News
         </h1>
-        <p className="mt-2 text-zinc-400">
+        <p className="mt-2 text-texto-suave">
           Histórias, guias e explicações sobre esportes de combate.
         </p>
 
         <ExplorarOArquivo />
 
-        <h2 className="mt-12 text-xs font-bold uppercase tracking-widest text-zinc-500">
-          Entendendo o Jogo
-        </h2>
+        <SectionHeader
+          titulo="Entendendo o Jogo"
+          variante="rotulo"
+          className="mt-12"
+        />
 
         {artigos.length === 0 ? (
-          <p className="mt-4 text-zinc-400">Nenhum artigo publicado ainda.</p>
+          <p className="mt-4 text-texto-suave">Nenhum artigo publicado ainda.</p>
         ) : (
           <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {artigos.map((artigo, indice) => (

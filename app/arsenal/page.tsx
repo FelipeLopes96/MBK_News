@@ -2,34 +2,36 @@ import type { Metadata } from "next";
 import ConteudoCard from "@/app/components/ConteudoCard";
 import Header from "@/app/components/Header";
 import { getTodos, rotuloDaCategoria } from "@/lib/arsenal";
+import { metadataDaPagina } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Arsenal | O Corner",
-  description:
-    "Rankings e análises de equipamentos de combate: luvas, caneleiras, shorts e proteção testados pelo O Corner.",
-};
+export const metadata: Metadata = metadataDaPagina({
+  titulo: "Arsenal",
+  descricao:
+    "Rankings e análises de equipamentos de combate: luvas, caneleiras, shorts e proteção testados pela redação do MBK News.",
+  caminho: "/arsenal",
+});
 
 export default function ArsenalPage() {
   const reviews = getTodos();
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+    <div className="flex flex-1 flex-col bg-fundo">
       <Header />
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight text-white">
+        <h1 className="text-3xl font-bold tracking-tight text-texto">
           Arsenal
         </h1>
-        <p className="mt-2 text-zinc-400">
+        <p className="mt-2 text-texto-suave">
           Rankings e análises de equipamento.
         </p>
 
         {/* Enquanto não houver nenhum .md em content/arsenal, a seção fica em
             espera. Basta publicar o primeiro arquivo para a grade voltar. */}
         {reviews.length === 0 ? (
-          <div className="mt-16 flex flex-col items-center justify-center rounded-lg border border-zinc-800 px-6 py-20 text-center">
-            <p className="text-2xl font-semibold text-white">Em breve</p>
-            <p className="mt-3 max-w-md text-zinc-400">
+          <div className="mt-16 flex flex-col items-center justify-center rounded-lg border border-linha px-6 py-20 text-center">
+            <p className="text-2xl font-semibold text-texto">Em breve</p>
+            <p className="mt-3 max-w-md text-texto-suave">
               Estamos preparando as primeiras análises de equipamento. Volte
               em breve para conferir.
             </p>

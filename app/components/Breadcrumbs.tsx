@@ -12,7 +12,7 @@ export default function Breadcrumbs({ trilha }: { trilha: Migalha[] }) {
 
   return (
     <nav aria-label="Trilha de navegação">
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-zinc-500">
+      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-texto-fraco">
         {trilha.map((migalha, indice) => {
           const ultima = indice === trilha.length - 1;
 
@@ -21,18 +21,18 @@ export default function Breadcrumbs({ trilha }: { trilha: Migalha[] }) {
               {migalha.href && !ultima ? (
                 <Link
                   href={migalha.href}
-                  className="transition-colors hover:text-[#F97316]"
+                  className="transition-colors hover:text-marca-clara"
                 >
                   {migalha.rotulo}
                 </Link>
               ) : (
-                <span aria-current={ultima ? "page" : undefined} className="text-zinc-400">
+                <span aria-current={ultima ? "page" : undefined} className="text-texto-suave">
                   {migalha.rotulo}
                 </span>
               )}
 
               {ultima ? null : (
-                <span aria-hidden className="text-zinc-700">
+                <span aria-hidden className="text-texto-fraco/50">
                   ›
                 </span>
               )}

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import BlocoDeFontes from "@/app/components/BlocoDeFontes";
 import CreditoDeImagem from "@/app/components/CreditoDeImagem";
+import Etiqueta from "@/app/components/Etiqueta";
 import Header from "@/app/components/Header";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
 import {
@@ -16,6 +17,7 @@ import {
   getTodasNoticias,
   rotuloDaCategoria,
 } from "@/lib/noticias";
+import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getTodasNoticias().map((noticia) => ({ slug: noticia.slug }));
@@ -28,13 +30,16 @@ export async function generateMetadata(
   const noticia = getNoticiaPorSlug(slug);
 
   if (!noticia) {
-    return { title: "Notícia não encontrada | O Corner" };
+    return { title: `Notícia não encontrada | ${NOME_DO_SITE}` };
   }
 
-  return {
-    title: `${noticia.title} | O Corner`,
-    description: noticia.resumo,
-  };
+  return metadataDaPagina({
+    titulo: noticia.title,
+    descricao: noticia.resumo,
+    caminho: `/noticia/${noticia.slug}`,
+    imagem: noticia.imagem?.url,
+    tipo: "article",
+  });
 }
 
 export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
@@ -46,7 +51,7 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
   }
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+    <div className="flex flex-1 flex-col bg-fundo">
       <Header />
 
       <article className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
@@ -62,21 +67,18 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
         <CreditoDeImagem imagem={noticia.imagem} />
 
         <div className="mt-8 flex items-center gap-3">
-          <Link
-            href={`/${noticia.categoria}`}
-            className="rounded bg-[#F97316] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#1A1A1A] hover:opacity-90"
-          >
+          <Etiqueta href={`/${noticia.categoria}`}>
             {rotuloDaCategoria(noticia.categoria)}
-          </Link>
+          </Etiqueta>
           <time
             dateTime={noticia.date}
-            className="text-xs font-semibold uppercase tracking-wide text-zinc-500"
+            className="text-xs font-semibold uppercase tracking-wide text-texto-fraco"
           >
             {formatarData(noticia.date)}
           </time>
         </div>
 
-        <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+        <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-texto sm:text-4xl">
           {noticia.title}
         </h1>
 
@@ -90,7 +92,7 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
 
         <Link
           href="/"
-          className="mt-12 inline-block text-sm font-medium text-[#F97316] hover:underline"
+          className="mt-12 inline-block text-sm font-medium text-marca-clara hover:underline"
         >
           ← Voltar para as notícias
         </Link>

@@ -7,7 +7,10 @@ import ConteudoCard from "@/app/components/ConteudoCard";
 import GradeDeEntidades from "@/app/components/GradeDeEntidades";
 import Header from "@/app/components/Header";
 import SecaoDaEntidade from "@/app/components/SecaoDaEntidade";
-import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
+import {
+  classeDoCorpoDaMateria,
+  componentesDeMarkdown,
+} from "@/app/components/markdownDeConteudo";
 import { getPorOrganizacao, rotuloDaCategoria } from "@/lib/arquivo";
 import {
   getLendasDaOrganizacao,
@@ -15,7 +18,7 @@ import {
   getOrganizacao,
   getOrganizacoes,
 } from "@/lib/entidades";
-import { metadataDaPagina } from "@/lib/seo";
+import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getOrganizacoes().map((organizacao) => ({ slug: organizacao.slug }));
@@ -28,7 +31,7 @@ export async function generateMetadata(
   const organizacao = getOrganizacao(slug);
 
   if (!organizacao) {
-    return { title: "Organização não encontrada | O Corner" };
+    return { title: `Organização não encontrada | ${NOME_DO_SITE}` };
   }
 
   return metadataDaPagina({
@@ -74,7 +77,7 @@ export default async function OrganizacaoPage(
   ].filter((linha) => linha.valor);
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+    <div className="flex flex-1 flex-col bg-fundo">
       <Header />
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
@@ -93,13 +96,13 @@ export default async function OrganizacaoPage(
         />
 
         {ficha.length > 0 ? (
-          <dl className="mt-8 grid grid-cols-1 gap-4 rounded-lg border border-zinc-800 bg-[#242424] p-5 sm:grid-cols-3">
+          <dl className="mt-8 grid grid-cols-1 gap-4 rounded-lg border border-linha bg-superficie p-5 sm:grid-cols-3">
             {ficha.map((linha) => (
               <div key={linha.rotulo}>
-                <dt className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+                <dt className="text-[10px] font-bold uppercase tracking-widest text-texto-fraco">
                   {linha.rotulo}
                 </dt>
-                <dd className="mt-1 text-sm font-medium text-white">
+                <dd className="mt-1 text-sm font-medium text-texto">
                   {linha.valor}
                 </dd>
               </div>
@@ -111,7 +114,7 @@ export default async function OrganizacaoPage(
           titulo={organizacao.tituloDaHistoria ?? "História"}
           vazia={!organizacao.conteudo}
         >
-          <div className="prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-lg prose-li:leading-8 prose-li:text-zinc-300">
+          <div className={classeDoCorpoDaMateria}>
             <Markdown components={componentesDeMarkdown}>
               {organizacao.conteudo}
             </Markdown>
@@ -119,7 +122,7 @@ export default async function OrganizacaoPage(
         </SecaoDaEntidade>
 
         <SecaoDaEntidade titulo="Legado" vazia={!organizacao.legado}>
-          <p className="text-lg leading-8 text-zinc-300">{organizacao.legado}</p>
+          <p className="text-lg leading-8 text-texto-corpo">{organizacao.legado}</p>
         </SecaoDaEntidade>
 
         <SecaoDaEntidade

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { PosicaoDaImagem } from "@/lib/conteudo";
+import { NOME_DO_SITE } from "@/lib/seo";
 
 type Props = {
   src?: string;
@@ -39,10 +40,10 @@ export default function ImagemNoticia({
       <div
         role="img"
         aria-label={alt}
-        className={`absolute inset-0 flex items-center justify-center bg-zinc-800 ${className}`}
+        className={`absolute inset-0 flex items-center justify-center bg-superficie-alta ${className}`}
       >
-        <span className="text-xs font-semibold uppercase tracking-widest text-zinc-600">
-          O Corner
+        <span className="text-xs font-semibold uppercase tracking-widest text-texto-fraco">
+          {NOME_DO_SITE}
         </span>
       </div>
     );

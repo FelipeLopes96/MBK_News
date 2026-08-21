@@ -1,3 +1,4 @@
+import SectionHeader from "@/app/components/SectionHeader";
 import {
   diaDoEvento,
   getProximosEventos,
@@ -16,18 +17,18 @@ const coresPorOrganizacao: Record<string, string> = {
 function badgeDaOrganizacao(organizacao: string): string {
   return (
     coresPorOrganizacao[organizacao] ??
-    "border-zinc-700 bg-zinc-800 text-zinc-300"
+    "border-linha-forte bg-superficie-alta text-texto-corpo"
   );
 }
 
 function ItemDeEvento({ evento }: { evento: Evento }) {
   return (
     <li className="flex gap-4 py-4 first:pt-0 last:pb-0">
-      <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-md bg-zinc-900 text-center">
-        <span className="text-base font-bold leading-none text-white">
+      <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-md bg-superficie-alta text-center">
+        <span className="text-base font-bold leading-none text-texto">
           {diaDoEvento(evento.data)}
         </span>
-        <span className="mt-0.5 text-[10px] font-semibold uppercase leading-none tracking-wide text-[#F97316]">
+        <span className="mt-0.5 text-[10px] font-semibold uppercase leading-none tracking-wide text-marca-clara">
           {mesDoEvento(evento.data)}
         </span>
       </div>
@@ -40,10 +41,10 @@ function ItemDeEvento({ evento }: { evento: Evento }) {
         >
           {evento.organizacao}
         </span>
-        <p className="mt-1.5 text-sm font-semibold leading-snug text-white">
+        <p className="mt-1.5 text-sm font-semibold leading-snug text-texto">
           {evento.nome}
         </p>
-        <p className="mt-0.5 truncate text-xs text-zinc-500">
+        <p className="mt-0.5 truncate text-xs text-texto-fraco">
           {evento.hora ? `${evento.hora} · ` : null}
           {evento.local}
         </p>
@@ -56,12 +57,10 @@ export default function EventosSidebar() {
   const eventos = getProximosEventos();
 
   return (
-    <section className="rounded-lg border border-zinc-800 bg-[#242424] p-6">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-white">
-        Próximos Eventos
-      </h2>
+    <section className="rounded-lg border border-linha bg-superficie p-6">
+      <SectionHeader titulo="Próximos Eventos" variante="modulo" />
 
-      <ul className="mt-4 divide-y divide-zinc-800">
+      <ul className="mt-4 divide-y divide-linha">
         {eventos.map((evento) => (
           <ItemDeEvento key={evento.id} evento={evento} />
         ))}

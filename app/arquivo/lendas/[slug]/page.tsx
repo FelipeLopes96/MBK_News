@@ -8,9 +8,12 @@ import FichaDeEntidade from "@/app/components/FichaDeEntidade";
 import Header from "@/app/components/Header";
 import NotaDoEditor from "@/app/components/NotaDoEditor";
 import SecaoDaEntidade from "@/app/components/SecaoDaEntidade";
-import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
+import {
+  classeDoCorpoDaMateria,
+  componentesDeMarkdown,
+} from "@/app/components/markdownDeConteudo";
 import { getLenda, getLendas, getOrganizacao } from "@/lib/entidades";
-import { metadataDaPagina } from "@/lib/seo";
+import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getLendas().map((lenda) => ({ slug: lenda.slug }));
@@ -23,7 +26,7 @@ export async function generateMetadata(
   const lenda = getLenda(slug);
 
   if (!lenda) {
-    return { title: "Lenda não encontrada | O Corner" };
+    return { title: `Lenda não encontrada | ${NOME_DO_SITE}` };
   }
 
   return metadataDaPagina({
@@ -63,7 +66,7 @@ export default async function LendaPage(
   ];
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+    <div className="flex flex-1 flex-col bg-fundo">
       <Header />
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
@@ -82,7 +85,7 @@ export default async function LendaPage(
 
         {organizacoes.length > 0 ? (
           <div className="mt-6">
-            <h2 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+            <h2 className="text-[10px] font-bold uppercase tracking-widest text-texto-fraco">
               {organizacoes.length > 1 ? "Organizações" : "Organização"}
             </h2>
             <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-sm">
@@ -90,7 +93,7 @@ export default async function LendaPage(
                 <Link
                   key={organizacao.slug}
                   href={`/arquivo/organizacoes/${organizacao.slug}`}
-                  className="font-medium text-[#F97316] hover:underline"
+                  className="font-medium text-marca-clara hover:underline"
                 >
                   {organizacao.nomeCompleto ?? organizacao.nome}
                 </Link>
@@ -106,20 +109,20 @@ export default async function LendaPage(
             {lenda.titulos.map((titulo) => (
               <li
                 key={titulo.titulo}
-                className="flex gap-2 text-base leading-7 text-zinc-300"
+                className="flex gap-2 text-base leading-7 text-texto-corpo"
               >
-                <span aria-hidden className="text-[#F97316]">
+                <span aria-hidden className="text-marca-clara">
                   ▪
                 </span>
                 <span>
                   {titulo.titulo}
                   {titulo.local ? (
-                    <span className="text-zinc-400"> · {titulo.local}</span>
+                    <span className="text-texto-suave"> · {titulo.local}</span>
                   ) : null}
                   {/* A atribuição fica sob o título, e não ao lado, para o
                       leitor ver de imediato de onde vem a informação. */}
                   {titulo.qualificacao ? (
-                    <span className="mt-0.5 block text-xs leading-5 text-zinc-500">
+                    <span className="mt-0.5 block text-xs leading-5 text-texto-fraco">
                       {titulo.qualificacao}
                     </span>
                   ) : null}
@@ -136,7 +139,7 @@ export default async function LendaPage(
           variante={lenda.tituloDaHistoria ? "titulo" : "rotulo"}
           vazia={!lenda.conteudo}
         >
-          <div className="prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-lg prose-li:leading-8 prose-li:text-zinc-300">
+          <div className={classeDoCorpoDaMateria}>
             <Markdown components={componentesDeMarkdown}>
               {lenda.conteudo}
             </Markdown>
@@ -147,7 +150,7 @@ export default async function LendaPage(
           titulo="Grandes lutas"
           vazia={lenda.grandesLutas.length === 0}
         >
-          <ul className="divide-y divide-zinc-800 rounded-lg border border-zinc-800 bg-[#242424]">
+          <ul className="divide-y divide-linha rounded-lg border border-linha bg-superficie">
             {lenda.grandesLutas.map((luta) => {
               const contexto = [luta.evento, luta.ano]
                 .filter(Boolean)
@@ -155,14 +158,14 @@ export default async function LendaPage(
 
               return (
                 <li key={`${luta.titulo}-${luta.ano ?? ""}`} className="p-5">
-                  <p className="text-base font-semibold leading-snug text-white">
+                  <p className="text-base font-semibold leading-snug text-texto">
                     {luta.titulo}
                   </p>
                   {contexto ? (
-                    <p className="mt-1 text-xs text-zinc-500">{contexto}</p>
+                    <p className="mt-1 text-xs text-texto-fraco">{contexto}</p>
                   ) : null}
                   {luta.resultado ? (
-                    <p className="mt-2 text-sm leading-6 text-zinc-400">
+                    <p className="mt-2 text-sm leading-6 text-texto-suave">
                       {luta.resultado}
                     </p>
                   ) : null}
@@ -173,7 +176,7 @@ export default async function LendaPage(
         </SecaoDaEntidade>
 
         <SecaoDaEntidade titulo="Legado" vazia={!lenda.legado}>
-          <p className="text-lg leading-8 text-zinc-300">{lenda.legado}</p>
+          <p className="text-lg leading-8 text-texto-corpo">{lenda.legado}</p>
         </SecaoDaEntidade>
 
         <BlocoDeFontes fontes={lenda.fontes} />

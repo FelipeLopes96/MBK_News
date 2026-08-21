@@ -6,10 +6,10 @@ import type { Metadata } from "next";
  * dentro de cada Server Action — isto aqui é só higiene de SEO.
  */
 export const metadata: Metadata = {
-  title: "Painel editorial | O Corner",
+  title: "Painel editorial | MBK News",
   robots: { index: false, follow: false, nocache: true },
 };
 
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {
-  return <div className="flex-1 bg-[#141414]">{children}</div>;
+  return <div className="flex-1 bg-fundo">{children}</div>;
 }

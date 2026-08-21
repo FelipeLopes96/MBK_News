@@ -1,9 +1,13 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import Markdown from "react-markdown";
+import Etiqueta from "@/app/components/Etiqueta";
 import Header from "@/app/components/Header";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
-import { componentesDeMarkdown } from "@/app/components/markdownDeConteudo";
+import {
+  classeDoCorpoDaMateria,
+  componentesDeMarkdown,
+} from "@/app/components/markdownDeConteudo";
 import { formatarData, type ItemDeConteudo } from "@/lib/conteudo";
 
 /** Layout de leitura compartilhado pelas seções Arquivo e Arsenal. */
@@ -22,7 +26,7 @@ export default function LeituraDeArtigo({
   aviso?: ReactNode;
 }) {
   return (
-    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+    <div className="flex flex-1 flex-col bg-fundo">
       <Header />
 
       <article className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
@@ -36,30 +40,28 @@ export default function LeituraDeArtigo({
         </div>
 
         <div className="mt-8 flex items-center gap-3">
-          <span className="rounded bg-[#F97316] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#1A1A1A]">
-            {rotuloCategoria}
-          </span>
+          <Etiqueta>{rotuloCategoria}</Etiqueta>
           <time
             dateTime={item.date}
-            className="text-xs font-semibold uppercase tracking-wide text-zinc-500"
+            className="text-xs font-semibold uppercase tracking-wide text-texto-fraco"
           >
             {formatarData(item.date)}
           </time>
         </div>
 
-        <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+        <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-texto sm:text-4xl">
           {item.title}
         </h1>
 
         {aviso}
 
-        <div className="prose prose-invert mt-8 max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-lg prose-li:leading-8 prose-li:text-zinc-300">
+        <div className={`mt-8 ${classeDoCorpoDaMateria}`}>
           <Markdown components={componentesDeMarkdown}>{item.conteudo}</Markdown>
         </div>
 
         <Link
           href={voltarHref}
-          className="mt-12 inline-block text-sm font-medium text-[#F97316] hover:underline"
+          className="mt-12 inline-block text-sm font-medium text-marca-clara hover:underline"
         >
           ← {voltarRotulo}
         </Link>

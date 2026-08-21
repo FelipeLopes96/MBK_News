@@ -18,11 +18,11 @@ export default function NotaDoEditor({
   }
 
   return (
-    <aside className="mt-12 rounded-r-lg border-l-2 border-zinc-700 bg-[#202020] px-5 py-4">
-      <h2 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+    <aside className="mt-12 rounded-r-lg border-l-2 border-linha-forte bg-superficie-alta px-5 py-4">
+      <h2 className="text-[10px] font-bold uppercase tracking-widest text-texto-fraco">
         {titulo}
       </h2>
-      <p className="mt-2 text-sm leading-6 text-zinc-400">{nota}</p>
+      <p className="mt-2 text-sm leading-6 text-texto-suave">{nota}</p>
     </aside>
   );
 }

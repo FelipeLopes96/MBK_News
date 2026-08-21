@@ -2,13 +2,21 @@ import type { Metadata } from "next";
 
 /**
  * Domínio público do site, usado para canonical e Open Graph.
- * Defina NEXT_PUBLIC_SITE_URL no ambiente de produção — sem isso as URLs
- * absolutas saem apontando para localhost.
+ *
+ * O default é o domínio de produção: se a variável faltar na Vercel, as URLs
+ * absolutas saem certas em vez de apontar para localhost. Defina
+ * NEXT_PUBLIC_SITE_URL apenas para apontar para outro ambiente.
  */
 export const urlDoSite =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://mbknews.vercel.app";
 
-export const NOME_DO_SITE = "O Corner";
+export const NOME_DO_SITE = "MBK News";
+
+/** Assinatura da marca, usada no título padrão e no cabeçalho. */
+export const TAGLINE = "Jornalismo de esportes de combate";
+
+/** Assinatura padrão das matérias sem autor declarado no frontmatter. */
+export const REDACAO = "Redação MBK News";
 
 /**
  * Monta o metadata de uma página seguindo o padrão do site: título com sufixo,

@@ -16,7 +16,7 @@ aliases:
   - "one"
   - "one-fighting-championship"
 imagem:
-  url: "/noticias/ONE1.png"
+  url: "/noticias/ONE1.jpg"
   credito: ""
   fonte: ""
   licenca: ""
@@ -71,7 +71,7 @@ O crescimento do ONE consolidou uma proposta diferente: reunir diferentes esport
 
 MMA, Muay Thai, kickboxing e grappling passaram a dividir espaço no calendário da organização.
 
-![Montagem com dez atletas do ONE Championship identificados por modalidade, entre eles Rodtang Jitmuangnon, Demetrious Johnson, Angela Lee e Kazushi Sakuraba](/noticias/ONE2.png "Atletas de diferentes modalidades dividem o mesmo cartaz no ONE Championship.")
+![Montagem com dez atletas do ONE Championship identificados por modalidade, entre eles Rodtang Jitmuangnon, Demetrious Johnson, Angela Lee e Kazushi Sakuraba](/noticias/ONE2.jpg "Atletas de diferentes modalidades dividem o mesmo cartaz no ONE Championship.")
 
 Em vez de tentar simplesmente reproduzir o modelo do UFC na Ásia, o ONE construiu uma identidade própria baseada na diversidade das artes marciais.
 

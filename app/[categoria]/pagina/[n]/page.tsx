@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import ListaDeCategoria from "@/app/components/ListaDeCategoria";
 import { buscarCategoria, categorias, getTotalDePaginas } from "@/lib/noticias";
+import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
 
 /**
  * A página 1 é canônica em /categoria, então só pré-renderizamos daqui pra frente.
@@ -24,13 +25,14 @@ export async function generateMetadata(
   const categoria = buscarCategoria(slug);
 
   if (!categoria) {
-    return { title: "Categoria não encontrada | O Corner" };
+    return { title: `Categoria não encontrada | ${NOME_DO_SITE}` };
   }
 
-  return {
-    title: `${categoria.rotulo}, página ${n} | O Corner`,
-    description: `Últimas notícias, análises e bastidores de ${categoria.rotulo} no O Corner.`,
-  };
+  return metadataDaPagina({
+    titulo: `${categoria.rotulo}, página ${n}`,
+    descricao: `Últimas notícias, análises e bastidores de ${categoria.rotulo} no ${NOME_DO_SITE}.`,
+    caminho: `/${categoria.slug}/pagina/${n}`,
+  });
 }
 
 export default async function CategoriaPaginadaPage(

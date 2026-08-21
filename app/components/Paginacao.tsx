@@ -9,9 +9,9 @@ export function urlDaPagina(base: string, pagina: number): string {
 }
 
 const classeAtiva =
-  "rounded-md border border-zinc-800 bg-[#242424] px-4 py-2 text-sm font-medium text-white transition-colors hover:border-[#F97316] hover:text-[#F97316]";
+  "rounded-md border border-linha bg-superficie px-4 py-2 text-sm font-medium text-texto transition-colors hover:border-marca hover:text-marca-clara";
 const classeInativa =
-  "rounded-md border border-zinc-900 px-4 py-2 text-sm font-medium text-zinc-600";
+  "rounded-md border border-linha px-4 py-2 text-sm font-medium text-texto-fraco/70";
 
 export default function Paginacao({
   base,
@@ -38,7 +38,7 @@ export default function Paginacao({
         <span className={classeInativa}>← Anterior</span>
       )}
 
-      <span className="text-sm text-zinc-500">
+      <span className="text-sm text-texto-fraco">
         Página {pagina} de {total}
       </span>
 

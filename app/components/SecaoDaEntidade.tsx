@@ -32,8 +32,8 @@ export default function SecaoDaEntidade({
       <h2
         className={
           ehTitulo
-            ? "text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl"
-            : "text-xs font-bold uppercase tracking-widest text-zinc-500"
+            ? "text-2xl font-bold leading-tight tracking-tight text-texto sm:text-3xl"
+            : "text-xs font-bold uppercase tracking-widest text-texto-fraco"
         }
       >
         {titulo}

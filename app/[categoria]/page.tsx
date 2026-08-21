@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ListaDeCategoria from "@/app/components/ListaDeCategoria";
 import { buscarCategoria, categorias } from "@/lib/noticias";
+import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
 
 export function generateStaticParams() {
   return categorias.map((categoria) => ({ categoria: categoria.slug }));
@@ -14,13 +15,14 @@ export async function generateMetadata(
   const categoria = buscarCategoria(slug);
 
   if (!categoria) {
-    return { title: "Categoria não encontrada | O Corner" };
+    return { title: `Categoria não encontrada | ${NOME_DO_SITE}` };
   }
 
-  return {
-    title: `${categoria.rotulo} | O Corner`,
-    description: `Últimas notícias, análises e bastidores de ${categoria.rotulo} no O Corner.`,
-  };
+  return metadataDaPagina({
+    titulo: categoria.rotulo,
+    descricao: `Últimas notícias, análises e bastidores de ${categoria.rotulo} no ${NOME_DO_SITE}.`,
+    caminho: `/${categoria.slug}`,
+  });
 }
 
 export default async function CategoriaPage(props: PageProps<"/[categoria]">) {

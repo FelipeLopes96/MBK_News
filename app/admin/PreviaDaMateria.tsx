@@ -66,8 +66,8 @@ export default function PreviaDaMateria({
   capa,
 }: Props) {
   return (
-    <div className="rounded-lg border border-zinc-800 bg-[#1A1A1A] p-6 sm:p-8">
-      <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-600">
+    <div className="rounded-lg border border-linha bg-fundo p-6 sm:p-8">
+      <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-texto-fraco/70">
         Prévia — não é a página publicada
       </p>
 
@@ -86,23 +86,23 @@ export default function PreviaDaMateria({
           <CreditoDeImagem imagem={capa} />
         </>
       ) : (
-        <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-zinc-800">
-          <span className="text-xs font-semibold uppercase tracking-widest text-zinc-600">
+        <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-superficie-alta">
+          <span className="text-xs font-semibold uppercase tracking-widest text-texto-fraco/70">
             Sem capa
           </span>
         </div>
       )}
 
       <div className="mt-8 flex items-center gap-3">
-        <span className="rounded bg-[#F97316] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#1A1A1A]">
+        <span className="rounded bg-marca px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-texto">
           {categoria}
         </span>
-        <span className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+        <span className="text-xs font-semibold uppercase tracking-wide text-texto-fraco">
           {formatar(date)}
         </span>
       </div>
 
-      <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+      <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-texto sm:text-4xl">
         {title || "Sem título"}
       </h1>
 
@@ -111,7 +111,7 @@ export default function PreviaDaMateria({
           <Markdown components={componentesDeMarkdown}>{corpo}</Markdown>
         </div>
       ) : (
-        <p className="mt-8 text-sm italic text-zinc-600">
+        <p className="mt-8 text-sm italic text-texto-fraco/70">
           O corpo da matéria ainda está vazio.
         </p>
       )}

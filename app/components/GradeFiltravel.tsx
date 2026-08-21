@@ -50,7 +50,7 @@ export default function GradeFiltravel({
   return (
     <div className="mt-8">
       {vaiFiltrar ? (
-        <div className="border-b border-zinc-800 pb-5">
+        <div className="border-b border-linha pb-5">
           <div
             role="group"
             aria-label="Filtrar por organização"
@@ -65,10 +65,10 @@ export default function GradeFiltravel({
                   type="button"
                   onClick={() => setAtivo(pastilha.slug)}
                   aria-pressed={selecionada}
-                  className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316] ${
+                  className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca ${
                     selecionada
-                      ? "border-[#F97316] bg-[#F97316] text-[#1A1A1A]"
-                      : "border-zinc-800 bg-[#242424] text-zinc-300 hover:border-zinc-700 hover:text-white"
+                      ? "border-marca bg-marca text-texto"
+                      : "border-linha bg-superficie text-texto-corpo hover:border-linha-forte hover:text-texto"
                   }`}
                 >
                   {pastilha.rotulo}
@@ -79,7 +79,7 @@ export default function GradeFiltravel({
 
           {/* Quem usa leitor de tela ouve o resultado do filtro; quem não usa
               tem a mesma informação escrita. */}
-          <p aria-live="polite" className="mt-3 text-xs text-zinc-500">
+          <p aria-live="polite" className="mt-3 text-xs text-texto-fraco">
             {total} {nomeDoTotal}
           </p>
         </div>

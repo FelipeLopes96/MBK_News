@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import AvisoDeAfiliados from "@/app/components/AvisoDeAfiliados";
 import LeituraDeArtigo from "@/app/components/LeituraDeArtigo";
 import { getPorSlug, getTodos, rotuloDaCategoria } from "@/lib/arsenal";
+import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getTodos().map((review) => ({ slug: review.slug }));
@@ -15,13 +16,16 @@ export async function generateMetadata(
   const review = getPorSlug(slug);
 
   if (!review) {
-    return { title: "Análise não encontrada | O Corner" };
+    return { title: `Análise não encontrada | ${NOME_DO_SITE}` };
   }
 
-  return {
-    title: `${review.title} | O Corner`,
-    description: review.resumo,
-  };
+  return metadataDaPagina({
+    titulo: review.title,
+    descricao: review.resumo,
+    caminho: `/arsenal/${review.slug}`,
+    imagem: review.imagem,
+    tipo: "article",
+  });
 }
 
 export default async function ReviewPage(props: PageProps<"/arsenal/[slug]">) {

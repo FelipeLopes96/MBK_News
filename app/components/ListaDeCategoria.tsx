@@ -18,14 +18,14 @@ export default function ListaDeCategoria({
   const noticias = getNoticiasDaPagina(categoria.slug, pagina);
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+    <div className="flex flex-1 flex-col bg-fundo">
       <Header />
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight text-white">
+        <h1 className="text-3xl font-bold tracking-tight text-texto">
           {categoria.rotulo}
         </h1>
-        <p className="mt-2 text-zinc-400">
+        <p className="mt-2 text-texto-suave">
           Tudo o que rolou no mundo do {categoria.rotulo}.
         </p>
 

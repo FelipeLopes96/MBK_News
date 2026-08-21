@@ -1,6 +1,6 @@
 export default function AvisoDeAfiliados() {
   return (
-    <p className="mt-6 flex items-start gap-2 text-xs leading-5 text-zinc-500">
+    <p className="mt-6 flex items-start gap-2 text-xs leading-5 text-texto-fraco">
       <svg
         aria-hidden="true"
         viewBox="0 0 20 20"
@@ -14,7 +14,7 @@ export default function AvisoDeAfiliados() {
         />
       </svg>
       Este artigo contém links de afiliados. Comprando através deles, você apoia
-      O Corner sem custo adicional.
+      o MBK News sem custo adicional.
     </p>
   );
 }

@@ -11,13 +11,13 @@ export default function FormularioDeLogin() {
   return (
     <form action={acao} className="flex flex-col gap-4">
       <label className="flex flex-col gap-2">
-        <span className="text-sm font-semibold text-zinc-300">Senha</span>
+        <span className="text-sm font-semibold text-texto-corpo">Senha</span>
         <input
           type="password"
           name="senha"
           autoFocus
           autoComplete="current-password"
-          className="rounded-md border border-zinc-700 bg-[#1A1A1A] px-3 py-2 text-white outline-none focus:border-[#F97316]"
+          className="rounded-md border border-linha-forte bg-fundo px-3 py-2 text-texto outline-none focus:border-marca"
         />
       </label>
 
@@ -30,7 +30,7 @@ export default function FormularioDeLogin() {
       <button
         type="submit"
         disabled={enviando}
-        className="rounded-md bg-[#F97316] px-4 py-2 font-semibold text-black transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="rounded-md bg-marca px-4 py-2 font-semibold text-texto transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {enviando ? "Entrando..." : "Entrar"}
       </button>

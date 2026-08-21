@@ -19,7 +19,7 @@ export default function NewsGrid({
   mensagemVazia?: string;
 }) {
   if (noticias.length === 0) {
-    return <p className="mt-8 text-zinc-400">{mensagemVazia}</p>;
+    return <p className="mt-8 text-texto-suave">{mensagemVazia}</p>;
   }
 
   return (

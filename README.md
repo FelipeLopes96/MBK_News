@@ -1,20 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MBK News
 
-## Getting Started
+Portal independente de jornalismo especializado em esportes de combate — MMA,
+boxe, muay thai, jiu-jitsu, kickboxing e wrestling.
 
-First, run the development server:
+Next.js 16 (App Router) + Tailwind CSS 4, publicado na Vercel. Não há banco de
+dados: o conteúdo são arquivos Markdown versionados em `content/`, lidos no
+build.
+
+## Rodando
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000).
+
+> Não rode `npm run build` com o `next dev` no ar: o build sobrescreve o `.next`
+> que o servidor de desenvolvimento está usando e as páginas passam a responder
+> 500. Para validar um build, sirva-o em outra porta.
+
+## Como o conteúdo é organizado
+
+| Pasta | O que é |
+| --- | --- |
+| `content/noticias/` | Matérias. O nome do arquivo começa com a data (`AAAA-MM-DD-slug.md`). |
+| `content/arquivo/` | Conteúdo de longa duração: histórias, guias, explicações. |
+| `content/organizacoes/` | Hubs de organização — UFC, PRIDE, ONE, WGP, Bellator. |
+| `content/lendas/` | Atletas que definiram eras. |
+| `content/momentos/` | Momentos históricos. |
+| `content/eventos.json` | Agenda de próximos eventos. |
+| `public/noticias/` | Capas das matérias. |
+| `public/marca/` | Logo e arte oficial do MBK News. |
+
+Os relacionamentos são resolvidos por slug de organização, nunca dentro de
+componente: publicar um `.md` novo já o faz aparecer nas listagens e no hub da
+organização correspondente, sem tocar em código.
+
+## Design system
+
+Toda cor e toda fonte do site nascem do bloco `@theme` em `app/globals.css` —
+nenhum componente escreve hex literal. Trocar um valor de lá repinta o portal
+inteiro.
+
+| Token | Uso |
+| --- | --- |
+| `fundo`, `superficie`, `superficie-alta` | Superfícies, do fundo da página para cima. |
+| `linha`, `linha-forte` | Traços e divisórias. |
+| `texto`, `texto-corpo`, `texto-suave`, `texto-fraco` | Hierarquia de texto. |
+| `marca`, `marca-clara`, `marca-escura` | Azul MBK. Texto e link usam a variante clara, que passa AA sobre o fundo escuro. |
+| `urgente` | Reservado a AO VIVO, BREAKING e urgência. |
 
 ## Painel editorial (`/admin`)
 
@@ -34,27 +69,9 @@ produção (modelo em `.env.example`):
 | `ADMIN_SENHA` | Senha única de acesso, compartilhada pela redação. |
 | `ADMIN_SESSION_SECRET` | Assina o cookie de sessão. Gere com `openssl rand -base64 32`. |
 | `GITHUB_TOKEN` | Fine-grained token com escrita em *Contents*, restrito a este repositório. |
-| `GITHUB_REPO` | Opcional. Padrão `FelipeLopes96/O_Corner`. |
+| `GITHUB_REPO` | Opcional. Padrão `FelipeLopes96/MBK_News`. |
 | `GITHUB_BRANCH` | Opcional. Padrão `main`. |
+| `NEXT_PUBLIC_SITE_URL` | Opcional. Padrão `https://mbknews.vercel.app`. |
 
 Rodando localmente, o painel também commita no GitHub — para ver a matéria no
 `next dev` é preciso dar `git pull` depois.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

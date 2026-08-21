@@ -14,13 +14,16 @@ import CreditoDeImagem from "@/app/components/CreditoDeImagem";
  * fica na figcaption e a URL vira a linha de crédito, igual à foto de capa.
  */
 /**
- * Tipografia do corpo da matéria. Exportada porque a prévia do painel precisa
- * renderizar com exatamente as mesmas classes — se as duas divergirem, a prévia
- * deixa de valer como prévia. O espaçamento externo fica no chamador: é posição
- * na página, não tipografia.
+ * Tipografia do texto longo — matéria, artigo do Arquivo, história de entidade.
+ *
+ * É uma constante única de propósito: antes esta lista de classes estava
+ * copiada literalmente em cinco lugares e já havia divergido entre eles. A
+ * prévia do painel também renderiza por aqui — se divergir, deixa de valer como
+ * prévia. O espaçamento externo fica no chamador: é posição na página, não
+ * tipografia.
  */
 export const classeDoCorpoDaMateria =
-  "prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-lg prose-p:leading-8 prose-p:text-zinc-300 prose-a:text-[#F97316] prose-blockquote:border-l-[#F97316] prose-blockquote:text-zinc-400 prose-strong:text-white prose-li:text-zinc-300";
+  "prose prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-texto prose-p:text-lg prose-p:leading-8 prose-p:text-texto-corpo prose-a:text-marca-clara prose-a:decoration-marca/50 prose-blockquote:border-l-marca prose-blockquote:text-texto-suave prose-strong:text-texto prose-li:text-lg prose-li:leading-8 prose-li:text-texto-corpo";
 
 export const componentesDeMarkdown: Components = {
   // Uma imagem sozinha na linha é um parágrafo com um único filho no Markdown.
@@ -58,7 +61,7 @@ export const componentesDeMarkdown: Components = {
           className="h-auto w-full rounded-lg"
         />
         {legenda ? (
-          <figcaption className="mt-3 text-center text-sm leading-6 text-zinc-500">
+          <figcaption className="mt-3 text-center text-sm leading-6 text-texto-fraco">
             {legenda}
           </figcaption>
         ) : null}

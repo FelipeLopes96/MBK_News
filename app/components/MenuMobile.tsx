@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -57,7 +58,7 @@ export default function MenuMobile({ links }: { links: LinkDoMenu[] }) {
         onClick={() => setAberto(true)}
         aria-label="Abrir menu"
         aria-expanded={aberto}
-        className="-mr-2 shrink-0 p-2 text-zinc-300 transition-colors hover:text-[#F97316] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316] lg:hidden"
+        className="-mr-2 shrink-0 p-2 text-texto-corpo transition-colors hover:text-marca-clara focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca lg:hidden"
       >
         <svg
           aria-hidden="true"
@@ -77,19 +78,24 @@ export default function MenuMobile({ links }: { links: LinkDoMenu[] }) {
           role="dialog"
           aria-modal="true"
           aria-label="Menu de navegação"
-          className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-[#1A1A1A] lg:hidden"
+          className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-fundo lg:hidden"
         >
           {/* Mesma altura da barra do cabeçalho, para o menu abrir "no lugar". */}
           <div className="flex shrink-0 items-center justify-between gap-6 px-6 py-4">
-            <span className="text-2xl font-extrabold tracking-tight text-[#F97316]">
-              O Corner
-            </span>
+            {/* Mesmo logo da barra, para o menu não parecer outra página. */}
+            <Image
+              src="/marca/mbk-news.png"
+              alt="MBK News"
+              width={620}
+              height={218}
+              className="h-9 w-auto"
+            />
 
             <button
               type="button"
               onClick={() => setAberto(false)}
               aria-label="Fechar menu"
-              className="-mr-2 p-2 text-zinc-300 transition-colors hover:text-[#F97316] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316]"
+              className="-mr-2 p-2 text-texto-corpo transition-colors hover:text-marca-clara focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
             >
               <svg
                 aria-hidden="true"
@@ -111,7 +117,7 @@ export default function MenuMobile({ links }: { links: LinkDoMenu[] }) {
               const id = idDoGrupo(link.href);
 
               return (
-                <div key={link.href} className="border-b border-zinc-800">
+                <div key={link.href} className="border-b border-linha">
                   {/* O rótulo continua sendo link para a própria seção; quem
                       expande é o botão ao lado. Um elemento só, fazendo as duas
                       coisas, deixaria de ser navegável por teclado e leitor. */}
@@ -119,7 +125,7 @@ export default function MenuMobile({ links }: { links: LinkDoMenu[] }) {
                     <Link
                       href={link.href}
                       onClick={() => setAberto(false)}
-                      className="flex-1 py-5 text-xl font-semibold text-white transition-colors hover:text-[#F97316]"
+                      className="flex-1 py-5 text-xl font-semibold text-texto transition-colors hover:text-marca-clara"
                     >
                       {link.rotulo}
                     </Link>
@@ -131,7 +137,7 @@ export default function MenuMobile({ links }: { links: LinkDoMenu[] }) {
                         aria-expanded={expandido}
                         aria-controls={id}
                         aria-label={`${expandido ? "Recolher" : "Expandir"} ${link.rotulo}`}
-                        className="shrink-0 p-3 text-zinc-400 transition-colors hover:text-[#F97316] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316]"
+                        className="shrink-0 p-3 text-texto-suave transition-colors hover:text-marca-clara focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
                       >
                         <svg
                           aria-hidden="true"
@@ -151,14 +157,14 @@ export default function MenuMobile({ links }: { links: LinkDoMenu[] }) {
                   {link.subitens?.length && expandido ? (
                     <ul
                       id={id}
-                      className="mb-4 ml-1 flex flex-col border-l border-zinc-800 pl-5"
+                      className="mb-4 ml-1 flex flex-col border-l border-linha pl-5"
                     >
                       {link.subitens.map((subitem) => (
                         <li key={subitem.href}>
                           <Link
                             href={subitem.href}
                             onClick={() => setAberto(false)}
-                            className="block py-3 text-lg text-zinc-300 transition-colors hover:text-[#F97316]"
+                            className="block py-3 text-lg text-texto-corpo transition-colors hover:text-marca-clara"
                           >
                             {subitem.rotulo}
                           </Link>

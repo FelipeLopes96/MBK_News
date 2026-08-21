@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Etiqueta from "@/app/components/Etiqueta";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
 import type { PosicaoDaImagem } from "@/lib/conteudo";
 
@@ -29,7 +30,7 @@ export default function ConteudoCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col overflow-hidden rounded-lg border border-zinc-800 bg-[#242424] transition-colors hover:border-[#F97316] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316]"
+      className="group flex flex-col overflow-hidden rounded-lg border border-linha bg-superficie transition-colors hover:border-marca focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
     >
       <div className="relative aspect-video w-full">
         <ImagemNoticia
@@ -42,16 +43,14 @@ export default function ConteudoCard({
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <span className="text-xs font-semibold uppercase tracking-wide text-[#F97316]">
-          {rotulo}
-        </span>
+        <Etiqueta variante="texto">{rotulo}</Etiqueta>
 
-        <h3 className="text-lg font-semibold leading-snug text-white transition-colors group-hover:text-[#F97316]">
+        <h3 className="text-lg font-semibold leading-snug text-texto transition-colors group-hover:text-marca-clara">
           {titulo}
         </h3>
 
         {resumo ? (
-          <p className="text-sm leading-6 text-zinc-400">{resumo}</p>
+          <p className="text-sm leading-6 text-texto-suave">{resumo}</p>
         ) : null}
       </div>
     </Link>

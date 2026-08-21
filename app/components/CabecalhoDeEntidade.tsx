@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Breadcrumbs, { type Migalha } from "@/app/components/Breadcrumbs";
 import CreditoDeImagem from "@/app/components/CreditoDeImagem";
+import Etiqueta from "@/app/components/Etiqueta";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
 import type { ImagemComCredito } from "@/lib/conteudo";
 
@@ -51,26 +52,26 @@ export default function CabecalhoDeEntidade({
         </>
       ) : null}
 
-      <span className="mt-8 block text-xs font-semibold uppercase tracking-wide text-[#F97316]">
+      <Etiqueta variante="texto" className="mt-8">
         {rotulo}
-      </span>
+      </Etiqueta>
 
-      <h1 className="mt-2 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+      <h1 className="mt-2 text-3xl font-bold leading-tight tracking-tight text-texto sm:text-4xl">
         {titulo}
       </h1>
 
       {nomeSecundario && nomeSecundario !== titulo ? (
-        <p className="mt-1.5 text-sm font-medium text-zinc-500">
+        <p className="mt-1.5 text-sm font-medium text-texto-fraco">
           {nomeSecundario}
         </p>
       ) : null}
 
       {subtitulo ? (
-        <p className="mt-2 text-lg text-zinc-400">{subtitulo}</p>
+        <p className="mt-2 text-lg text-texto-suave">{subtitulo}</p>
       ) : null}
 
       {resumo ? (
-        <p className="mt-4 text-lg leading-8 text-zinc-300">{resumo}</p>
+        <p className="mt-4 text-lg leading-8 text-texto-corpo">{resumo}</p>
       ) : null}
 
       {metadados}

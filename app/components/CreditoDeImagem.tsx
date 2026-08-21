@@ -33,7 +33,7 @@ export default function CreditoDeImagem({
   }
 
   return (
-    <p className="mt-2 text-xs leading-5 text-zinc-500">
+    <p className="mt-2 text-xs leading-5 text-texto-fraco">
       Foto:{credito ? ` ${credito}` : null}
       {credito && fonte ? " /" : null}
       {fonte ? (
@@ -44,7 +44,7 @@ export default function CreditoDeImagem({
               href={fonte}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline decoration-zinc-700 hover:text-[#F97316]"
+              className="underline decoration-linha-forte hover:text-marca-clara"
             >
               {rotuloDoLink(fonte)}
             </a>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import LeituraDeArtigo from "@/app/components/LeituraDeArtigo";
 import { getPorSlug, getTodos, rotuloDaCategoria } from "@/lib/arquivo";
+import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getTodos().map((artigo) => ({ slug: artigo.slug }));
@@ -14,13 +15,16 @@ export async function generateMetadata(
   const artigo = getPorSlug(slug);
 
   if (!artigo) {
-    return { title: "Artigo não encontrado | O Corner" };
+    return { title: `Artigo não encontrado | ${NOME_DO_SITE}` };
   }
 
-  return {
-    title: `${artigo.title} | O Corner`,
-    description: artigo.resumo,
-  };
+  return metadataDaPagina({
+    titulo: artigo.title,
+    descricao: artigo.resumo,
+    caminho: `/arquivo/${artigo.slug}`,
+    imagem: artigo.imagem,
+    tipo: "article",
+  });
 }
 
 export default async function ArtigoPage(props: PageProps<"/arquivo/[slug]">) {

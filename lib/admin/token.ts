@@ -7,7 +7,7 @@ import crypto from "node:crypto";
  * nada além de `node:crypto`.
  */
 
-export const COOKIE_DA_SESSAO = "corner_admin";
+export const COOKIE_DA_SESSAO = "mbk_admin";
 
 /** Uma semana. Renovada a cada login, não a cada requisição. */
 const DURACAO_EM_MS = 7 * 24 * 60 * 60 * 1000;

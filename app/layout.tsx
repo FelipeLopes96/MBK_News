@@ -1,22 +1,27 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Barlow_Condensed, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Footer from "@/app/components/Footer";
-import { NOME_DO_SITE, urlDoSite } from "@/lib/seo";
+import { NOME_DO_SITE, TAGLINE, urlDoSite } from "@/lib/seo";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+/**
+ * Condensada das manchetes grandes. Não é fonte variável, então os pesos vêm
+ * declarados — só os dois que o site usa, para não carregar arquivo morto.
+ */
+const manchete = Barlow_Condensed({
+  variable: "--font-manchete",
   subsets: ["latin"],
+  weight: ["600", "700"],
 });
 
 const descricaoDoSite =
-  "Notícias, análises e bastidores de MMA, boxe, jiu-jitsu e muay thai. O Corner é a referência digital em esportes de combate.";
+  "Jornalismo independente de esportes de combate: MMA, UFC, ONE, PFL, Bellator, boxe, muay thai, jiu-jitsu, kickboxing e wrestling.";
 
 /**
  * Defaults herdados por todas as páginas: `metadataBase` resolve os canonical
@@ -25,13 +30,13 @@ const descricaoDoSite =
  */
 export const metadata: Metadata = {
   metadataBase: new URL(urlDoSite),
-  title: `${NOME_DO_SITE} | A referência digital em esportes de combate`,
+  title: `${NOME_DO_SITE} | ${TAGLINE}`,
   description: descricaoDoSite,
   openGraph: {
     siteName: NOME_DO_SITE,
     locale: "pt_BR",
     type: "website",
-    title: `${NOME_DO_SITE} | A referência digital em esportes de combate`,
+    title: `${NOME_DO_SITE} | ${TAGLINE}`,
     description: descricaoDoSite,
   },
   twitter: { card: "summary_large_image" },
@@ -41,9 +46,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${manchete.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#1A1A1A] text-white">
+      {/* Fundo e cor de texto vêm do `@layer base` do globals.css. */}
+      <body className="flex min-h-full flex-col">
         {children}
         <Footer />
         {/* Web Analytics da Vercel. Fica no layout raiz para valer em todas as

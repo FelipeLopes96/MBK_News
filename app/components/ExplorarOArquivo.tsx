@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Etiqueta from "@/app/components/Etiqueta";
+import SectionHeader from "@/app/components/SectionHeader";
 import { getLendas, getMomentos, getOrganizacoes } from "@/lib/entidades";
 
 /** Plural correto sem depender de biblioteca: "1 lenda" / "4 lendas". */
@@ -36,24 +38,22 @@ export default function ExplorarOArquivo() {
 
   return (
     <section className="mt-8">
-      <h2 className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-        Além do Octógono
-      </h2>
+      {/* "Além do Octógono" saiu: a metáfora é do MMA e o portal cobre também
+          boxe, muay thai, kickboxing e wrestling. */}
+      <SectionHeader titulo="A história do esporte" variante="rotulo" />
 
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {grupos.map((grupo) => (
           <Link
             key={grupo.href}
             href={grupo.href}
-            className="group flex flex-col rounded-lg border border-zinc-800 bg-[#242424] p-5 transition-colors hover:border-[#F97316] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316]"
+            className="group flex flex-col rounded-lg border border-linha bg-superficie p-5 transition-colors hover:border-marca focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
           >
-            <span className="text-xs font-semibold uppercase tracking-wide text-[#F97316]">
-              {grupo.total}
-            </span>
-            <span className="mt-2 text-lg font-semibold text-white transition-colors group-hover:text-[#F97316]">
+            <Etiqueta variante="texto">{grupo.total}</Etiqueta>
+            <span className="mt-2 text-lg font-semibold text-texto transition-colors group-hover:text-marca-clara">
               {grupo.titulo}
             </span>
-            <span className="mt-1 text-sm leading-6 text-zinc-400">
+            <span className="mt-1 text-sm leading-6 text-texto-suave">
               {grupo.descricao}
             </span>
           </Link>

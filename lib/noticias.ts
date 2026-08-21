@@ -5,23 +5,38 @@ import {
   normalizarData,
   normalizarFontes,
   normalizarImagem,
+  normalizarLista,
+  normalizarOrganizacoes,
+  textoOpcional,
   type Fonte,
   type ImagemComCredito,
 } from "@/lib/conteudo";
+import { REDACAO } from "@/lib/seo";
 
 /** Imagem de capa com os dados de atribuição exigidos na publicação. */
 export type ImagemDeNoticia = ImagemComCredito;
 
 export type Noticia = {
   title: string;
+  /** Linha de apoio sob o título, quando a matéria tem olho. */
+  subtitulo?: string;
   slug: string;
   /** Data em formato ISO (AAAA-MM-DD). */
   date: string;
   categoria: string;
   resumo: string;
+  /** Assinatura da matéria. Sem `autor` no frontmatter, assina a redação. */
+  autor: string;
   imagem?: ImagemDeNoticia;
   /** Veículos consultados na apuração, exibidos no fim da matéria. */
   fontes: Fonte[];
+  /** Temas livres da matéria — atletas, eventos, assuntos. */
+  tags: string[];
+  /**
+   * Organizações citadas (slugs de content/organizacoes). É o que liga a
+   * matéria ao hub da organização, do mesmo jeito que já vale no Arquivo.
+   */
+  organizacoes: string[];
   destaque: boolean;
   /** Corpo do arquivo .md, ainda em Markdown. */
   conteudo: string;
@@ -32,12 +47,20 @@ export type Categoria = {
   rotulo: string;
 };
 
-/** Fonte única de verdade das categorias — usada pelo Header, pelo Footer e pela rota /[categoria]. */
+/**
+ * Fonte única de verdade das categorias — alimenta o Header, o Footer, o painel
+ * e a rota /[categoria]. A ordem daqui é a ordem da navegação.
+ *
+ * São modalidades, não organizações: UFC, ONE, PFL e Bellator entram pelo campo
+ * `organizacoes` da matéria, que resolve para os hubs do Arquivo.
+ */
 export const categorias: Categoria[] = [
   { slug: "mma", rotulo: "MMA" },
   { slug: "boxe", rotulo: "Boxe" },
-  { slug: "jiu-jitsu", rotulo: "Jiu-Jitsu" },
   { slug: "muay-thai", rotulo: "Muay Thai" },
+  { slug: "jiu-jitsu", rotulo: "Jiu-Jitsu" },
+  { slug: "kickboxing", rotulo: "Kickboxing" },
+  { slug: "wrestling", rotulo: "Wrestling" },
 ];
 
 export const NOTICIAS_POR_PAGINA = 9;
@@ -55,12 +78,17 @@ function lerNoticias(): Noticia[] {
 
     return {
       title: String(data.title ?? ""),
+      subtitulo: textoOpcional(data.subtitulo ?? data.olho),
       slug: String(data.slug ?? arquivo.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/\.md$/, "")),
       date: normalizarData(data.date),
       categoria: String(data.categoria ?? ""),
       resumo: String(data.resumo ?? ""),
+      // Toda matéria sai assinada: sem `autor` no frontmatter, pela redação.
+      autor: textoOpcional(data.autor) ?? REDACAO,
       imagem: normalizarImagem(data.imagem),
       fontes: normalizarFontes(data.fontes),
+      tags: normalizarLista(data.tags),
+      organizacoes: normalizarOrganizacoes(data),
       destaque: data.destaque === true,
       conteudo: content.trim(),
     } satisfies Noticia;

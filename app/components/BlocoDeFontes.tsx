@@ -16,11 +16,11 @@ export default function BlocoDeFontes({
   }
 
   return (
-    <aside className="mt-12 border-t border-zinc-800 pt-6">
-      <h2 className="text-xs font-bold uppercase tracking-widest text-zinc-500">
+    <aside className="mt-12 border-t border-linha pt-6">
+      <h2 className="text-xs font-bold uppercase tracking-widest text-texto-fraco">
         {titulo}
       </h2>
-      <ul className="mt-3 flex flex-wrap gap-x-2 gap-y-1 text-sm text-zinc-400">
+      <ul className="mt-3 flex flex-wrap gap-x-2 gap-y-1 text-sm text-texto-suave">
         {fontes.map((fonte, indice) => (
           <li key={`${fonte.rotulo}-${indice}`}>
             {fonte.url ? (
@@ -28,7 +28,7 @@ export default function BlocoDeFontes({
                 href={fonte.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline decoration-zinc-700 transition-colors hover:text-[#F97316]"
+                className="underline decoration-linha-forte transition-colors hover:text-marca-clara"
               >
                 {fonte.rotulo}
               </a>
@@ -36,10 +36,10 @@ export default function BlocoDeFontes({
               fonte.rotulo
             )}
             {fonte.tipo ? (
-              <span className="text-zinc-600"> ({fonte.tipo})</span>
+              <span className="text-texto-fraco/70"> ({fonte.tipo})</span>
             ) : null}
             {indice < fontes.length - 1 ? (
-              <span aria-hidden className="ml-2 text-zinc-700">
+              <span aria-hidden className="ml-2 text-texto-fraco/50">
                 •
               </span>
             ) : null}

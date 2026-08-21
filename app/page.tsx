@@ -5,6 +5,7 @@ import HeroDestaque from "@/app/components/HeroDestaque";
 import ListaCompacta from "@/app/components/ListaCompacta";
 import { BASE_DE_NOTICIAS } from "@/app/components/ListaDeNoticias";
 import NoticiaCard from "@/app/components/NoticiaCard";
+import SectionHeader from "@/app/components/SectionHeader";
 import { getTodos as getArtigosDoArquivo } from "@/lib/arquivo";
 import { getTodos as getReviewsDoArsenal } from "@/lib/arsenal";
 import { getNoticiaDestaque, getTodasNoticias } from "@/lib/noticias";
@@ -32,7 +33,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1A1A1A]">
+    <div className="flex flex-1 flex-col bg-fundo">
       <Header />
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-6 lg:py-10">
@@ -51,9 +52,10 @@ export default function Home() {
               <HeroDestaque noticia={destaque} className="order-1 sm:col-span-2" />
             )}
 
-            <h2 className="order-2 mt-2 mb-2 border-b border-zinc-800 pb-3 text-xl font-bold tracking-tight text-white sm:col-span-2 lg:mt-6">
-              Últimas Notícias
-            </h2>
+            <SectionHeader
+              titulo="Últimas Notícias"
+              className="order-2 mt-2 mb-2 sm:col-span-2 lg:mt-6"
+            />
 
             {blocosDeNoticias.map((bloco) =>
               bloco.noticias.map((noticia) => (
@@ -66,7 +68,7 @@ export default function Home() {
             )}
 
             {ultimas.length === 0 && (
-              <p className="order-3 text-zinc-400 sm:col-span-2">
+              <p className="order-3 text-texto-suave sm:col-span-2">
                 Nenhuma notícia publicada ainda.
               </p>
             )}
@@ -79,7 +81,7 @@ export default function Home() {
               <div className="order-9 mt-2 flex justify-center sm:col-span-2">
                 <Link
                   href={BASE_DE_NOTICIAS}
-                  className="rounded-md border border-zinc-800 bg-[#242424] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+                  className="rounded-md border border-linha bg-superficie px-5 py-2.5 text-sm font-medium text-texto transition-colors hover:border-marca hover:text-marca-clara"
                 >
                   Ver todas as notícias →
                 </Link>
@@ -99,7 +101,7 @@ export default function Home() {
 
             <div className="order-6 sm:col-span-2">
               <ListaCompacta
-                titulo="Arquivo do Corner"
+                titulo="Arquivo MBK News"
                 itens={getArtigosDoArquivo().slice(0, 3)}
                 baseHref="/arquivo"
                 verTodosHref="/arquivo"

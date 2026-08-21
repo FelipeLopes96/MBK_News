@@ -30,7 +30,7 @@ function config() {
     );
   }
 
-  const repo = process.env.GITHUB_REPO ?? "FelipeLopes96/O_Corner";
+  const repo = process.env.GITHUB_REPO ?? "FelipeLopes96/MBK_News";
   const branch = process.env.GITHUB_BRANCH ?? "main";
 
   return { token, repo, branch };
