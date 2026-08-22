@@ -29,6 +29,10 @@ export function metadataDaPagina({
   caminho,
   imagem,
   tipo = "website",
+  publicadoEm,
+  autor,
+  secao,
+  tags,
 }: {
   titulo: string;
   descricao?: string;
@@ -37,22 +41,43 @@ export function metadataDaPagina({
   /** URL da imagem de destaque, quando existir. */
   imagem?: string;
   tipo?: "website" | "article";
+  /**
+   * Os quatro campos abaixo só valem para `tipo: "article"`. Data de publicação
+   * e autor não são enfeite num veículo de notícia: é o que permite a agregação
+   * de notícias saber quando a matéria saiu e quem assina.
+   */
+  publicadoEm?: string;
+  autor?: string;
+  /** Editoria — a modalidade, no caso deste portal. */
+  secao?: string;
+  tags?: string[];
 }): Metadata {
   const tituloCompleto = `${titulo} | ${NOME_DO_SITE}`;
+
+  const comum = {
+    title: tituloCompleto,
+    description: descricao,
+    url: caminho,
+    siteName: NOME_DO_SITE,
+    locale: "pt_BR",
+    ...(imagem ? { images: [{ url: imagem }] } : {}),
+  };
 
   return {
     title: tituloCompleto,
     description: descricao,
     alternates: { canonical: caminho },
-    openGraph: {
-      title: tituloCompleto,
-      description: descricao,
-      url: caminho,
-      type: tipo,
-      siteName: NOME_DO_SITE,
-      locale: "pt_BR",
-      ...(imagem ? { images: [{ url: imagem }] } : {}),
-    },
+    openGraph:
+      tipo === "article"
+        ? {
+            ...comum,
+            type: "article",
+            publishedTime: publicadoEm,
+            authors: autor ? [autor] : undefined,
+            section: secao,
+            tags,
+          }
+        : { ...comum, type: "website" },
     twitter: {
       card: "summary_large_image",
       title: tituloCompleto,

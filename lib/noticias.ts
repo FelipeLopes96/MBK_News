@@ -125,6 +125,41 @@ export function getNoticiaDestaque(): Noticia | undefined {
   return todas.find((noticia) => noticia.destaque) ?? todas[0];
 }
 
+/**
+ * Matérias para oferecer no fim de uma.
+ *
+ * A proximidade é medida pelo que as duas têm em comum: mesma modalidade pesa
+ * mais, e cada organização ou tema repetido soma. Empate se resolve pela data,
+ * da mais recente para a mais antiga.
+ *
+ * Matéria sem nada em comum ainda entra, com pontuação zero — num acervo deste
+ * tamanho, é melhor oferecer a mais recente do que fechar o bloco vazio.
+ */
+export function getNoticiasRelacionadas(
+  noticia: Noticia,
+  quantidade: number
+): Noticia[] {
+  const emComum = (candidata: Noticia): number => {
+    const mesmaModalidade = candidata.categoria === noticia.categoria ? 2 : 0;
+
+    const organizacoes = candidata.organizacoes.filter((organizacao) =>
+      noticia.organizacoes.includes(organizacao)
+    ).length;
+
+    const tags = candidata.tags.filter((tag) => noticia.tags.includes(tag))
+      .length;
+
+    return mesmaModalidade + organizacoes + tags;
+  };
+
+  return getTodasNoticias()
+    .filter((candidata) => candidata.slug !== noticia.slug)
+    .sort(
+      (a, b) => emComum(b) - emComum(a) || b.date.localeCompare(a.date)
+    )
+    .slice(0, quantidade);
+}
+
 function contarPaginas(noticias: Noticia[]): number {
   return Math.max(1, Math.ceil(noticias.length / NOTICIAS_POR_PAGINA));
 }

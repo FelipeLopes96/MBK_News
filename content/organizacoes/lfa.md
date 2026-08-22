@@ -10,6 +10,9 @@ pais: "Estados Unidos"
 sede: "Las Vegas, Nevada"
 artigo: "da"
 resumo: "Nascida em 2017 da fusão entre Legacy FC e RFA, a LFA se consolidou como a principal porta de entrada para o UFC — um circuito mensal em que lutadores disputam cinturão e contrato ao mesmo tempo."
+imagem:
+  url: "/noticias/LFA.jpg"
+  fonte: "Divulgação"
 tituloDaHistoria: "LFA: a promoção que existe para revelar"
 legado: "A LFA organizou uma etapa que antes era improvisada. Antes dela, chegar ao UFC dependia de juntar vitórias em eventos regionais espalhados e esperar ser visto; com o circuito consolidado, existe um caminho reconhecível — e um cinturão que funciona como carta de apresentação."
 # Outros slugs que devem cair nesta página: as duas promoções que a formaram.

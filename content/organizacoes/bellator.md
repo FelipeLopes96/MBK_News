@@ -11,6 +11,9 @@ sede: "Santa Monica, Califórnia"
 proprietario: "PFL (Professional Fighters League)"
 artigo: "do"
 resumo: "Criada em 2008 e estreando nos ringues em 2009, a Bellator construiu sua identidade no formato de torneios eliminatórios e se tornou a principal alternativa ao UFC, revelando campeões próprios antes de ser comprada pela PFL em 2023."
+imagem:
+  url: "/noticias/bellator.jpg"
+  fonte: "Divulgação"
 tituloDaHistoria: "Bellator: o torneio que virou alternativa ao UFC"
 legado: "A Bellator provou que era possível construir uma organização relevante de MMA fora do UFC. Formou campeões próprios, deu palco a veteranos que ainda tinham público e manteve por mais de uma década um circuito em que o caminho até o cinturão passava por um torneio."
 # Outros slugs que devem cair nesta página.

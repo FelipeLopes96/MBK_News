@@ -13,7 +13,15 @@ import { rotuloDaCategoria } from "@/lib/noticias";
  *
  * Sem lista curada em `content/mais-lidas.json`, o módulo não renderiza.
  */
-export default function MaisLidas() {
+export default function MaisLidas({
+  className = "",
+}: {
+  /**
+   * Espaçamento externo. Vem por prop, e não num `div` de embrulho: com
+   * wrapper, o módulo escondido deixaria a margem para trás.
+   */
+  className?: string;
+}) {
   const noticias = getMaisLidas();
 
   if (noticias.length === 0) {
@@ -21,7 +29,9 @@ export default function MaisLidas() {
   }
 
   return (
-    <section className="rounded-lg border border-linha bg-superficie p-6">
+    <section
+      className={`rounded-lg border border-linha bg-superficie p-6 ${className}`}
+    >
       <SectionHeader titulo="Mais lidas" variante="modulo" />
 
       <ol className="mt-4 divide-y divide-linha">
