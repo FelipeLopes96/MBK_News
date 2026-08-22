@@ -2,21 +2,20 @@
 nome: "LFA"
 slug: "lfa"
 nomeCompleto: "Legacy Fighting Alliance"
-tagline: "A antessala do UFC: onde a próxima geração aparece antes de todo mundo."
+tagline: "A vitrine onde a próxima geração do MMA começa a aparecer."
 modalidade: "MMA"
 fundacao: "2017"
 status: "Em atividade"
 pais: "Estados Unidos"
 sede: "Las Vegas, Nevada"
 artigo: "da"
-resumo: "Nascida em 2017 da fusão entre Legacy FC e RFA, a LFA se consolidou como a principal porta de entrada para o UFC — um circuito mensal em que lutadores disputam cinturão e contrato ao mesmo tempo."
+resumo: "Nascida em 2017 da fusão entre Legacy FC e RFA, a LFA se consolidou como uma das principais organizações de desenvolvimento do MMA, reunindo atletas em ascensão e oferecendo uma vitrine para quem busca chegar às maiores ligas do esporte."
 imagem:
   url: "/noticias/LFA.jpg"
   credito: "Edição MBK News"
   geradaPorIA: true
 tituloDaHistoria: "LFA: a promoção que existe para revelar"
-legado: "A LFA organizou uma etapa que antes era improvisada. Antes dela, chegar ao UFC dependia de juntar vitórias em eventos regionais espalhados e esperar ser visto; com o circuito consolidado, existe um caminho reconhecível — e um cinturão que funciona como carta de apresentação."
-# Outros slugs que devem cair nesta página: as duas promoções que a formaram.
+legado: "A LFA ajudou a consolidar um caminho mais estruturado entre o circuito regional e as grandes organizações de MMA. Com calendário frequente, cinturões e alcance internacional, tornou-se uma das principais vitrines para atletas em ascensão."
 aliases:
   - "legacy-fighting-alliance"
   - "legacy-fc"
@@ -27,48 +26,70 @@ fontes:
   - rotulo: "LFA — site oficial"
     url: "https://www.lfa.com/"
     tipo: "oficial"
+
+  - rotulo: "LFA — histórico e expansão da organização"
+    url: "https://www.lfa.com/lfa-announces-january-schedule-of-events-in-minnesota-and-brazil/"
+    tipo: "oficial"
+
   - rotulo: "Bloody Elbow — RFA and Legacy FC to merge, form new promotion in 2017"
     url: "https://bloodyelbow.com/2016/09/20/rfa-legacy-fc-to-merge-form-new-promotion-in-2017-mma-news/"
     tipo: "imprensa"
-  - rotulo: "Wikipedia — Legacy Fighting Alliance"
-    url: "https://en.wikipedia.org/wiki/Legacy_Fighting_Alliance"
-    tipo: "referência"
-  - rotulo: "Cageside Press — cobertura dos eventos de 2026"
-    url: "https://cagesidepress.com/2026/01/16/lfa-224-adams-vs-bilalov-full-results/"
-    tipo: "imprensa"
-notaDoEditor: "Esta página cobre a organização, não os atletas que passaram por ela. A LFA já enviou muita gente ao UFC, mas preferimos não publicar uma lista de nomes sem conferir caso a caso em que evento cada um lutou — quando essa apuração estiver feita, ela entra aqui."
+
+  - rotulo: "LFA — acordo com a VICE TV para a temporada de 2026"
+    url: "https://www.lfa.com/legacy-fighting-alliance-announces-vice-tv-as-exclusive-u-s-linear-television-home-for-2026-season-with-25-live-mixed-martial-arts-events/"
+    tipo: "oficial"
+
+  - rotulo: "LFA — eventos e transmissão internacional em 2026"
+    url: "https://www.lfa.com/lfa-239-official-live-results/"
+    tipo: "oficial"
+
+notaDoEditor: "Esta página cobre a organização, não os atletas que passaram por ela. A LFA já revelou centenas de lutadores que chegaram ao UFC e a outras grandes organizações. Uma relação histórica de atletas pode ser adicionada posteriormente após verificação individual das trajetórias."
 ---
 
 ## Duas rivais viraram uma
 
-Em setembro de 2016, Ed Soares anunciou que a RFA — a Resurrection Fighting Alliance, que ele presidia — se fundiria com a Legacy FC no começo do ano seguinte. As duas eram concorrentes diretas e disputavam o mesmo espaço: revelar lutadores antes do UFC.
+Em setembro de 2016, Ed Soares anunciou que a RFA — Resurrection Fighting Alliance, organização da qual era presidente — se fundiria com a Legacy FC no início do ano seguinte.
 
-A promoção que saiu da fusão se chamou Legacy Fighting Alliance, e o nome carrega as duas metades. Soares assumiu como CEO, com Sven Bean, executivo da RFA, como COO. Mick Maynard, então presidente da Legacy FC, não foi para a nova casa: tinha acabado de ser contratado pelo UFC como matchmaker.
+As duas disputavam um espaço parecido no MMA: revelar atletas antes que eles chegassem às maiores organizações do esporte.
 
-O primeiro evento aconteceu em 13 de janeiro de 2017. A solução para os cinturões foi direta: os campeões da RFA e os da Legacy FC se enfrentaram para definir quem seria o primeiro campeão de cada categoria da LFA.
+A promoção formada pela fusão recebeu o nome de Legacy Fighting Alliance. Ed Soares assumiu como CEO, enquanto Sven Bean passou a ocupar uma função executiva na nova organização. Mick Maynard, então presidente da Legacy FC, havia deixado a promoção para trabalhar no UFC.
 
-## O caminho mais curto até o UFC
+O primeiro evento da LFA aconteceu em 13 de janeiro de 2017. A nova organização também precisou lidar com os cinturões herdados das duas promoções, promovendo confrontos e processos de unificação ao longo de seus primeiros eventos.
 
-O que as duas promoções tinham em comum antes da fusão era a proximidade com o UFC. Somadas, já haviam mandado mais de cem lutadores para a maior organização do mundo — e é essa função que a LFA herdou e transformou em identidade.
+## Uma das principais vitrines do MMA
 
-A lógica de quem luta ali é diferente da de quem luta num evento regional qualquer. Na LFA, uma vitória convincente pode significar duas coisas na mesma noite: o cinturão e o telefone tocando. O modelo funciona porque a organização não finge ser um destino final. Ela é uma etapa, e assume isso.
+RFA e Legacy FC já tinham uma relação próxima com o mercado das grandes organizações antes da fusão. Juntas, haviam servido de plataforma para dezenas de atletas que depois chegaram ao UFC.
 
-Para o leitor que acompanha o esporte, é onde os nomes aparecem primeiro. Boa parte dos lutadores que estreiam no UFC já lutou sob esse teto — e quem viu antes reconhece o estilo do atleta antes da estreia.
+A LFA herdou essa função e passou a fazer dela parte central de sua identidade.
 
-## O calendário também fala português
+A organização não precisa competir diretamente com o UFC para cumprir seu papel. Seu foco está em colocar atletas em ascensão diante de um público maior, oferecer lutas por cinturão e criar oportunidades para quem ainda busca espaço no topo do esporte.
 
-A LFA mantém um circuito mensal, com eventos em praças americanas como Las Vegas, Los Angeles, Denver, Dallas e Phoenix. Mas a lista não para nos Estados Unidos: Rio de Janeiro e São Paulo estão entre as cidades que recebem cartelas da organização.
+Para quem acompanha MMA, isso transforma a LFA em uma vitrine antecipada. Muitos atletas passam pela organização antes de aparecerem em palcos maiores.
 
-Para o atleta brasileiro, isso encurta a distância. Aparecer para o mercado americano deixa de exigir necessariamente uma viagem.
+## Um circuito que também fala português
+
+A LFA mantém um calendário frequente de eventos nos Estados Unidos e realiza cards em diferentes mercados. Las Vegas, Los Angeles, Denver, Dallas e Houston estão entre as cidades que fizeram parte de sua trajetória.
+
+A organização também expandiu suas operações para o Brasil em 2021 e continua realizando eventos no país.
+
+Essa presença aproximou o circuito de atletas brasileiros que buscavam visibilidade internacional sem precisar iniciar sua trajetória diretamente no mercado norte-americano.
 
 ## Onde assistir mudou de mãos
 
-A transmissão da LFA passou por várias casas. Em 7 de janeiro de 2026, a organização encerrou a parceria com o UFC Fight Pass e anunciou acordo com a Vice TV, que passa a exibir 25 eventos no ano.
+A transmissão da LFA passou por diferentes plataformas ao longo dos anos. A organização iniciou uma parceria com o UFC Fight Pass em 2019, ampliando sua distribuição internacional.
 
-O pacote atual inclui simulcast em espanhol pela ESPN Deportes e transmissão pela ESPN na América Latina — o que, na prática, amplia o alcance da vitrine justamente onde ela recruta.
+Em 8 de janeiro de 2026, a LFA anunciou um novo acordo com a VICE TV para a temporada. A parceria prevê 25 eventos ao vivo na televisão americana.
+
+Os eventos também passaram a contar com distribuição internacional em mercados como a América Latina, com transmissões por ESPN Deportes e ESPN KnockOut.
+
+A mudança amplia a exposição dos atletas e reforça uma das principais funções da organização: colocar novos nomes diante de um público maior.
 
 ## O que a LFA representa
 
-Nem toda organização precisa querer ser a maior. A LFA ocupou um lugar que o esporte tinha em aberto: o degrau anterior ao topo, organizado, com calendário, cinturão e transmissão.
+Nem toda organização de MMA precisa disputar diretamente o posto de maior do mundo.
 
-É uma função menos glamorosa que a de um grande evento, e mais decisiva do que parece. Sem um degrau assim, a passagem do circuito regional para o UFC volta a depender de sorte e de quem estava assistindo.
+A LFA encontrou espaço em outra parte da cadeia: o desenvolvimento.
+
+Com calendário frequente, cinturões e distribuição internacional, a organização se tornou uma das principais vitrines para atletas que ainda estão construindo espaço no esporte.
+
+Para muitos, uma passagem pela LFA não representa o ponto final da carreira. Representa o momento em que um lutador deixa de ser apenas uma promessa regional e começa a ser observado pelo restante do mercado.

@@ -35,13 +35,19 @@ const estilos: Record<VarianteDeCard, Estilo> = {
     titulo: "text-xl leading-tight sm:text-2xl",
     resumo: "line-clamp-3 sm:text-base sm:leading-7",
   },
+  /**
+   * `media` só é grande de sm em diante, onde as duas chamadas ficam lado a
+   * lado. Empilhada no celular ela media 470px — quase o dobro do hero, de 258
+   * — e a página abria com dois pseudo-heros maiores que a manchete, invertendo
+   * a hierarquia. Abaixo de sm ela se comporta como o card do feed.
+   */
   media: {
-    caixa: "flex-col",
-    imagem: "relative aspect-video w-full",
-    sizes: "(min-width: 1024px) 33vw, 100vw",
-    conteudo: "p-5 sm:gap-3",
-    titulo: "text-xl leading-tight",
-    resumo: "line-clamp-3",
+    caixa: "sm:flex-col",
+    imagem: "relative w-1/3 shrink-0 sm:aspect-video sm:w-full",
+    sizes: "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 33vw",
+    conteudo: "p-4 sm:gap-3 sm:p-5",
+    titulo: "line-clamp-3 text-base sm:line-clamp-none sm:text-xl sm:leading-tight",
+    resumo: "hidden sm:line-clamp-3 sm:block",
   },
   padrao: {
     // Abaixo de sm o card é horizontal (imagem pequena à esquerda); de sm em
