@@ -30,12 +30,25 @@ Abra [http://localhost:3000](http://localhost:3000).
 | `content/lendas/` | Atletas que definiram eras. |
 | `content/momentos/` | Momentos históricos. |
 | `content/eventos.json` | Agenda de próximos eventos. |
+| `content/mais-lidas.json` | Ranking da home: lista de slugs, da 1ª para a 5ª posição. |
 | `public/noticias/` | Capas das matérias. |
 | `public/marca/` | Logo e arte oficial do MBK News. |
 
 Os relacionamentos são resolvidos por slug de organização, nunca dentro de
 componente: publicar um `.md` novo já o faz aparecer nas listagens e no hub da
 organização correspondente, sem tocar em código.
+
+### Mais lidas
+
+O ranking da home é **curado**, não medido: o site é estático e não há de onde
+ler audiência no build. Preencha `content/mais-lidas.json` com os slugs na
+ordem desejada e o módulo aparece na coluna lateral; com a lista vazia ele não
+é renderizado, em vez de estampar "mais lidas" sobre um critério que não é
+audiência.
+
+```json
+["slug-da-primeira", "slug-da-segunda", "slug-da-terceira"]
+```
 
 ## Design system
 
