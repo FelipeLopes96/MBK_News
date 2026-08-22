@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import CampoDeBusca from "@/app/components/CampoDeBusca";
 import type { ItemDeNavegacao } from "@/lib/navegacao";
 
@@ -75,7 +76,15 @@ export default function MenuMobile({ secoes }: { secoes: ItemDeNavegacao[] }) {
         </svg>
       </button>
 
-      {aberto && (
+      {/*
+        O menu é levado para o `body` por portal, e não renderizado aqui dentro.
+        O cabeçalho tem `backdrop-blur`, e `backdrop-filter` cria bloco de
+        contenção para descendentes `fixed`: dentro dele, o `inset-0` deixa de
+        valer para a viewport e passa a valer para a barra de ~56px. O menu
+        abria confinado a uma tira, o que na tela é indistinguível de não abrir.
+      */}
+      {aberto &&
+        createPortal(
         <div
           role="dialog"
           aria-modal="true"
@@ -199,8 +208,9 @@ export default function MenuMobile({ secoes }: { secoes: ItemDeNavegacao[] }) {
               );
             })}
           </nav>
-        </div>
-      )}
+        </div>,
+          document.body
+        )}
     </>
   );
 }

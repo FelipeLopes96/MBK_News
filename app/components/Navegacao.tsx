@@ -22,14 +22,19 @@ export default function Navegacao({ itens }: { itens: ItemDeNavegacao[] }) {
   const ativa = (href: string) =>
     caminho === href || caminho.startsWith(`${href}/`);
 
+  // `overflow-y-hidden` anda junto com `overflow-x-auto` por obrigação: pela
+  // especificação, um eixo em `auto` promove o outro de `visible` para `auto`.
+  // O filete do item ativo transbordava o bastante para o navegador desenhar
+  // uma barra de rolagem vertical — com setas, no Windows — numa linha que não
+  // tem o que rolar.
   return (
-    <ul className="mx-auto flex max-w-6xl gap-x-6 overflow-x-auto px-6">
+    <ul className="mx-auto flex max-w-6xl gap-x-6 overflow-x-auto overflow-y-hidden px-6">
       {itens.map((item) => (
         <li key={item.href} className="shrink-0">
           <Link
             href={item.href}
             aria-current={ativa(item.href) ? "page" : undefined}
-            className={`-mb-px inline-block border-b-2 py-2.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-marca ${
+            className={`inline-block border-b-2 py-2.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-marca ${
               ativa(item.href)
                 ? "border-marca text-texto"
                 : "border-transparent text-texto-suave hover:text-texto"
