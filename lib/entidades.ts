@@ -387,7 +387,25 @@ export type CardDeEntidade = {
   imagem?: ImagemComCredito;
   /** Slugs canônicos das organizações, que é o que o filtro compara. */
   organizacoes: string[];
+  /** Modalidades já separadas — ver `modalidadesDe`. */
+  modalidades: string[];
 };
+
+/**
+ * Modalidades de uma entidade, separadas.
+ *
+ * No conteúdo o campo é texto livre e vem composto: "Kickboxing / Muay Thai",
+ * "MMA / Jiu-Jitsu". Filtro por igualdade exata deixaria a lenda de fora dos
+ * dois filtros a que ela pertence, então a barra é o separador.
+ */
+export function modalidadesDe(entidade: Entidade): string[] {
+  const bruta = entidade.tipo === "momento" ? undefined : entidade.modalidade;
+
+  return (bruta ?? "")
+    .split("/")
+    .map((parte) => parte.trim())
+    .filter((parte) => parte.length > 0);
+}
 
 /** Slugs canônicos das organizações citadas por uma entidade. */
 function organizacoesCanonicas(entidade: Entidade): string[] {
@@ -412,7 +430,18 @@ export function paraCardDeEntidade(
     resumo: entidade.resumo,
     imagem: entidade.imagem,
     organizacoes: organizacoesCanonicas(entidade),
+    modalidades: modalidadesDe(entidade),
   };
+}
+
+/**
+ * Modalidades que aparecem entre as entidades recebidas, em ordem alfabética.
+ * Só entra modalidade com pelo menos uma entidade, então nenhum filtro leva a
+ * uma grade vazia.
+ */
+export function modalidadesPresentes(entidades: Entidade[]): string[] {
+  const presentes = new Set(entidades.flatMap(modalidadesDe));
+  return [...presentes].sort((a, b) => a.localeCompare(b, "pt-BR"));
 }
 
 /**

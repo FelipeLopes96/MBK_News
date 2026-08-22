@@ -12,8 +12,19 @@ import {
   classeDoCorpoDaMateria,
   componentesDeMarkdown,
 } from "@/app/components/markdownDeConteudo";
+import NewsGrid from "@/app/components/NewsGrid";
+import VideoCard from "@/app/components/VideoCard";
 import { getLenda, getLendas, getOrganizacao } from "@/lib/entidades";
+import {
+  getNoticiasDoAtleta,
+  rotuloDaCategoria as rotuloDaCategoriaDeNoticia,
+} from "@/lib/noticias";
 import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
+import { getVideosDoAtleta, paraCardDeVideo } from "@/lib/videos";
+
+/** Tetos dos blocos: a página é ficha histórica, não feed do atleta. */
+const NOTICIAS_NA_LENDA = 4;
+const VIDEOS_NA_LENDA = 4;
 
 export function generateStaticParams() {
   return getLendas().map((lenda) => ({ slug: lenda.slug }));
@@ -53,6 +64,15 @@ export default async function LendaPage(
   const organizacoes = lenda.organizacoes
     .map((referencia) => getOrganizacao(referencia))
     .filter((organizacao) => organizacao !== undefined);
+
+  const noticias = getNoticiasDoAtleta([lenda.nome, lenda.apelido]).slice(
+    0,
+    NOTICIAS_NA_LENDA
+  );
+  const videos = getVideosDoAtleta([lenda.nome, lenda.apelido]).slice(
+    0,
+    VIDEOS_NA_LENDA
+  );
 
   const ficha = [
     { rotulo: "Modalidade", valor: lenda.modalidade },
@@ -174,6 +194,29 @@ export default async function LendaPage(
 
       <SecaoDaEntidade titulo="Legado" vazia={!lenda.legado}>
         <p className="text-lg leading-8 text-texto-corpo">{lenda.legado}</p>
+      </SecaoDaEntidade>
+
+      {/*
+        Notícias e vídeos são encontrados pelas tags — o nome e o apelido do
+        atleta já são tag na cobertura. Sem lista dentro da lenda para manter em
+        dia, e sem risco de as duas pontas discordarem.
+      */}
+      <SecaoDaEntidade titulo="No noticiário" vazia={noticias.length === 0}>
+        <NewsGrid noticias={noticias} colunas={2} className="mt-0" />
+      </SecaoDaEntidade>
+
+      <SecaoDaEntidade titulo="Em vídeo" vazia={videos.length === 0}>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {videos.map((video) => (
+            <VideoCard
+              key={video.slug}
+              video={paraCardDeVideo(
+                video,
+                rotuloDaCategoriaDeNoticia(video.categoria)
+              )}
+            />
+          ))}
+        </div>
       </SecaoDaEntidade>
 
       <BlocoDeFontes fontes={lenda.fontes} />

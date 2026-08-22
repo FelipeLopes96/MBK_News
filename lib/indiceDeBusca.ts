@@ -106,7 +106,7 @@ export function getIndiceDeBusca(): ItemDoIndice[] {
       tipo: "video",
       resumo: video.descricao,
       data: video.publicadoEm,
-      extra: [video.canal ?? "", ...video.organizacoes],
+      extra: [video.canal ?? "", ...video.tags, ...video.organizacoes],
     })
   );
 

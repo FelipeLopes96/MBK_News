@@ -11,6 +11,8 @@ import {
   type Fonte,
   type ImagemComCredito,
 } from "@/lib/conteudo";
+import { normalizar as normalizarParaComparar } from "@/lib/busca";
+import { referenciaOrganizacao, type Organizacao } from "@/lib/entidades";
 import { REDACAO } from "@/lib/seo";
 
 /** Imagem de capa com os dados de atribuição exigidos na publicação. */
@@ -117,6 +119,41 @@ export function getNoticiaPorSlug(slug: string): Noticia | undefined {
 
 export function getNoticiasPorCategoria(categoria: string): Noticia[] {
   return getTodasNoticias().filter((noticia) => noticia.categoria === categoria);
+}
+
+/**
+ * Matérias marcadas com a organização no frontmatter — é o que alimenta o
+ * bloco de notícias no hub de cada organização. Resolve por slug canônico ou
+ * por alias, então `one` e `one-championship` são a mesma coisa.
+ */
+export function getNoticiasPorOrganizacao(
+  organizacao: Organizacao
+): Noticia[] {
+  return getTodasNoticias().filter((noticia) =>
+    referenciaOrganizacao(noticia.organizacoes, organizacao)
+  );
+}
+
+/**
+ * Matérias que citam um atleta, encontradas pelas tags.
+ *
+ * A ligação vem das tags e não de um campo novo: o nome do atleta já é tag nas
+ * matérias, e duplicar a relação num `noticias:` dentro da lenda criaria duas
+ * listas para manter. Compara sem acento e sem caixa — "Fedor Emelianenko" na
+ * tag acha a lenda `fedor-emelianenko`.
+ */
+export function getNoticiasDoAtleta(nomes: (string | undefined)[]): Noticia[] {
+  const procurados = nomes
+    .filter((nome): nome is string => Boolean(nome))
+    .map(normalizarParaComparar);
+
+  if (procurados.length === 0) {
+    return [];
+  }
+
+  return getTodasNoticias().filter((noticia) =>
+    noticia.tags.some((tag) => procurados.includes(normalizarParaComparar(tag)))
+  );
 }
 
 /** A mais recente marcada como destaque; se não houver nenhuma, a mais recente geral. */

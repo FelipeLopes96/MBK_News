@@ -22,11 +22,11 @@ export default function FiltroDePastilhas({
   aoEscolher: (slug: string) => void;
   /** Descreve o grupo para leitor de tela — ex.: "Filtrar por modalidade". */
   rotuloDoGrupo: string;
-  /** Linha de resultado — ex.: "4 vídeos". */
+  /** Linha de resultado — ex.: "4 vídeos". Vazia, a linha não aparece. */
   contagem: string;
 }) {
   return (
-    <div className="border-b border-linha pb-5">
+    <div>
       <div role="group" aria-label={rotuloDoGrupo} className="flex flex-wrap gap-2">
         {pastilhas.map((pastilha) => {
           const selecionada = pastilha.slug === ativo;
@@ -50,10 +50,13 @@ export default function FiltroDePastilhas({
       </div>
 
       {/* Quem usa leitor de tela ouve o resultado do filtro; quem não usa tem a
-          mesma informação escrita. */}
-      <p aria-live="polite" className="mt-3 text-xs text-texto-fraco">
-        {contagem}
-      </p>
+          mesma informação escrita. Com dois grupos de pastilhas, a contagem sai
+          uma vez só — embaixo do último. */}
+      {contagem ? (
+        <p aria-live="polite" className="mt-3 text-xs text-texto-fraco">
+          {contagem}
+        </p>
+      ) : null}
     </div>
   );
 }

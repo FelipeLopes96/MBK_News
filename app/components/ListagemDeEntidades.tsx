@@ -5,6 +5,7 @@ import GradeFiltravel from "@/app/components/GradeFiltravel";
 import NavDoArquivo from "@/app/components/NavDoArquivo";
 import TituloDaPagina from "@/app/components/TituloDaPagina";
 import {
+  modalidadesPresentes,
   organizacoesPresentes,
   paraCardDeEntidade,
   type Entidade,
@@ -20,7 +21,7 @@ export default function ListagemDeEntidades({
   descricao,
   entidades,
   mensagemVazia,
-  filtroPorOrganizacao,
+  filtros,
 }: {
   trilha: Migalha[];
   titulo: string;
@@ -28,10 +29,19 @@ export default function ListagemDeEntidades({
   entidades: Entidade[];
   mensagemVazia: string;
   /**
-   * Liga o filtro por organização acima da grade. O singular e o plural são do
-   * que está listado ("lenda"/"lendas"), usados na linha de contagem.
+   * Liga os filtros acima da grade. Cada dimensão é declarada porque nem toda
+   * listagem quer as duas: filtrar organização por organização, na listagem de
+   * organizações, seria circular — ali só modalidade separa alguma coisa.
+   *
+   * O singular e o plural são do que está listado ("lenda"/"lendas"), usados na
+   * linha de contagem.
    */
-  filtroPorOrganizacao?: { singular: string; plural: string };
+  filtros?: {
+    porOrganizacao?: boolean;
+    porModalidade?: boolean;
+    singular: string;
+    plural: string;
+  };
 }) {
   return (
     <Container>
@@ -43,13 +53,18 @@ export default function ListagemDeEntidades({
 
       {entidades.length === 0 ? (
         <p className="mt-8 text-texto-suave">{mensagemVazia}</p>
-      ) : filtroPorOrganizacao ? (
+      ) : filtros ? (
         // O mapeamento acontece aqui, no servidor: a grade filtrável é
         // Client Component e não pode ler o disco para resolver os rótulos.
         <GradeFiltravel
           cards={entidades.map((entidade) => paraCardDeEntidade(entidade))}
-          filtros={organizacoesPresentes(entidades)}
-          contagem={filtroPorOrganizacao}
+          filtros={
+            filtros.porOrganizacao ? organizacoesPresentes(entidades) : []
+          }
+          modalidades={
+            filtros.porModalidade ? modalidadesPresentes(entidades) : []
+          }
+          contagem={filtros}
         />
       ) : (
         <div className="mt-8">

@@ -2,48 +2,59 @@
 
 import { useState } from "react";
 import ConteudoCard from "@/app/components/ConteudoCard";
-import FiltroDePastilhas from "@/app/components/FiltroDePastilhas";
+import FiltroDePastilhas, {
+  type Pastilha,
+} from "@/app/components/FiltroDePastilhas";
 import type { CardDeEntidade } from "@/lib/entidades";
 
-export type FiltroDeOrganizacao = { slug: string; rotulo: string };
+export type FiltroDeOrganizacao = Pastilha;
 
 const TODAS = "todas";
 
 /**
- * Grade de cards com filtro por organização.
+ * Grade de cards do Arquivo, com filtro por organização e por modalidade.
  *
- * O filtro é do cliente e não da URL de propósito: a página segue estática e a
- * troca é instantânea, sem navegação. Uma entidade ligada a duas organizações
- * aparece nos dois filtros, mas nunca duas vezes na mesma tela.
+ * Os filtros são do cliente e não da URL de propósito: a página segue estática
+ * e a troca é instantânea, sem navegação. As duas dimensões se somam — escolher
+ * "PRIDE" e "MMA" mostra quem é das duas coisas, não a união delas, que é o que
+ * se espera de um acervo.
+ *
+ * Uma entidade ligada a duas organizações aparece nos dois filtros, mas nunca
+ * duas vezes na mesma tela.
  */
 export default function GradeFiltravel({
   cards,
   filtros,
+  modalidades = [],
   rotuloDeTodas = "Todas",
   contagem,
 }: {
   cards: CardDeEntidade[];
   filtros: FiltroDeOrganizacao[];
-  /** Texto da primeira pastilha, que limpa o filtro. */
+  /** Modalidades presentes, já separadas e ordenadas. */
+  modalidades?: string[];
+  /** Texto da primeira pastilha de organização, que limpa o filtro. */
   rotuloDeTodas?: string;
   /** Singular e plural do que está listado, para a linha de contagem. */
   contagem: { singular: string; plural: string };
 }) {
-  const [ativo, setAtivo] = useState(TODAS);
+  const [organizacao, setOrganizacao] = useState(TODAS);
+  const [modalidade, setModalidade] = useState(TODAS);
 
-  const visiveis =
-    ativo === TODAS
-      ? cards
-      : cards.filter((card) => card.organizacoes.includes(ativo));
+  const visiveis = cards.filter((card) => {
+    const daOrganizacao =
+      organizacao === TODAS || card.organizacoes.includes(organizacao);
+    const daModalidade =
+      modalidade === TODAS || card.modalidades.includes(modalidade);
 
-  // Sem pelo menos duas organizações não há o que filtrar: as pastilhas só
-  // ocupariam espaço dizendo o que a grade toda já diz.
-  const vaiFiltrar = filtros.length > 1;
+    return daOrganizacao && daModalidade;
+  });
 
-  const pastilhas: FiltroDeOrganizacao[] = [
-    { slug: TODAS, rotulo: rotuloDeTodas },
-    ...filtros,
-  ];
+  // Sem pelo menos duas opções não há o que filtrar: as pastilhas só ocupariam
+  // espaço dizendo o que a grade toda já diz.
+  const filtrarPorOrganizacao = filtros.length > 1;
+  const filtrarPorModalidade = modalidades.length > 1;
+  const vaiFiltrar = filtrarPorOrganizacao || filtrarPorModalidade;
 
   const total = visiveis.length;
   const nomeDoTotal = total === 1 ? contagem.singular : contagem.plural;
@@ -51,33 +62,57 @@ export default function GradeFiltravel({
   return (
     <div className="mt-8">
       {vaiFiltrar ? (
-        <FiltroDePastilhas
-          pastilhas={pastilhas}
-          ativo={ativo}
-          aoEscolher={setAtivo}
-          rotuloDoGrupo="Filtrar por organização"
-          contagem={`${total} ${nomeDoTotal}`}
-        />
+        <div className="flex flex-col gap-4 border-b border-linha pb-5">
+          {filtrarPorOrganizacao ? (
+            <FiltroDePastilhas
+              pastilhas={[{ slug: TODAS, rotulo: rotuloDeTodas }, ...filtros]}
+              ativo={organizacao}
+              aoEscolher={setOrganizacao}
+              rotuloDoGrupo="Filtrar por organização"
+              // A contagem sai uma vez só, embaixo do último grupo.
+              contagem={filtrarPorModalidade ? "" : `${total} ${nomeDoTotal}`}
+            />
+          ) : null}
+
+          {filtrarPorModalidade ? (
+            <FiltroDePastilhas
+              pastilhas={[
+                { slug: TODAS, rotulo: "Todas as modalidades" },
+                ...modalidades.map((nome) => ({ slug: nome, rotulo: nome })),
+              ]}
+              ativo={modalidade}
+              aoEscolher={setModalidade}
+              rotuloDoGrupo="Filtrar por modalidade"
+              contagem={`${total} ${nomeDoTotal}`}
+            />
+          ) : null}
+        </div>
       ) : null}
 
-      <div
-        className={`grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 ${
-          vaiFiltrar ? "mt-8" : ""
-        }`}
-      >
-        {visiveis.map((card, indice) => (
-          <ConteudoCard
-            key={card.slug}
-            href={card.href}
-            titulo={card.nome}
-            rotulo={card.rotulo}
-            resumo={card.resumo}
-            imagem={card.imagem?.url}
-            posicaoDaImagem={card.imagem?.posicao}
-            preload={indice === 0}
-          />
-        ))}
-      </div>
+      {total === 0 ? (
+        <p className="mt-8 text-texto-suave">
+          Nenhum resultado para esta combinação de filtros.
+        </p>
+      ) : (
+        <div
+          className={`grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 ${
+            vaiFiltrar ? "mt-8" : ""
+          }`}
+        >
+          {visiveis.map((card, indice) => (
+            <ConteudoCard
+              key={card.slug}
+              href={card.href}
+              titulo={card.nome}
+              rotulo={card.rotulo}
+              resumo={card.resumo}
+              imagem={card.imagem?.url}
+              posicaoDaImagem={card.imagem?.posicao}
+              preload={indice === 0}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

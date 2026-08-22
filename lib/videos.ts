@@ -6,6 +6,7 @@ import {
   textoOpcional,
   type ArquivoBruto,
 } from "@/lib/conteudo";
+import { normalizar } from "@/lib/busca";
 import { getNoticiaPorSlug, type Noticia } from "@/lib/noticias";
 import {
   extrairVideoId,
@@ -45,6 +46,8 @@ export type Video = {
   duracao?: string;
   categoria: string;
   organizacoes: string[];
+  /** Temas do vídeo — atletas, eventos, assuntos. Liga o vídeo às lendas. */
+  tags: string[];
   /** Data ISO (AAAA-MM-DD). */
   publicadoEm: string;
   /** Slugs das matérias relacionadas. */
@@ -97,6 +100,7 @@ function ler(): Video[] {
           duracao: textoOpcional(data.duracao ?? data.duration),
           categoria: String(data.categoria ?? ""),
           organizacoes: normalizarOrganizacoes(data),
+          tags: normalizarLista(data.tags),
           publicadoEm: normalizarData(data.publicadoEm ?? data.date),
           noticias: normalizarLista(data.noticias ?? data.relatedArticleIds),
           destaque: data.destaque === true || data.isFeatured === true,
@@ -136,6 +140,24 @@ export function getVideosEmDestaque(quantidade: number): Video[] {
 /** Vídeos ligados a uma matéria, na ordem em que o vídeo foi publicado. */
 export function getVideosDaNoticia(slug: string): Video[] {
   return getTodosOsVideos().filter((video) => video.noticias.includes(slug));
+}
+
+/**
+ * Vídeos que citam um atleta, encontrados pelas tags — mesma mecânica das
+ * matérias, para a página da lenda não precisar de uma lista própria.
+ */
+export function getVideosDoAtleta(nomes: (string | undefined)[]): Video[] {
+  const procurados = nomes
+    .filter((nome): nome is string => Boolean(nome))
+    .map(normalizar);
+
+  if (procurados.length === 0) {
+    return [];
+  }
+
+  return getTodosOsVideos().filter((video) =>
+    video.tags.some((tag) => procurados.includes(normalizar(tag)))
+  );
 }
 
 /** Caminho inverso: as matérias que um vídeo cita. */

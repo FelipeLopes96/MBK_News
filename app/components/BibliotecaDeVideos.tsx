@@ -39,13 +39,15 @@ export default function BibliotecaDeVideos({
   return (
     <div className="mt-8">
       {vaiFiltrar ? (
-        <FiltroDePastilhas
-          pastilhas={[{ slug: TODAS, rotulo: "Todos" }, ...filtros]}
-          ativo={ativo}
-          aoEscolher={setAtivo}
-          rotuloDoGrupo="Filtrar por modalidade"
-          contagem={`${visiveis.length} ${visiveis.length === 1 ? "vídeo" : "vídeos"}`}
-        />
+        <div className="border-b border-linha pb-5">
+          <FiltroDePastilhas
+            pastilhas={[{ slug: TODAS, rotulo: "Todos" }, ...filtros]}
+            ativo={ativo}
+            aoEscolher={setAtivo}
+            rotuloDoGrupo="Filtrar por modalidade"
+            contagem={`${visiveis.length} ${visiveis.length === 1 ? "vídeo" : "vídeos"}`}
+          />
+        </div>
       ) : null}
 
       <div

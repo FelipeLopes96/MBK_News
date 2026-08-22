@@ -6,6 +6,7 @@ import BlocoDeFontes from "@/app/components/BlocoDeFontes";
 import CabecalhoDeEntidade from "@/app/components/CabecalhoDeEntidade";
 import ConteudoCard from "@/app/components/ConteudoCard";
 import GradeDeEntidades from "@/app/components/GradeDeEntidades";
+import NewsGrid from "@/app/components/NewsGrid";
 import SecaoDaEntidade from "@/app/components/SecaoDaEntidade";
 import {
   classeDoCorpoDaMateria,
@@ -18,7 +19,11 @@ import {
   getOrganizacao,
   getOrganizacoes,
 } from "@/lib/entidades";
+import { getNoticiasPorOrganizacao } from "@/lib/noticias";
 import { metadataDaPagina, NOME_DO_SITE } from "@/lib/seo";
+
+/** Teto do bloco de notícias: o hub é acervo, não feed. */
+const NOTICIAS_NO_HUB = 4;
 
 export function generateStaticParams() {
   return getOrganizacoes().map((organizacao) => ({ slug: organizacao.slug }));
@@ -64,6 +69,10 @@ export default async function OrganizacaoPage(
   const lendas = getLendasDaOrganizacao(organizacao);
   const momentos = getMomentosDaOrganizacao(organizacao);
   const artigos = getPorOrganizacao(organizacao);
+  const noticias = getNoticiasPorOrganizacao(organizacao).slice(
+    0,
+    NOTICIAS_NO_HUB
+  );
 
   const ficha = [
     { rotulo: "Modalidade", valor: organizacao.modalidade },
@@ -120,6 +129,15 @@ export default async function OrganizacaoPage(
 
       <SecaoDaEntidade titulo="Legado" vazia={!organizacao.legado}>
         <p className="text-lg leading-8 text-texto-corpo">{organizacao.legado}</p>
+      </SecaoDaEntidade>
+
+      {/*
+        Notícias marcadas com esta organização no frontmatter. É o que liga o
+        acervo histórico à cobertura do dia: quem chega pela história do UFC
+        encontra o que saiu esta semana sobre ele.
+      */}
+      <SecaoDaEntidade titulo="No noticiário" vazia={noticias.length === 0}>
+        <NewsGrid noticias={noticias} colunas={2} className="mt-0" />
       </SecaoDaEntidade>
 
       <SecaoDaEntidade

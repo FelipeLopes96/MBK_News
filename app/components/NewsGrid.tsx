@@ -17,10 +17,13 @@ export default function NewsGrid({
   colunas = 3,
   comAbertura = false,
   preloadPrimeira = false,
+  className = "mt-8",
   mensagemVazia = "Nenhuma notícia publicada nesta categoria ainda.",
 }: {
   noticias: Noticia[];
   colunas?: 2 | 3;
+  /** Espaçamento externo. Dentro de um bloco de seção, o padrão sobra. */
+  className?: string;
   /**
    * Dá à primeira matéria o peso de chamada de abertura. Use só onde a
    * listagem começa — na página 2 de um acervo, destacar a matéria do topo
@@ -32,7 +35,7 @@ export default function NewsGrid({
   mensagemVazia?: string;
 }) {
   if (noticias.length === 0) {
-    return <p className="mt-8 text-texto-suave">{mensagemVazia}</p>;
+    return <p className={`${className} text-texto-suave`}>{mensagemVazia}</p>;
   }
 
   // Com duas matérias ou menos a abertura não cria hierarquia nenhuma: sobraria
@@ -41,7 +44,7 @@ export default function NewsGrid({
 
   return (
     <div
-      className={`mt-8 grid grid-cols-1 gap-6 ${colunasPorVariante[colunas]}`}
+      className={`${className} grid grid-cols-1 gap-6 ${colunasPorVariante[colunas]}`}
     >
       {noticias.map((noticia, indice) => {
         const ehAbertura = abertura && indice === 0;

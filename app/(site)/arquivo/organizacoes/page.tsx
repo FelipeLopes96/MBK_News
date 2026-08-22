@@ -21,6 +21,12 @@ export default function OrganizacoesPage() {
       descricao="As organizações que moldaram o esporte. Cada uma reúne a própria história, suas lendas e seus momentos decisivos."
       entidades={getOrganizacoes()}
       mensagemVazia="Nenhuma organização cadastrada ainda."
+      // Só modalidade: filtrar organização por organização seria circular.
+      filtros={{
+        porModalidade: true,
+        singular: "organização",
+        plural: "organizações",
+      }}
     />
   );
 }

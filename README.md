@@ -81,6 +81,7 @@ organizacoes: [ufc]                       # opcional
 publicadoEm: 2026-08-14
 noticias:                                 # slugs das matérias relacionadas
   - edson-barboza-admite-que-ufc-330-pode-ser-sua-ultima-luta
+tags: ["Edson Barboza"]                   # opcional; liga o vídeo às lendas
 destaque: false
 thumbnail: /noticias/arte-propria.jpg     # opcional; padrão é a do YouTube
 ---
