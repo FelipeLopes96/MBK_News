@@ -12,6 +12,7 @@ import {
   getTodasNoticias,
   rotuloDaCategoria as rotuloDeNoticia,
 } from "@/lib/noticias";
+import { getTodosOsVideos } from "@/lib/videos";
 
 /**
  * Montagem do índice de busca. Lê o conteúdo, então roda só no servidor/build.
@@ -50,6 +51,26 @@ const rotaDaEntidade: Record<Entidade["tipo"], string> = {
   momento: "/arquivo/momentos",
 };
 
+/**
+ * O que entra na chave além do que o card mostra.
+ *
+ * Organização é conhecida tanto pela sigla quanto pelo nome inteiro — quem
+ * digita "Legacy Fighting Alliance" tem de achar a LFA, e quem digita "PRIDE
+ * Fighting Championships" tem de achar o PRIDE. Atleta de esporte de combate é
+ * procurado pelo apelido antes do nome de registro.
+ */
+function chaveExtra(entidade: Entidade): string[] {
+  if (entidade.tipo === "organizacao") {
+    return [entidade.nomeCompleto ?? "", ...entidade.aliases];
+  }
+
+  if (entidade.tipo === "lenda") {
+    return [entidade.apelido ?? ""];
+  }
+
+  return [];
+}
+
 function entidadeNoIndice(entidade: Entidade): ItemDoIndice {
   return montar({
     titulo: entidade.nome,
@@ -57,9 +78,7 @@ function entidadeNoIndice(entidade: Entidade): ItemDoIndice {
     rotulo: rotuloDaEntidade(entidade),
     tipo: tipoDaEntidade[entidade.tipo],
     resumo: entidade.resumo,
-    // O apelido entra na chave sem aparecer no card: atleta de esporte de
-    // combate costuma ser procurado pelo apelido, não pelo nome de registro.
-    extra: entidade.tipo === "lenda" ? [entidade.apelido ?? ""] : [],
+    extra: chaveExtra(entidade),
   });
 }
 
@@ -73,6 +92,21 @@ export function getIndiceDeBusca(): ItemDoIndice[] {
       resumo: noticia.resumo,
       data: noticia.date,
       extra: [...noticia.tags, ...noticia.organizacoes],
+    })
+  );
+
+  // Vídeo entra no mesmo índice das matérias em vez de ganhar busca própria
+  // dentro da seção: quem procura um atleta quer achar o que existe sobre ele,
+  // não escolher antes em que formato.
+  const videos = getTodosOsVideos().map((video) =>
+    montar({
+      titulo: video.title,
+      href: `/videos/${video.slug}`,
+      rotulo: `Vídeo · ${rotuloDeNoticia(video.categoria)}`,
+      tipo: "video",
+      resumo: video.descricao,
+      data: video.publicadoEm,
+      extra: [video.canal ?? "", ...video.organizacoes],
     })
   );
 
@@ -107,7 +141,13 @@ export function getIndiceDeBusca(): ItemDoIndice[] {
 
   // Com data primeiro, da mais recente para a mais antiga; as entidades do
   // Arquivo, que são atemporais, fecham a lista em ordem alfabética.
-  return [...noticias, ...artigos, ...reviews, ...entidades].sort((a, b) => {
+  return [
+    ...noticias,
+    ...videos,
+    ...artigos,
+    ...reviews,
+    ...entidades,
+  ].sort((a, b) => {
     if (a.data && b.data) return b.data.localeCompare(a.data);
     if (a.data) return -1;
     if (b.data) return 1;

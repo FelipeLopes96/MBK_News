@@ -7,6 +7,7 @@ import BlocoDeFontes from "@/app/components/BlocoDeFontes";
 import CreditoDeImagem from "@/app/components/CreditoDeImagem";
 import Etiqueta from "@/app/components/Etiqueta";
 import ImagemNoticia from "@/app/components/ImagemNoticia";
+import VideosRelacionados from "@/app/components/VideosRelacionados";
 import {
   classeDoCorpoDaMateria,
   componentesDeMarkdown,
@@ -86,6 +87,13 @@ export default async function NoticiaPage(props: PageProps<"/noticia/[slug]">) {
       </div>
 
       <BlocoDeFontes fontes={noticia.fontes} />
+
+      {/*
+        Vídeos ligados a esta matéria. A relação é declarada dentro do vídeo,
+        então publicar um vídeo apontando para cá já o faz aparecer — sem editar
+        o `.md` da matéria.
+      */}
+      <VideosRelacionados slugDaNoticia={noticia.slug} />
 
       <Link
         href="/"

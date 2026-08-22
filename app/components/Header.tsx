@@ -5,6 +5,7 @@ import MenuMobile from "@/app/components/MenuMobile";
 import Navegacao from "@/app/components/Navegacao";
 import { secoesPrincipais } from "@/lib/navegacao";
 import { categorias } from "@/lib/noticias";
+import { getTodosOsVideos } from "@/lib/videos";
 
 /**
  * Cabeçalho do portal, em duas faixas.
@@ -18,7 +19,10 @@ import { categorias } from "@/lib/noticias";
  * dois componentes de cliente.
  */
 export default function Header() {
-  const secoes = secoesPrincipais(categorias);
+  // Vídeos só aparece na barra quando há biblioteca para abrir.
+  const secoes = secoesPrincipais(categorias, {
+    comVideos: getTodosOsVideos().length > 0,
+  });
 
   return (
     <header className="sticky top-0 z-50 border-b border-linha bg-fundo/95 backdrop-blur">

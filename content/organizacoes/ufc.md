@@ -1,7 +1,7 @@
 ---
 nome: "UFC"
 slug: "ufc"
-nomeCompleto: ""
+nomeCompleto: "Ultimate Fighting Championship"
 tagline: "De um torneio entre estilos à principal organização de MMA do mundo."
 modalidade: "MMA"
 fundacao: "1993"

@@ -7,6 +7,7 @@ import { BASE_DE_NOTICIAS } from "@/app/components/ListaDeNoticias";
 import MaisLidas from "@/app/components/MaisLidas";
 import NoticiaCard from "@/app/components/NoticiaCard";
 import SectionHeader from "@/app/components/SectionHeader";
+import VideosEmDestaque from "@/app/components/VideosEmDestaque";
 import { getTodos as getArtigosDoArquivo } from "@/lib/arquivo";
 import { getTodos as getReviewsDoArsenal } from "@/lib/arsenal";
 import { getNoticiaDestaque, getTodasNoticias } from "@/lib/noticias";
@@ -87,11 +88,11 @@ export default function Home() {
         {/*
           Cada módulo se esconde sozinho quando não tem conteúdo, e como não há
           `div` de embrulho em volta deles, um módulo ausente não deixa buraco
-          de `gap` na coluna. O bloco de Vídeos em destaque entra aqui na fase
-          do sistema de vídeos.
+          de `gap` na coluna.
         */}
         <aside className="flex flex-col gap-6">
           <EventosSidebar />
+          <VideosEmDestaque />
           <MaisLidas />
           <ListaCompacta
             titulo="Arquivo MBK News"

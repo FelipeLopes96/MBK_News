@@ -27,6 +27,7 @@ Abra [http://localhost:3000](http://localhost:3000).
 | `content/noticias/` | Matérias. O nome do arquivo começa com a data (`AAAA-MM-DD-slug.md`). |
 | `content/arquivo/` | Conteúdo de longa duração: histórias, guias, explicações. |
 | `content/organizacoes/` | Hubs de organização — UFC, PRIDE, ONE, WGP, Bellator. |
+| `content/videos/` | Biblioteca de vídeos: um `.md` por vídeo do YouTube. |
 | `content/lendas/` | Atletas que definiram eras. |
 | `content/momentos/` | Momentos históricos. |
 | `content/eventos.json` | Agenda de próximos eventos. |
@@ -37,6 +38,39 @@ Abra [http://localhost:3000](http://localhost:3000).
 Os relacionamentos são resolvidos por slug de organização, nunca dentro de
 componente: publicar um `.md` novo já o faz aparecer nas listagens e no hub da
 organização correspondente, sem tocar em código.
+
+### Vídeos
+
+Cada vídeo é um `.md` em `content/videos/`. Nenhum vídeo é hospedado aqui: o
+que se guarda é a URL, e o portal monta o embed oficial do YouTube. O `videoId`
+é **extraído da URL**, nunca digitado — `watch?v=`, `youtu.be/`, `/shorts/` e
+`/embed/` são todos aceitos.
+
+```yaml
+---
+title: "Edson Barboza fala sobre aposentadoria antes do UFC 330"
+slug: entrevista-edson-barboza-ufc-330   # opcional; padrão é o nome do arquivo
+descricao: "Entrevista concedida antes do card de sábado."
+url: https://www.youtube.com/watch?v=XXXXXXXXXXX
+canal: "MBK News"
+duracao: "12:41"
+categoria: mma                            # mesma lista das notícias
+organizacoes: [ufc]                       # opcional
+publicadoEm: 2026-08-14
+noticias:                                 # slugs das matérias relacionadas
+  - edson-barboza-admite-que-ufc-330-pode-ser-sua-ultima-luta
+destaque: false
+thumbnail: /noticias/arte-propria.jpg     # opcional; padrão é a do YouTube
+---
+```
+
+A ligação com as matérias é declarada **só aqui**, no campo `noticias`. O bloco
+"Vídeos relacionados" no fim da matéria é derivado disso — não é preciso editar
+o `.md` da matéria. E a seção `/videos` só aparece na navegação quando existe
+pelo menos um vídeo cadastrado.
+
+Vídeo cuja `url` não for reconhecida é descartado da biblioteca em vez de virar
+um player vazio no ar; em desenvolvimento o console aponta o arquivo.
 
 ### Mais lidas
 

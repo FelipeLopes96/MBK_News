@@ -9,6 +9,7 @@
 
 export type TipoDeResultado =
   | "noticia"
+  | "video"
   | "arquivo"
   | "arsenal"
   | "organizacao"

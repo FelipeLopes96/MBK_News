@@ -23,11 +23,16 @@ export const secoesDoArquivo: ItemDeNavegacao[] = [
 
 /**
  * Seções da barra principal: o acervo geral, uma por modalidade e as seções
- * fixas. `/videos` e `/eventos` entram aqui quando as rotas existirem — não
- * antes, para a barra não levar a lugar nenhum.
+ * fixas.
+ *
+ * Vídeos entra condicionalmente porque a seção só faz sentido com biblioteca
+ * montada — item de menu que abre em "em breve" gasta o espaço mais nobre da
+ * navegação sem levar a nada. Publicar o primeiro vídeo o traz sozinho.
+ * `/eventos` entra aqui quando a rota existir.
  */
 export function secoesPrincipais(
-  categorias: { slug: string; rotulo: string }[]
+  categorias: { slug: string; rotulo: string }[],
+  { comVideos = false }: { comVideos?: boolean } = {}
 ): ItemDeNavegacao[] {
   return [
     { href: "/noticias", rotulo: "Notícias" },
@@ -35,6 +40,7 @@ export function secoesPrincipais(
       href: `/${categoria.slug}`,
       rotulo: categoria.rotulo,
     })),
+    ...(comVideos ? [{ href: "/videos", rotulo: "Vídeos" }] : []),
     { href: "/arquivo", rotulo: "Arquivo", subitens: secoesDoArquivo },
     { href: "/arsenal", rotulo: "Arsenal" },
   ];

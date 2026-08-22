@@ -10,6 +10,7 @@ import {
   getTotalDePaginasGeral,
 } from "@/lib/noticias";
 import { urlDoSite } from "@/lib/seo";
+import { getTodosOsVideos } from "@/lib/videos";
 
 /**
  * Sitemap do portal.
@@ -139,6 +140,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ]);
 
+  // A biblioteca só entra no sitemap quando existe: uma seção vazia indexada é
+  // uma URL que o buscador visita para não achar nada.
+  const videos = getTodosOsVideos();
+  const secaoDeVideos: MetadataRoute.Sitemap =
+    videos.length === 0
+      ? []
+      : [
+          {
+            url: url("/videos"),
+            lastModified: maisRecente(videos.map((v) => v.publicadoEm)),
+            changeFrequency: "weekly",
+            priority: 0.8,
+          },
+          ...videos.map((video) => ({
+            url: url(`/videos/${video.slug}`),
+            lastModified: video.publicadoEm
+              ? new Date(video.publicadoEm)
+              : undefined,
+            changeFrequency: "monthly" as const,
+            priority: 0.6,
+          })),
+        ];
+
   const arsenal: MetadataRoute.Sitemap = [
     {
       url: url("/arsenal"),
@@ -159,6 +183,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...acervo,
     ...secoesDeCategoria,
     ...materias,
+    ...secaoDeVideos,
     ...arquivo,
     ...entidades,
     ...arsenal,

@@ -4,13 +4,18 @@ import Container from "@/app/components/Container";
 import { secoesDoArquivo } from "@/lib/navegacao";
 import { categorias } from "@/lib/noticias";
 import { NOME_DO_SITE, TAGLINE } from "@/lib/seo";
+import { getTodosOsVideos } from "@/lib/videos";
 
-const secoes = [
-  { href: "/noticias", rotulo: "Todas as notícias" },
-  { href: "/arquivo", rotulo: "Arquivo" },
-  { href: "/arsenal", rotulo: "Arsenal" },
-  { href: "/busca", rotulo: "Busca" },
-];
+/** `Vídeos` entra só com biblioteca montada, como na barra do cabeçalho. */
+function secoesDoRodape(comVideos: boolean) {
+  return [
+    { href: "/noticias", rotulo: "Todas as notícias" },
+    ...(comVideos ? [{ href: "/videos", rotulo: "Vídeos" }] : []),
+    { href: "/arquivo", rotulo: "Arquivo" },
+    { href: "/arsenal", rotulo: "Arsenal" },
+    { href: "/busca", rotulo: "Busca" },
+  ];
+}
 
 const classeDoLink =
   "text-sm text-texto-suave transition-colors hover:text-marca-clara";
@@ -45,6 +50,8 @@ export default function Footer() {
     href: `/${categoria.slug}`,
     rotulo: categoria.rotulo,
   }));
+
+  const secoes = secoesDoRodape(getTodosOsVideos().length > 0);
 
   return (
     <footer className="border-t border-linha bg-superficie">

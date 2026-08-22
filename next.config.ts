@@ -15,6 +15,15 @@ const nextConfig: NextConfig = {
         pathname: "/**",
         search: "",
       },
+      {
+        // Miniaturas dos vídeos. Vêm do YouTube porque a alternativa seria
+        // baixar e versionar uma imagem por vídeo cadastrado.
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        port: "",
+        pathname: "/vi/**",
+        search: "",
+      },
     ],
   },
 };
