@@ -16,6 +16,13 @@ imagem:
   posicao: topo
   fonte: ESPN Brasil
 destaque: false
+tags:
+  - "Edson Barboza"
+  - "Esteban Ribovics"
+  - "UFC 330"
+  - "Aposentadoria"
+organizacoes:
+  - "ufc"
 ---
 
 Edson Barboza pode estar entrando no octógono pela última vez. Aos 40 anos, o brasileiro enfrenta Esteban Ribovics neste sábado, no UFC 330, e admitiu que a luta pode marcar o fim de sua carreira.

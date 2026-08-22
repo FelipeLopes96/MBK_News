@@ -13,6 +13,12 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "UFC Edmonton"
+  - "Katlyn Cerminara"
+  - "Card"
+organizacoes:
+  - "ufc"
 ---
 
 O UFC Edmonton ganhou seis lutas novas — e uma delas marca o retorno de uma antiga desafiante ao cinturão.

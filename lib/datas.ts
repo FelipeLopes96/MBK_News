@@ -20,3 +20,23 @@ const formatadorDeData = new Intl.DateTimeFormat("pt-BR", {
 export function formatarData(data: string): string {
   return formatadorDeData.format(new Date(data));
 }
+
+/**
+ * Hoje no fuso da redação, não em UTC.
+ *
+ * O servidor da Vercel roda em UTC: depois das 21h de Brasília o
+ * `toISOString()` já virou o dia seguinte, e um evento de hoje seria tratado
+ * como passado. `en-CA` é o locale que formata como AAAA-MM-DD.
+ */
+const FUSO_DA_REDACAO = "America/Sao_Paulo";
+
+const formatadorDeHoje = new Intl.DateTimeFormat("en-CA", {
+  timeZone: FUSO_DA_REDACAO,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
+export function dataDeHoje(): string {
+  return formatadorDeHoje.format(new Date());
+}

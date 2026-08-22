@@ -32,7 +32,10 @@ export const secoesDoArquivo: ItemDeNavegacao[] = [
  */
 export function secoesPrincipais(
   categorias: { slug: string; rotulo: string }[],
-  { comVideos = false }: { comVideos?: boolean } = {}
+  {
+    comEventos = false,
+    comVideos = false,
+  }: { comEventos?: boolean; comVideos?: boolean } = {}
 ): ItemDeNavegacao[] {
   return [
     { href: "/noticias", rotulo: "Notícias" },
@@ -40,6 +43,7 @@ export function secoesPrincipais(
       href: `/${categoria.slug}`,
       rotulo: categoria.rotulo,
     })),
+    ...(comEventos ? [{ href: "/eventos", rotulo: "Eventos" }] : []),
     ...(comVideos ? [{ href: "/videos", rotulo: "Vídeos" }] : []),
     { href: "/arquivo", rotulo: "Arquivo", subitens: secoesDoArquivo },
     { href: "/arsenal", rotulo: "Arsenal" },

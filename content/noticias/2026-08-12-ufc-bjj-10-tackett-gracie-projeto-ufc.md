@@ -13,6 +13,13 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "UFC BJJ"
+  - "Andrew Tackett"
+  - "Jonnatas Gracie"
+  - "Las Vegas"
+organizacoes:
+  - "ufc"
 ---
 
 O UFC BJJ 10 acontece no dia 20 de agosto, em Las Vegas, e o evento começa a mostrar que o projeto do UFC para o jiu-jitsu está ficando sério.

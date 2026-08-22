@@ -99,6 +99,7 @@ export async function publicarNoticia(
     imagemCredito: String(formData.get("imagemCredito") ?? ""),
     imagemFonte: String(formData.get("imagemFonte") ?? ""),
     imagemLicenca: String(formData.get("imagemLicenca") ?? ""),
+    imagemGeradaPorIA: formData.get("imagemGeradaPorIA") === "on",
   };
 
   const erros = validar(dados);

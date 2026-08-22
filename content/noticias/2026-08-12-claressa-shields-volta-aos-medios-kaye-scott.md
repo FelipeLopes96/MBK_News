@@ -13,6 +13,12 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Claressa Shields"
+  - "Kaye Scott"
+  - "WBC"
+  - "WBA"
+  - "Boxe feminino"
 ---
 
 Claressa Shields vai voltar aos 72,6 kg.

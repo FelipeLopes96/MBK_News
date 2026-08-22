@@ -14,6 +14,10 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Teremoana Teremoana"
+  - "DeAndre Savage"
+  - "Nocaute"
 ---
 
 Teremoana Teremoana continua sem deixar os juízes trabalharem.

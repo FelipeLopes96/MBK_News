@@ -12,6 +12,11 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Usman Nurmagomedov"
+  - "PFL"
+  - "Mercado"
+  - "Contrato"
 ---
 
 Usman Nurmagomedov terminou seu contrato com a PFL invicto e agora é um dos nomes mais interessantes disponíveis no mercado.

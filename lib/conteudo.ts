@@ -59,6 +59,15 @@ export type ImagemComCredito = {
   fonte?: string;
   /** Termos de uso — ex.: "Getty Images", "CC BY 2.0", "Divulgação". */
   licenca?: string;
+  /**
+   * Imagem sintética, criada com IA.
+   *
+   * Existe porque uma ilustração de IA que parece fotografia de evento não pode
+   * ir ao ar rotulada como "Foto". O leitor tem de saber que aquilo não é
+   * registro do que aconteceu — e num veículo jornalístico essa distinção não é
+   * detalhe de crédito, é a diferença entre documentar e ilustrar.
+   */
+  geradaPorIA?: boolean;
 };
 
 /**
@@ -156,6 +165,7 @@ export function normalizarImagem(valor: unknown): ImagemComCredito | undefined {
       credito: textoOpcional(campos.credito),
       fonte: textoOpcional(campos.fonte),
       licenca: textoOpcional(campos.licenca),
+      geradaPorIA: campos.geradaPorIA === true || campos.ia === true,
     };
   }
 

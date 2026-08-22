@@ -14,6 +14,11 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Cris Cyborg"
+  - "Ketlen Vieira"
+  - "PFL"
+  - "Aposentadoria"
 ---
 
 Cris Cyborg pode estar a uma luta de encerrar uma das maiores carreiras da história do MMA feminino.

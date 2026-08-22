@@ -13,6 +13,10 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "ADCC"
+  - "ADCC Youth World"
+  - "Categorias de base"
 ---
 
 O ADCC resolveu olhar para o futuro.

@@ -13,6 +13,12 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Ryan Garcia"
+  - "Conor Benn"
+  - "WBC"
+  - "Meio-médios"
+  - "Las Vegas"
 ---
 
 Ryan Garcia e Conor Benn já sabem quando vão resolver essa história.

@@ -5,6 +5,8 @@ import { publicarNoticia, type EstadoDaPublicacao } from "@/app/admin/acoes";
 import { gerarSlug } from "@/lib/admin/slug";
 import PreviaDaMateria from "@/app/admin/PreviaDaMateria";
 import type { PosicaoDaImagem } from "@/lib/conteudo";
+// `lib/seo` não lê disco, então a constante pode atravessar para o navegador.
+import { REDACAO } from "@/lib/seo";
 
 /**
  * Todos os campos são controlados de propósito: quando a publicação falha, o
@@ -65,6 +67,7 @@ export default function FormularioDeNoticia({
   const [imagemCredito, setImagemCredito] = useState("");
   const [imagemFonte, setImagemFonte] = useState("");
   const [imagemLicenca, setImagemLicenca] = useState("");
+  const [imagemGeradaPorIA, setImagemGeradaPorIA] = useState(false);
   const [previa, setPrevia] = useState("");
 
   const [fontes, setFontes] = useState([{ rotulo: "", url: "" }]);
@@ -407,6 +410,25 @@ export default function FormularioDeNoticia({
           </label>
         </div>
 
+        {/* Capa de IA precisa ir ao ar rotulada: a linha de crédito troca
+            "Foto" por "Imagem gerada por IA", para o leitor não tomar a
+            ilustração por registro do que aconteceu. */}
+        <label className="mt-4 flex items-start gap-3">
+          <input
+            type="checkbox"
+            name="imagemGeradaPorIA"
+            checked={imagemGeradaPorIA}
+            onChange={(evento) => setImagemGeradaPorIA(evento.target.checked)}
+            className="mt-0.5 size-4 accent-marca"
+          />
+          <span>
+            <span className={rotulo}>Imagem gerada por IA</span>
+            <span className={`block ${dica}`}>
+              A matéria sai com “Imagem gerada por IA” no lugar de “Foto”.
+            </span>
+          </span>
+        </label>
+
         <label className="flex flex-col gap-2">
           <span className={rotulo}>Ou URL de uma imagem já hospedada</span>
           <input
@@ -485,6 +507,8 @@ export default function FormularioDeNoticia({
           }
           corpo={corpo}
           fontes={fontesDaPrevia}
+          // A matéria sai assinada pela redação; o painel não pede autor.
+          autor={REDACAO}
           capa={
             capaDaPrevia
               ? {
@@ -495,6 +519,7 @@ export default function FormularioDeNoticia({
                   credito: imagemCredito.trim() || undefined,
                   fonte: imagemFonte.trim() || undefined,
                   licenca: imagemLicenca.trim() || undefined,
+                  geradaPorIA: imagemGeradaPorIA,
                 }
               : undefined
           }

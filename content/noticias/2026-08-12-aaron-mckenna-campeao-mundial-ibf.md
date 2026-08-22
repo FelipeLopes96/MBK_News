@@ -14,6 +14,12 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Aaron McKenna"
+  - "Etinosa Oliha"
+  - "IBF"
+  - "Médios"
+  - "Título mundial"
 ---
 
 Aaron McKenna esperou 21 lutas para conquistar o título mundial. E fez isso diante da própria torcida.

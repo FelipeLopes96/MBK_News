@@ -13,6 +13,12 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "William Zepeda"
+  - "Lamont Roach Jr."
+  - "WBC"
+  - "Peso-leve"
+  - "Título mundial"
 ---
 
 William Zepeda finalmente tem um cinturão mundial.

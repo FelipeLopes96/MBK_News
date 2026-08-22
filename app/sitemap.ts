@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getTodos as getArtigos } from "@/lib/arquivo";
 import { getTodos as getReviews } from "@/lib/arsenal";
 import { getLendas, getMomentos, getOrganizacoes } from "@/lib/entidades";
+import { getProximosEventos } from "@/lib/eventos";
 import {
   categorias,
   getNoticiasPorCategoria,
@@ -140,6 +141,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ]);
 
+  // A agenda muda de conteúdo sozinha conforme os eventos passam, mas a URL é
+  // permanente enquanto houver evento marcado.
+  const proximos = getProximosEventos();
+  const agenda: MetadataRoute.Sitemap =
+    proximos.length === 0
+      ? []
+      : [
+          {
+            url: url("/eventos"),
+            changeFrequency: "daily",
+            priority: 0.7,
+          },
+        ];
+
   // A biblioteca só entra no sitemap quando existe: uma seção vazia indexada é
   // uma URL que o buscador visita para não achar nada.
   const videos = getTodosOsVideos();
@@ -183,6 +198,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...acervo,
     ...secoesDeCategoria,
     ...materias,
+    ...agenda,
     ...secaoDeVideos,
     ...arquivo,
     ...entidades,

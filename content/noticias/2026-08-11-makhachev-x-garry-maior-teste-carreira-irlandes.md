@@ -13,6 +13,14 @@ imagem:
   fonte: ""
   licenca: ""
 destaque: true
+tags:
+  - "Islam Makhachev"
+  - "Ian Machado Garry"
+  - "UFC 330"
+  - "Meio-médios"
+  - "Cinturão"
+organizacoes:
+  - "ufc"
 ---
 
 Islam Makhachev já fez praticamente tudo o que precisava fazer no peso-leve. Foi campeão, defendeu o cinturão e deixou a categoria com uma sequência de vitórias que o colocou entre os maiores nomes da história do UFC.

@@ -21,6 +21,13 @@ import { getNoticiaDestaque, getTodasNoticias } from "@/lib/noticias";
 const SECUNDARIAS = 2;
 const NOTICIAS_NO_FEED = 6;
 
+/**
+ * A lateral traz a agenda, que depende de que dia é hoje. Sem revalidação, o
+ * que fica no ar é a agenda do último deploy — e um evento do fim de semana
+ * passado continuaria listado como próximo.
+ */
+export const revalidate = 3600;
+
 export default function Home() {
   const destaque = getNoticiaDestaque();
   const restantes = getTodasNoticias().filter(

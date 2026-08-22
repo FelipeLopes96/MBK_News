@@ -14,6 +14,12 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Moses Itauma"
+  - "Filip Hrgović"
+  - "IBF"
+  - "Pesados"
+  - "Título mundial"
 ---
 
 Moses Itauma já era tratado como uma das maiores promessas dos pesos-pesados. Agora ele pode sair de Londres como campeão mundial.

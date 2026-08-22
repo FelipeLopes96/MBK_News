@@ -13,6 +13,10 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "IBJJF"
+  - "The Crown"
+  - "Long Beach"
 ---
 
 Os melhores faixas-pretas vão voltar a se encontrar no The Crown.

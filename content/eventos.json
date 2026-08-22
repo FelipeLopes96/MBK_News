@@ -4,35 +4,40 @@
     "organizacao": "UFC",
     "nome": "UFC 330: Makhachev x Garry",
     "data": "2026-08-15",
-    "local": "Xfinity Mobile Arena, Filadélfia"
+    "local": "Xfinity Mobile Arena",
+    "cidade": "Filadélfia, Estados Unidos"
   },
   {
     "id": 2,
     "organizacao": "ONE",
     "nome": "ONE Fight Night 46",
     "data": "2026-08-15",
-    "local": "Lumpinee Stadium, Bangkok"
+    "local": "Lumpinee Stadium",
+    "cidade": "Bangkok, Tailândia"
   },
   {
     "id": 3,
     "organizacao": "UFC",
     "nome": "UFC Fight Night: Hernandez x Rodrigues",
     "data": "2026-08-22",
-    "local": "Golden 1 Center, Sacramento"
+    "local": "Golden 1 Center",
+    "cidade": "Sacramento, Estados Unidos"
   },
   {
     "id": 4,
     "organizacao": "PFL",
     "nome": "PFL Tampa: Cyborg x Vieira",
     "data": "2026-08-22",
-    "local": "Benchmark International Arena, Tampa"
+    "local": "Benchmark International Arena",
+    "cidade": "Tampa, Estados Unidos"
   },
   {
     "id": 5,
     "organizacao": "UFC",
     "nome": "UFC Fight Night: Nurmagomedov x Song",
     "data": "2026-08-29",
-    "local": "Oriental Sports Center, Xangai"
+    "local": "Oriental Sports Center",
+    "cidade": "Xangai, China"
   },
   {
     "id": 6,
@@ -40,6 +45,6 @@
     "nome": "WGP 86",
     "data": "2026-08-30",
     "hora": "18h",
-    "local": "Local a confirmar"
+    "status": "a-confirmar"
   }
 ]

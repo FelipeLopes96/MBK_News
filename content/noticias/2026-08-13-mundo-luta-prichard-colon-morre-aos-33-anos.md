@@ -15,6 +15,11 @@ imagem:
   fonte: ""
   licenca: ""
 destaque: true
+tags:
+  - "Prichard Colón"
+  - "Luto"
+  - "Lesão cerebral"
+  - "Segurança do atleta"
 ---
 
 O mundo da luta está de luto. Prichard Colón morreu nesta quinta-feira, 13 de agosto, aos 33 anos, quase 11 anos depois de sofrer uma grave lesão cerebral durante a última luta de sua carreira profissional. A morte foi confirmada por seu pai, Richard Colón. A causa exata da morte não foi divulgada. 

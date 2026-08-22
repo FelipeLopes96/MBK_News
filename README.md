@@ -30,7 +30,7 @@ Abra [http://localhost:3000](http://localhost:3000).
 | `content/videos/` | Biblioteca de vídeos: um `.md` por vídeo do YouTube. |
 | `content/lendas/` | Atletas que definiram eras. |
 | `content/momentos/` | Momentos históricos. |
-| `content/eventos.json` | Agenda de próximos eventos. |
+| `content/eventos.json` | Agenda de eventos: data, organização, local, cidade. |
 | `content/mais-lidas.json` | Ranking da home: lista de slugs, da 1ª para a 5ª posição. |
 | `public/noticias/` | Capas das matérias. |
 | `public/marca/` | Logo e arte oficial do MBK News. |
@@ -38,6 +38,28 @@ Abra [http://localhost:3000](http://localhost:3000).
 Os relacionamentos são resolvidos por slug de organização, nunca dentro de
 componente: publicar um `.md` novo já o faz aparecer nas listagens e no hub da
 organização correspondente, sem tocar em código.
+
+### Agenda de eventos
+
+`content/eventos.json` é uma lista mantida à mão. Evento cuja data já passou
+**sai da agenda sozinho** — não é preciso limpar o arquivo.
+
+```json
+{
+  "id": 7,
+  "organizacao": "UFC",
+  "nome": "UFC 331: Fulano x Ciclano",
+  "data": "2026-09-12",
+  "hora": "23h",
+  "local": "T-Mobile Arena",
+  "cidade": "Las Vegas, Estados Unidos",
+  "status": "a-confirmar"
+}
+```
+
+`hora`, `local`, `cidade` e `status` são opcionais; sem `status`, o evento é
+tratado como confirmado. A home e a `/eventos` revalidam de hora em hora,
+porque "próximo evento" depende de que dia é hoje e o site é estático.
 
 ### Vídeos
 

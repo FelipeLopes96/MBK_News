@@ -13,6 +13,12 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Murilo Bustamante"
+  - "Faixa-coral"
+  - "Graduação"
+organizacoes:
+  - "ufc"
 ---
 
 Murilo Bustamante acaba de subir mais um degrau em uma carreira que já atravessa décadas.

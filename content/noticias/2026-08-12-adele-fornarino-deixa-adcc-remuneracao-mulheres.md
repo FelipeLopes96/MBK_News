@@ -13,6 +13,11 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Adele Fornarino"
+  - "ADCC"
+  - "Remuneração"
+  - "Jiu-jitsu feminino"
 ---
 
 Adele Fornarino não vai defender os títulos que conquistou no ADCC.

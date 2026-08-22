@@ -13,6 +13,14 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Mackenzie Dern"
+  - "Gillian Robertson"
+  - "UFC 330"
+  - "Peso-palha"
+  - "Finalização"
+organizacoes:
+  - "ufc"
 ---
 
 O UFC 330 tem duas disputas de cinturão. E uma delas coloca duas especialistas em jiu-jitsu frente a frente.

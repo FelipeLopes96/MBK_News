@@ -13,6 +13,13 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Diego Lopes"
+  - "IBJJF"
+  - "Mundial Master"
+  - "Faixa-preta"
+organizacoes:
+  - "ufc"
 ---
 
 Diego Lopes vai trocar o octógono pelo tatame.

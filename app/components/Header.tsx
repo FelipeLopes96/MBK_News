@@ -3,6 +3,7 @@ import Link from "next/link";
 import CampoDeBusca from "@/app/components/CampoDeBusca";
 import MenuMobile from "@/app/components/MenuMobile";
 import Navegacao from "@/app/components/Navegacao";
+import { getProximosEventos } from "@/lib/eventos";
 import { secoesPrincipais } from "@/lib/navegacao";
 import { categorias } from "@/lib/noticias";
 import { getTodosOsVideos } from "@/lib/videos";
@@ -19,8 +20,9 @@ import { getTodosOsVideos } from "@/lib/videos";
  * dois componentes de cliente.
  */
 export default function Header() {
-  // Vídeos só aparece na barra quando há biblioteca para abrir.
+  // Eventos e Vídeos só aparecem na barra quando há o que abrir do outro lado.
   const secoes = secoesPrincipais(categorias, {
+    comEventos: getProximosEventos().length > 0,
     comVideos: getTodosOsVideos().length > 0,
   });
 

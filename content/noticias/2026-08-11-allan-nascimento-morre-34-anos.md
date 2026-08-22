@@ -14,6 +14,11 @@ imagem:
   fonte: "https://www.ufc.com.br/athlete/allan-nascimento"
   licenca: ""
 destaque: false
+tags:
+  - "Allan Nascimento"
+  - "Luto"
+organizacoes:
+  - "ufc"
 ---
 
 O MMA brasileiro perdeu Allan Nascimento na última segunda-feira, 3 de agosto. O lutador de 34 anos foi encontrado inconsciente enquanto dormia e, segundo o UFC, sofreu um aparente ataque cardíaco. A equipe médica que atendeu o atleta tentou reanimá-lo, mas ele morreu no local.

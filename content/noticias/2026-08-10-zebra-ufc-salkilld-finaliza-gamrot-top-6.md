@@ -14,6 +14,13 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Quillan Salkilld"
+  - "Mateusz Gamrot"
+  - "Peso-leve"
+  - "Ranking"
+organizacoes:
+  - "ufc"
 ---
 
 Quillan Salkilld entrou no UFC Vegas 120 como uma promessa. Saiu como um nome que o Top 5 dos leves precisa começar a observar.

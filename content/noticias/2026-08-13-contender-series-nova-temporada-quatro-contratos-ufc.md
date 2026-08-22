@@ -14,6 +14,11 @@ imagem:
   fonte: 
   licenca: ""
 destaque: false
+tags:
+  - "Contender Series"
+  - "Contratos"
+organizacoes:
+  - "ufc"
 ---
 
 O Contender Series voltou — e quatro lutadores já garantiram seu lugar no UFC.

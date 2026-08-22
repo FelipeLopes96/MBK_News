@@ -13,6 +13,14 @@ imagem:
   fonte: ""
   licenca: ""
 destaque: false
+tags:
+  - "Stella Hemetsberger"
+  - "Marcos Aurélio"
+  - "Nico Carrillo"
+  - "ONE Fight Night 46"
+  - "Bangkok"
+organizacoes:
+  - "one-championship"
 ---
 
 O ONE Fight Night 46 terminou com cinturão mantido, nocautes importantes e boas apresentações brasileiras em Bangkok. Realizado na sexta-feira, 14 de agosto, no Lumpinee Stadium, o evento reuniu Muay Thai, kickboxing, MMA e grappling em um dos cards mais variados da organização.

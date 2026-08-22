@@ -47,6 +47,8 @@ export type DadosDaNoticia = {
   imagemCredito: string;
   imagemFonte: string;
   imagemLicenca: string;
+  /** Capa criada com IA — sai rotulada como tal na matéria. */
+  imagemGeradaPorIA: boolean;
 };
 
 export type Publicacao = {
@@ -60,24 +62,9 @@ function extensaoDe(nome: string): string {
   return nome.split(".").pop()?.toLowerCase() ?? "";
 }
 
-/**
- * Data de hoje no fuso da redação, não em UTC. O servidor da Vercel roda em
- * UTC: depois das 21h de Brasília o `toISOString()` já virou o dia seguinte, e
- * a matéria sairia datada de amanhã — errando o nome do arquivo e a ordem do
- * feed. `en-CA` é o locale que formata como AAAA-MM-DD.
- */
-const FUSO_DA_REDACAO = "America/Sao_Paulo";
-
-const formatadorDeHoje = new Intl.DateTimeFormat("en-CA", {
-  timeZone: FUSO_DA_REDACAO,
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-});
-
-export function dataDeHoje(): string {
-  return formatadorDeHoje.format(new Date());
-}
+// A data de hoje no fuso da redação vive em `lib/datas.ts`: a agenda de eventos
+// precisa da mesma regra, e duas cópias divergiriam.
+export { dataDeHoje } from "@/lib/datas";
 
 /**
  * Erros de preenchimento, todos de uma vez — o editor corrige tudo numa
@@ -119,7 +106,12 @@ export function validar(dados: DadosDaNoticia): string[] {
 
   // Créditos sem imagem alguma são um sintoma de campo preenchido no lugar errado.
   const temImagem = Boolean(dados.imagem || dados.imagemUrl.trim());
-  if (!temImagem && (dados.imagemCredito.trim() || dados.imagemLicenca.trim())) {
+  if (
+    !temImagem &&
+    (dados.imagemCredito.trim() ||
+      dados.imagemLicenca.trim() ||
+      dados.imagemGeradaPorIA)
+  ) {
     erros.push("Há crédito de imagem preenchido, mas nenhuma imagem foi enviada.");
   }
 
@@ -136,6 +128,7 @@ function montarImagem(dados: DadosDaNoticia, url: string | undefined) {
     ...(dados.imagemCredito.trim() ? { credito: dados.imagemCredito.trim() } : {}),
     ...(dados.imagemFonte.trim() ? { fonte: dados.imagemFonte.trim() } : {}),
     ...(dados.imagemLicenca.trim() ? { licenca: dados.imagemLicenca.trim() } : {}),
+    ...(dados.imagemGeradaPorIA ? { geradaPorIA: true } : {}),
   };
 }
 
