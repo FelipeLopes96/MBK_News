@@ -1,6 +1,7 @@
 import NewsGrid from "@/app/components/NewsGrid";
 import Container from "@/app/components/Container";
 import Paginacao from "@/app/components/Paginacao";
+import TituloDaPagina from "@/app/components/TituloDaPagina";
 import { getNoticiasDaPaginaGeral, getTotalDePaginasGeral } from "@/lib/noticias";
 
 /** Raiz da seção — a paginação e os links da home partem daqui. */
@@ -20,16 +21,17 @@ export default function ListaDeNoticias({ pagina }: { pagina: number }) {
 
   return (
     <Container>
-      <h1 className="text-3xl font-bold tracking-tight text-texto">
-        Todas as Notícias
-      </h1>
-      <p className="mt-2 text-texto-suave">
-        O acervo completo do MBK News, da mais recente para a mais antiga.
-      </p>
+      <TituloDaPagina
+        titulo="Todas as Notícias"
+        descricao="O acervo completo do MBK News, da mais recente para a mais antiga."
+      />
 
       <NewsGrid
         noticias={noticias}
         colunas={3}
+        // Só na primeira página: a partir da segunda, a matéria do topo não é a
+        // mais importante — é só a próxima da fila.
+        comAbertura={pagina === 1}
         preloadPrimeira
         mensagemVazia="Nenhuma notícia publicada ainda."
       />

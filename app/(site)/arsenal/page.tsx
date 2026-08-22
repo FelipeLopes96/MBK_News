@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Container from "@/app/components/Container";
 import ConteudoCard from "@/app/components/ConteudoCard";
+import TituloDaPagina from "@/app/components/TituloDaPagina";
 import { getTodos, rotuloDaCategoria } from "@/lib/arsenal";
 import { metadataDaPagina } from "@/lib/seo";
 
@@ -16,12 +17,10 @@ export default function ArsenalPage() {
 
   return (
     <Container>
-      <h1 className="text-3xl font-bold tracking-tight text-texto">
-        Arsenal
-      </h1>
-      <p className="mt-2 text-texto-suave">
-        Rankings e análises de equipamento.
-      </p>
+      <TituloDaPagina
+        titulo="Arsenal"
+        descricao="Rankings e análises de equipamento."
+      />
 
       {/* Enquanto não houver nenhum .md em content/arsenal, a seção fica em
           espera. Basta publicar o primeiro arquivo para a grade voltar. */}

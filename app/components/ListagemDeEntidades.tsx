@@ -3,6 +3,7 @@ import Container from "@/app/components/Container";
 import GradeDeEntidades from "@/app/components/GradeDeEntidades";
 import GradeFiltravel from "@/app/components/GradeFiltravel";
 import NavDoArquivo from "@/app/components/NavDoArquivo";
+import TituloDaPagina from "@/app/components/TituloDaPagina";
 import {
   organizacoesPresentes,
   paraCardDeEntidade,
@@ -38,10 +39,7 @@ export default function ListagemDeEntidades({
 
       <NavDoArquivo />
 
-      <h1 className="mt-6 text-3xl font-bold tracking-tight text-texto">
-        {titulo}
-      </h1>
-      <p className="mt-2 text-texto-suave">{descricao}</p>
+      <TituloDaPagina titulo={titulo} descricao={descricao} className="mt-6" />
 
       {entidades.length === 0 ? (
         <p className="mt-8 text-texto-suave">{mensagemVazia}</p>

@@ -3,6 +3,7 @@ import Container from "@/app/components/Container";
 import ConteudoCard from "@/app/components/ConteudoCard";
 import ExplorarOArquivo from "@/app/components/ExplorarOArquivo";
 import SectionHeader from "@/app/components/SectionHeader";
+import TituloDaPagina from "@/app/components/TituloDaPagina";
 import { getTodos, rotuloDaCategoria } from "@/lib/arquivo";
 import { metadataDaPagina } from "@/lib/seo";
 
@@ -18,12 +19,10 @@ export default function ArquivoPage() {
 
   return (
     <Container>
-      <h1 className="text-3xl font-bold tracking-tight text-texto">
-        Arquivo MBK News
-      </h1>
-      <p className="mt-2 text-texto-suave">
-        Histórias, guias e explicações sobre esportes de combate.
-      </p>
+      <TituloDaPagina
+        titulo="Arquivo MBK News"
+        descricao="Histórias, guias e explicações sobre esportes de combate."
+      />
 
       <ExplorarOArquivo />
 

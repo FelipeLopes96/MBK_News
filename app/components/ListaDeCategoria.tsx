@@ -1,6 +1,7 @@
 import NewsGrid from "@/app/components/NewsGrid";
 import Container from "@/app/components/Container";
 import Paginacao from "@/app/components/Paginacao";
+import TituloDaPagina from "@/app/components/TituloDaPagina";
 import {
   getNoticiasDaPagina,
   getTotalDePaginas,
@@ -19,14 +20,17 @@ export default function ListaDeCategoria({
 
   return (
     <Container>
-      <h1 className="text-3xl font-bold tracking-tight text-texto">
-        {categoria.rotulo}
-      </h1>
-      <p className="mt-2 text-texto-suave">
-        Tudo o que rolou no mundo do {categoria.rotulo}.
-      </p>
+      <TituloDaPagina
+        titulo={categoria.rotulo}
+        descricao={`Notícias, resultados e bastidores de ${categoria.rotulo}.`}
+      />
 
-      <NewsGrid noticias={noticias} colunas={3} preloadPrimeira />
+      <NewsGrid
+        noticias={noticias}
+        colunas={3}
+        comAbertura={pagina === 1}
+        preloadPrimeira
+      />
       <Paginacao base={`/${categoria.slug}`} pagina={pagina} total={total} />
     </Container>
   );

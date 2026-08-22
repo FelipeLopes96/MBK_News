@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import Container from "@/app/components/Container";
 import ResultadosDaBusca from "@/app/components/ResultadosDaBusca";
+import TituloDaPagina from "@/app/components/TituloDaPagina";
 import { getIndiceDeBusca } from "@/lib/indiceDeBusca";
 import { metadataDaPagina } from "@/lib/seo";
 
@@ -19,9 +20,7 @@ export const metadata: Metadata = {
 export default function BuscaPage() {
   return (
     <Container largura="leitura">
-      <h1 className="font-manchete text-3xl font-bold uppercase tracking-wide text-texto sm:text-4xl">
-        Busca
-      </h1>
+      <TituloDaPagina titulo="Busca" />
 
       {/*
         O índice é montado no build e entregue inteiro ao componente cliente.
