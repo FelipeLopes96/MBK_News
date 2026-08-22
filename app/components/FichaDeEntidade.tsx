@@ -35,7 +35,9 @@ export default function FichaDeEntidade({
 
   return (
     <dl
-      className={`${className} grid grid-cols-1 gap-4 rounded-lg border border-linha bg-superficie p-5 sm:grid-cols-3`}
+      // Três colunas só de md em diante: a 640px, rótulos como "Primeira luta
+      // profissional" ficam com uma palavra por linha.
+      className={`${className} grid grid-cols-1 gap-4 rounded-lg border border-linha bg-superficie p-5 sm:grid-cols-2 md:grid-cols-3`}
     >
       {preenchidas.map((linha) => (
         <div

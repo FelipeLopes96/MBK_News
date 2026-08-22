@@ -67,3 +67,23 @@
     color: var(--color-texto);
   }
 }
+
+/*
+ * Quem pede menos movimento no sistema recebe menos movimento aqui.
+ *
+ * O site usa transição de cor em quase todo link e dois efeitos de escala nos
+ * cards de vídeo. Nada disso é essencial para entender a página, então sob
+ * `prefers-reduced-motion` o estado final continua o mesmo e só a animação
+ * some — para quem tem enxaqueca ou distúrbio vestibular, movimento na tela não
+ * é enfeite.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

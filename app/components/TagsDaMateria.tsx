@@ -23,7 +23,7 @@ export default function TagsDaMateria({ tags }: { tags: string[] }) {
         <Link
           key={tag}
           href={`/busca?q=${encodeURIComponent(tag)}`}
-          className="rounded-full border border-linha bg-superficie px-3 py-1 text-xs font-medium text-texto-corpo transition-colors hover:border-marca hover:text-marca-clara focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
+          className="inline-flex min-h-9 items-center rounded-full border border-linha bg-superficie px-3 text-xs font-medium text-texto-corpo transition-colors hover:border-marca hover:text-marca-clara focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
         >
           {tag}
         </Link>

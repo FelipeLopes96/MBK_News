@@ -59,7 +59,13 @@ export default function HeroDestaque({
           </span>
         </div>
 
-        <h2 className="font-manchete text-3xl font-bold leading-[1.05] text-texto transition-colors group-hover:text-marca-clara sm:text-5xl">
+        {/*
+          O texto fica sobre a foto e cresce para cima. Sem teto de linhas, uma
+          manchete longa numa tela estreita sobe por cima da imagem inteira e
+          acaba cortada pelo `overflow-hidden` do quadro. De sm em diante há
+          largura para a manchete respirar e o teto sai.
+        */}
+        <h2 className="line-clamp-3 font-manchete text-3xl font-bold leading-[1.05] text-texto transition-colors group-hover:text-marca-clara sm:line-clamp-none sm:text-5xl">
           {noticia.title}
         </h2>
 

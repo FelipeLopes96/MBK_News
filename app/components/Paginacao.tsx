@@ -27,10 +27,16 @@ function janela(pagina: number, total: number): (number | "…")[] {
   });
 }
 
+/**
+ * `min-h-11` no celular: 44px é o alvo de toque confortável. De sm em diante o
+ * ponteiro é preciso e o botão volta ao tamanho que o desenho pede.
+ */
+const alvoDeToque = "inline-flex min-h-11 items-center sm:min-h-9";
+
 const classeDeSeta =
-  "rounded-md border border-linha bg-superficie px-3 py-2 text-sm font-medium text-texto transition-colors hover:border-marca hover:text-marca-clara focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca sm:px-4";
+  `${alvoDeToque} rounded-md border border-linha bg-superficie px-3 text-sm font-medium text-texto transition-colors hover:border-marca hover:text-marca-clara focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca sm:px-4`;
 const classeDeSetaInativa =
-  "rounded-md border border-linha/60 px-3 py-2 text-sm font-medium text-texto-fraco/70 sm:px-4";
+  `${alvoDeToque} rounded-md border border-linha/60 px-3 text-sm font-medium text-texto-fraco/70 sm:px-4`;
 
 export default function Paginacao({
   base,
@@ -80,14 +86,14 @@ export default function Paginacao({
               {item === pagina ? (
                 <span
                   aria-current="page"
-                  className="inline-flex min-w-9 justify-center rounded-md bg-marca px-2.5 py-2 text-sm font-semibold text-texto"
+                  className={`${alvoDeToque} min-w-11 justify-center rounded-md bg-marca px-2.5 text-sm font-semibold text-texto sm:min-w-9`}
                 >
                   {item}
                 </span>
               ) : (
                 <Link
                   href={urlDaPagina(base, item)}
-                  className="inline-flex min-w-9 justify-center rounded-md px-2.5 py-2 text-sm font-medium text-texto-suave transition-colors hover:bg-superficie hover:text-texto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
+                  className={`${alvoDeToque} min-w-11 justify-center rounded-md px-2.5 text-sm font-medium text-texto-suave transition-colors hover:bg-superficie hover:text-texto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca sm:min-w-9`}
                 >
                   {item}
                 </Link>

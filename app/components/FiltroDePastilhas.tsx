@@ -37,7 +37,9 @@ export default function FiltroDePastilhas({
               type="button"
               onClick={() => aoEscolher(pastilha.slug)}
               aria-pressed={selecionada}
-              className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca ${
+              // 44px de altura no celular; de sm em diante a pastilha volta ao
+              // tamanho compacto que a fileira pede.
+              className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca sm:min-h-9 ${
                 selecionada
                   ? "border-marca bg-marca text-texto"
                   : "border-linha bg-superficie text-texto-corpo hover:border-linha-forte hover:text-texto"

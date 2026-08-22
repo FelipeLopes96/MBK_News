@@ -60,8 +60,10 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-linha bg-superficie">
-      <Container className="grid grid-cols-2 gap-10 lg:grid-cols-4">
-        <div className="col-span-2">
+      {/* Uma coluna no celular estreito: duas colunas de links a 360px deixam
+          "Todas as notícias" quebrando no meio. */}
+      <Container className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="sm:col-span-2">
           <Link href="/" className="inline-block">
             <Image
               src="/marca/mbk-news.png"
