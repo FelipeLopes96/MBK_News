@@ -1,6 +1,9 @@
 "use client";
 
-import Markdown from "react-markdown";
+import Markdown, {
+  defaultUrlTransform,
+  type UrlTransform,
+} from "react-markdown";
 import BlocoDeFontes from "@/app/components/BlocoDeFontes";
 import CreditoDeImagem from "@/app/components/CreditoDeImagem";
 import {
@@ -58,6 +61,16 @@ function formatar(data: string): string {
   const quando = new Date(data);
   return Number.isNaN(quando.getTime()) ? "" : formatador.format(quando);
 }
+
+/**
+ * As fotos do meio do texto ainda são arquivos no navegador, e o react-markdown
+ * apaga endereço de protocolo que não conhece — `blob:` sai como string vazia e
+ * a prévia perderia justamente a imagem que o editor quer conferir. A liberação
+ * vale só aqui: nas páginas do site o corpo vem do repositório, onde blob URL
+ * não existe e continuaria sendo coisa para descartar.
+ */
+const permitirBlob: UrlTransform = (url) =>
+  url.startsWith("blob:") ? url : defaultUrlTransform(url);
 
 export default function PreviaDaMateria({
   title,
@@ -117,7 +130,9 @@ export default function PreviaDaMateria({
 
       {corpo.trim() ? (
         <div className={`mt-8 ${classeDoCorpoDaMateria}`}>
-          <Markdown components={componentesDeMarkdown}>{corpo}</Markdown>
+          <Markdown components={componentesDeMarkdown} urlTransform={permitirBlob}>
+            {corpo}
+          </Markdown>
         </div>
       ) : (
         <p className="mt-8 text-sm italic text-texto-fraco/70">

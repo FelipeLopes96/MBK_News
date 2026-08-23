@@ -4,6 +4,13 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { publicarNoticia, type EstadoDaPublicacao } from "@/app/admin/acoes";
 import { gerarSlug } from "@/lib/admin/slug";
 import PreviaDaMateria from "@/app/admin/PreviaDaMateria";
+import {
+  marcadorDaImagem,
+  marcadoresNoCorpo,
+  markdownDaImagem,
+  renumerarMarcadores,
+  trocarMarcadores,
+} from "@/lib/imagensNoCorpo";
 import type { PosicaoDaImagem } from "@/lib/conteudo";
 // `lib/seo` não lê disco, então a constante pode atravessar para o navegador.
 import { REDACAO } from "@/lib/seo";
@@ -26,12 +33,42 @@ type Props = {
   hoje: string;
 };
 
+/**
+ * Uma foto do meio do texto enquanto o editor trabalha nela.
+ *
+ * O `id` existe para o React manter o input de arquivo no lugar quando uma linha
+ * é removida — com a chave na posição, ele reaproveitaria o campo da linha
+ * apagada e as fotos trocariam de dono sem ninguém ver.
+ */
+type ImagemDoCorpo = {
+  id: number;
+  /**
+   * O arquivo também fica guardado aqui, não só no input: o React esvazia os
+   * campos de arquivo depois que a action responde. Ver `devolverOsArquivos`.
+   */
+  arquivo: File | null;
+  tamanho: number;
+  /** Blob URL do arquivo escolhido, para a miniatura e a prévia. */
+  previa: string;
+  legenda: string;
+  fonte: string;
+  geradaPorIA: boolean;
+};
+
 const estadoInicial: EstadoDaPublicacao = { erros: [] };
 
 const campo =
   "w-full rounded-md border border-linha-forte bg-fundo px-3 py-2 text-texto outline-none focus:border-marca";
 const rotulo = "text-sm font-semibold text-texto-corpo";
 const dica = "text-xs text-texto-fraco";
+
+/** Foto de celular vem em MB, recorte de tela em KB — "0.0 MB" não diz nada. */
+function tamanhoLegivel(bytes: number): string {
+  const emMegabytes = bytes / 1024 / 1024;
+  return emMegabytes < 1
+    ? `${Math.round(bytes / 1024)} KB`
+    : `${emMegabytes.toFixed(1)} MB`;
+}
 
 // Espelham `classeDaPosicao` de ImagemNoticia — o Tailwind só gera as classes
 // que encontra escritas por extenso no código.
@@ -69,6 +106,10 @@ export default function FormularioDeNoticia({
   const [imagemLicenca, setImagemLicenca] = useState("");
   const [imagemGeradaPorIA, setImagemGeradaPorIA] = useState(false);
   const [previa, setPrevia] = useState("");
+  const [arquivoDaCapa, setArquivoDaCapa] = useState<File | null>(null);
+
+  const [imagensDoCorpo, setImagensDoCorpo] = useState<ImagemDoCorpo[]>([]);
+  const proximoId = useRef(1);
 
   const [fontes, setFontes] = useState([{ rotulo: "", url: "" }]);
   /**
@@ -82,6 +123,18 @@ export default function FormularioDeNoticia({
   // Input de arquivo não aceita `value`; para limpá-lo depois de publicar só
   // pela referência ao elemento.
   const inputDaImagem = useRef<HTMLInputElement>(null);
+  /** O mesmo, um por linha de imagem do corpo, para devolver os arquivos. */
+  const inputsDoCorpo = useRef(new Map<number, HTMLInputElement>());
+
+  const campoDoCorpo = useRef<HTMLTextAreaElement>(null);
+  /**
+   * O marcador entra onde o cursor está, e a posição é lida do próprio elemento
+   * na hora do clique — guardá-la a cada tecla ficaria velha, porque nem todo
+   * navegador avisa quando o cursor anda digitando. Enquanto o editor não tocou
+   * no campo, o cursor está em zero e a imagem cairia antes do primeiro
+   * parágrafo; nesse caso ela vai para o fim do texto.
+   */
+  const corpoFoiFocado = useRef(false);
 
   function trocarTitulo(valor: string) {
     setTitle(valor);
@@ -91,9 +144,90 @@ export default function FormularioDeNoticia({
   }
 
   function escolherImagem(arquivo: File | undefined) {
+    setArquivoDaCapa(arquivo ?? null);
     setPrevia((anterior) => {
       if (anterior) URL.revokeObjectURL(anterior);
       return arquivo ? URL.createObjectURL(arquivo) : "";
+    });
+  }
+
+  function adicionarImagemDoCorpo() {
+    setImagensDoCorpo((atuais) => [
+      ...atuais,
+      {
+        id: proximoId.current++,
+        arquivo: null,
+        tamanho: 0,
+        previa: "",
+        legenda: "",
+        fonte: "",
+        geradaPorIA: false,
+      },
+    ]);
+  }
+
+  function escolherImagemDoCorpo(id: number, arquivo: File | undefined) {
+    setImagensDoCorpo((atuais) =>
+      atuais.map((imagem) => {
+        if (imagem.id !== id) return imagem;
+        if (imagem.previa) URL.revokeObjectURL(imagem.previa);
+
+        return {
+          ...imagem,
+          arquivo: arquivo ?? null,
+          tamanho: arquivo?.size ?? 0,
+          previa: arquivo ? URL.createObjectURL(arquivo) : "",
+        };
+      })
+    );
+  }
+
+  function atualizarImagemDoCorpo(
+    id: number,
+    campos: Partial<Pick<ImagemDoCorpo, "legenda" | "fonte" | "geradaPorIA">>
+  ) {
+    setImagensDoCorpo((atuais) =>
+      atuais.map((imagem) => (imagem.id === id ? { ...imagem, ...campos } : imagem))
+    );
+  }
+
+  function removerImagemDoCorpo(indice: number) {
+    setImagensDoCorpo((atuais) => {
+      const alvo = atuais[indice];
+      if (alvo?.previa) URL.revokeObjectURL(alvo.previa);
+      return atuais.filter((_, i) => i !== indice);
+    });
+
+    // O corpo cita a foto pelo número, que é a posição na lista: tirar a do meio
+    // renumera as de baixo, e o texto tem de acompanhar na mesma hora.
+    setCorpo((atual) => renumerarMarcadores(atual, indice + 1));
+  }
+
+  /** Põe o marcador no ponto onde o editor deixou o cursor dentro do corpo. */
+  function inserirNoTexto(numero: number) {
+    const marcador = marcadorDaImagem(numero);
+    const area = campoDoCorpo.current;
+
+    const usarCursor = area !== null && corpoFoiFocado.current;
+    const inicio = usarCursor ? area.selectionStart : corpo.length;
+    const fim = usarCursor ? area.selectionEnd : corpo.length;
+
+    const antes = corpo.slice(0, inicio);
+    const depois = corpo.slice(fim);
+
+    // A foto precisa de parágrafo próprio: é o que faz o renderizador trocar o
+    // <p> em volta dela pelo <figure> com legenda e crédito.
+    const abertura = !antes || antes.endsWith("\n\n") ? "" : antes.endsWith("\n") ? "\n" : "\n\n";
+    const fechamento = depois.startsWith("\n\n") ? "" : depois.startsWith("\n") ? "\n" : "\n\n";
+
+    setCorpo(`${antes}${abertura}${marcador}${fechamento}${depois}`);
+
+    // Depois da re-renderização: o textarea é controlado, e antes disso o valor
+    // novo ainda não chegou ao DOM para receber o cursor.
+    const cursor = antes.length + abertura.length + marcador.length + fechamento.length;
+    requestAnimationFrame(() => {
+      area?.focus();
+      area?.setSelectionRange(cursor, cursor);
     });
   }
 
@@ -116,9 +250,17 @@ export default function FormularioDeNoticia({
     setImagemCredito("");
     setImagemFonte("");
     setImagemLicenca("");
+    setImagemGeradaPorIA(false);
     setFontes([{ rotulo: "", url: "" }]);
     escolherImagem(undefined);
     if (inputDaImagem.current) inputDaImagem.current.value = "";
+
+    // Some com as linhas inteiras: os inputs de arquivo saem do DOM junto e
+    // levam os arquivos escolhidos com eles.
+    for (const imagem of imagensDoCorpo) {
+      if (imagem.previa) URL.revokeObjectURL(imagem.previa);
+    }
+    setImagensDoCorpo([]);
   }
 
   // Solta a blob URL da prévia quando o componente sai de cena.
@@ -128,7 +270,73 @@ export default function FormularioDeNoticia({
     };
   }, [previa]);
 
+  /**
+   * O mesmo para as imagens do corpo, mas pela ref: um efeito com a lista na
+   * dependência revogaria as blob URLs a cada tecla digitada numa legenda, e as
+   * miniaturas das fotos ainda em uso morreriam junto.
+   */
+  const imagensParaSoltar = useRef(imagensDoCorpo);
+  useEffect(() => {
+    imagensParaSoltar.current = imagensDoCorpo;
+  }, [imagensDoCorpo]);
+  useEffect(() => {
+    return () => {
+      for (const imagem of imagensParaSoltar.current) {
+        if (imagem.previa) URL.revokeObjectURL(imagem.previa);
+      }
+    };
+  }, []);
+
+  /**
+   * O React esvazia os campos do formulário depois que a action responde, e os
+   * inputs de arquivo não voltam sozinhos: são os únicos que o navegador não
+   * deixa preencher por código. Numa publicação recusada por erro de
+   * preenchimento — justamente o caso em que o editor vai corrigir e tentar de
+   * novo — a capa e todas as fotos do corpo sumiriam dos campos sem aviso, e o
+   * envio seguinte iria sem imagem nenhuma.
+   *
+   * Por isso os arquivos ficam guardados no estado e são devolvidos aqui, via
+   * DataTransfer, que é o único caminho que o navegador aceita.
+   */
+  useEffect(() => {
+    function devolver(
+      input: HTMLInputElement | null | undefined,
+      arquivo: File | null
+    ) {
+      // `files.length` já preenchido é o caso normal, quando quem mexeu no campo
+      // foi o editor e não o reset.
+      if (!input || !arquivo || input.files?.length) return;
+
+      const deposito = new DataTransfer();
+      deposito.items.add(arquivo);
+      input.files = deposito.files;
+    }
+
+    devolver(inputDaImagem.current, arquivoDaCapa);
+    for (const imagem of imagensDoCorpo) {
+      devolver(inputsDoCorpo.current.get(imagem.id), imagem.arquivo);
+    }
+  }, [estado, arquivoDaCapa, imagensDoCorpo]);
+
   const slugFinal = gerarSlug(slug || title);
+
+  const numerosNoCorpo = new Set(marcadoresNoCorpo(corpo));
+  const totalDeBytes =
+    (arquivoDaCapa?.size ?? 0) +
+    imagensDoCorpo.reduce((soma, imagem) => soma + imagem.tamanho, 0);
+
+  /**
+   * Na prévia o marcador dá lugar à foto que está no navegador, para o editor
+   * ver onde ela caiu no texto. O caminho definitivo só existe depois do commit,
+   * então aqui vai a blob URL — a mesma função que monta o Markdown da
+   * publicação, para as duas telas não divergirem.
+   */
+  const corpoDaPrevia = trocarMarcadores(corpo, (numero) => {
+    const imagem = imagensDoCorpo[numero - 1];
+    if (!imagem?.previa) return null;
+
+    return `\n\n${markdownDaImagem(imagem.previa, imagem.legenda.trim() || title, imagem)}\n\n`;
+  });
 
   // A prévia mostra o arquivo escolhido agora; sem upload, cai na URL digitada.
   const capaDaPrevia = previa || imagemUrl.trim();
@@ -311,17 +519,175 @@ export default function FormularioDeNoticia({
         <label className="flex flex-col gap-2">
           <span className={rotulo}>Corpo da matéria</span>
           <textarea
+            ref={campoDoCorpo}
             name="corpo"
             value={corpo}
             onChange={(evento) => setCorpo(evento.target.value)}
+            onFocus={() => {
+              corpoFoiFocado.current = true;
+            }}
             rows={18}
             className={`${campo} font-mono text-sm leading-relaxed`}
           />
           <span className={dica}>
             Markdown: <code>## Subtítulo</code>, <code>**negrito**</code>,{" "}
-            <code>[link](url)</code>. Não repita o título aqui.
+            <code>[link](url)</code>. Não repita o título aqui. Fotos no meio do
+            texto entram como <code>{marcadorDaImagem(1)}</code> — veja a seção
+            abaixo.
           </span>
         </label>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-marca-clara">
+          Imagens no meio da matéria
+        </h2>
+
+        <p className={dica}>
+          Cada foto sai exatamente onde o marcador dela estiver no corpo. Clique
+          no texto acima, no ponto em que ela deve aparecer, e use “Inserir no
+          texto”. Pode adicionar quantas quiser, mover o marcador de lugar ou
+          apagá-lo à mão — vale onde ele estiver na hora de publicar.
+        </p>
+
+        {imagensDoCorpo.map((imagem, indice) => {
+          const numero = indice + 1;
+          const posicionada = numerosNoCorpo.has(numero);
+
+          return (
+            <div
+              key={imagem.id}
+              className="flex flex-col gap-3 rounded-md border border-linha p-4"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                <span className={rotulo}>
+                  Imagem {numero}{" "}
+                  <code className="text-xs text-texto-fraco">
+                    {marcadorDaImagem(numero)}
+                  </code>
+                </span>
+                <span
+                  className={`text-xs font-semibold ${
+                    posicionada ? "text-emerald-400" : "text-amber-400"
+                  }`}
+                >
+                  {posicionada ? "posicionada no texto" : "ainda fora do texto"}
+                </span>
+              </div>
+
+              <input
+                ref={(elemento) => {
+                  if (elemento) inputsDoCorpo.current.set(imagem.id, elemento);
+                  else inputsDoCorpo.current.delete(imagem.id);
+                }}
+                type="file"
+                name="imagemCorpo"
+                accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
+                onChange={(evento) =>
+                  escolherImagemDoCorpo(imagem.id, evento.target.files?.[0])
+                }
+                className={`${campo} file:mr-3 file:rounded file:border-0 file:bg-superficie-alta file:px-3 file:py-1 file:text-texto-corpo`}
+              />
+
+              {imagem.previa && (
+                <div className="overflow-hidden rounded-md border border-linha">
+                  {/* Arquivo ainda no navegador: o next/image não busca blob. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={imagem.previa}
+                    alt={`Prévia da imagem ${numero}`}
+                    className="max-h-48 w-full object-contain"
+                  />
+                </div>
+              )}
+
+              {/* `minmax(0,…)`: o mínimo de um input não é zero, e duas trilhas
+                  `1fr` empurrariam a linha para fora da tela num celular. */}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                <input
+                  name="imagemCorpoLegenda"
+                  value={imagem.legenda}
+                  onChange={(evento) =>
+                    atualizarImagemDoCorpo(imagem.id, {
+                      legenda: evento.target.value,
+                    })
+                  }
+                  placeholder="Legenda (opcional)"
+                  className={campo}
+                />
+                <input
+                  name="imagemCorpoFonte"
+                  value={imagem.fonte}
+                  onChange={(evento) =>
+                    atualizarImagemDoCorpo(imagem.id, {
+                      fonte: evento.target.value,
+                    })
+                  }
+                  placeholder="Crédito ou fonte (opcional)"
+                  className={campo}
+                />
+              </div>
+
+              {/* Mesma regra da capa: ilustração de IA vai ao ar rotulada, para
+                  o leitor não tomar o desenho por registro do que aconteceu. */}
+              <label className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  name="imagemCorpoIA"
+                  // O valor é o índice porque checkbox desmarcada não é enviada:
+                  // sem ele o servidor não saberia de qual imagem é a marcação.
+                  value={indice}
+                  checked={imagem.geradaPorIA}
+                  onChange={(evento) =>
+                    atualizarImagemDoCorpo(imagem.id, {
+                      geradaPorIA: evento.target.checked,
+                    })
+                  }
+                  className="mt-0.5 size-4 accent-marca"
+                />
+                <span className={dica}>Gerada por IA</span>
+              </label>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => inserirNoTexto(numero)}
+                  className="rounded-md border border-linha-forte px-4 py-2 text-sm text-texto-corpo hover:border-marca"
+                >
+                  {posicionada ? "Inserir de novo" : "Inserir no texto"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removerImagemDoCorpo(indice)}
+                  className="rounded-md border border-linha-forte px-3 py-2 text-sm text-texto-suave hover:border-red-800 hover:text-red-300"
+                >
+                  Remover
+                </button>
+                {imagem.tamanho > 0 && (
+                  <span className={dica}>{tamanhoLegivel(imagem.tamanho)}</span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={adicionarImagemDoCorpo}
+            className="rounded-md border border-linha-forte px-4 py-2 text-sm text-texto-corpo hover:border-marca"
+          >
+            Adicionar imagem
+          </button>
+          {/* A capa e as fotos do corpo sobem no mesmo envio, então é a soma que
+              estoura o limite — e o editor precisa vê-la antes de publicar. */}
+          {totalDeBytes > 0 && (
+            <span className={dica}>
+              Capa e fotos somam {tamanhoLegivel(totalDeBytes)} dos 20 MB que o
+              envio aceita.
+            </span>
+          )}
+        </div>
       </section>
 
       <section className="flex flex-col gap-4">
@@ -517,7 +883,7 @@ export default function FormularioDeNoticia({
             categorias.find((opcao) => opcao.slug === categoria)?.rotulo ??
             categoria
           }
-          corpo={corpo}
+          corpo={corpoDaPrevia}
           fontes={fontesDaPrevia}
           // A matéria sai assinada pela redação; o painel não pede autor.
           autor={REDACAO}

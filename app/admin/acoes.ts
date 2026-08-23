@@ -8,6 +8,7 @@ import {
   validar,
   type DadosDaNoticia,
   type FonteInformada,
+  type ImagemDoCorpoInformada,
 } from "@/lib/admin/publicacao";
 
 /**
@@ -76,6 +77,37 @@ async function lerImagem(
   };
 }
 
+/**
+ * As fotos do meio do texto chegam em campos repetidos, um conjunto por linha do
+ * formulário. A ordem é o que liga cada arquivo à sua legenda e ao marcador que
+ * o editor deixou no corpo, então a linha sem arquivo é preservada aqui, com
+ * bytes vazios: descartá-la deslocaria a numeração de todas as seguintes.
+ * `validar` é quem reclama dela.
+ */
+async function lerImagensDoCorpo(
+  formData: FormData
+): Promise<ImagemDoCorpoInformada[]> {
+  const arquivos = formData.getAll("imagemCorpo");
+  const legendas = formData.getAll("imagemCorpoLegenda").map(String);
+  const fontes = formData.getAll("imagemCorpoFonte").map(String);
+  // Checkbox só é enviada quando marcada, então ela carrega o índice da linha em
+  // vez de "on" — sem isso não daria para saber de qual imagem ela é.
+  const geradasPorIA = new Set(formData.getAll("imagemCorpoIA").map(String));
+
+  return Promise.all(
+    arquivos.map(async (arquivo, indice) => ({
+      nome: arquivo instanceof File ? arquivo.name : "",
+      bytes:
+        arquivo instanceof File
+          ? Buffer.from(await arquivo.arrayBuffer())
+          : Buffer.alloc(0),
+      legenda: legendas[indice] ?? "",
+      fonte: fontes[indice] ?? "",
+      geradaPorIA: geradasPorIA.has(String(indice)),
+    }))
+  );
+}
+
 export async function publicarNoticia(
   _anterior: EstadoDaPublicacao,
   formData: FormData
@@ -100,6 +132,7 @@ export async function publicarNoticia(
     imagemFonte: String(formData.get("imagemFonte") ?? ""),
     imagemLicenca: String(formData.get("imagemLicenca") ?? ""),
     imagemGeradaPorIA: formData.get("imagemGeradaPorIA") === "on",
+    imagensDoCorpo: await lerImagensDoCorpo(formData),
   };
 
   const erros = validar(dados);
@@ -116,6 +149,25 @@ export async function publicarNoticia(
       return {
         erros: [
           `Já existe uma matéria em ${publicacao.caminhoDoMarkdown}. Mude o slug ou a data.`,
+        ],
+      };
+    }
+
+    // O commit é montado com `base_tree`: caminho repetido grava em cima do que
+    // estava lá, sem conflito nem aviso. Duas matérias de slug parecido podem
+    // colidir aqui, e o prejuízo seria a foto da matéria antiga.
+    const ocupados = (
+      await Promise.all(
+        publicacao.caminhosDasImagensDoCorpo.map(async (caminho) =>
+          (await caminhoExiste(caminho)) ? caminho : null
+        )
+      )
+    ).filter((caminho): caminho is string => caminho !== null);
+
+    if (ocupados.length > 0) {
+      return {
+        erros: [
+          `Já existe arquivo em ${ocupados.join(", ")}. Mude o slug para não apagar a imagem de outra matéria.`,
         ],
       };
     }

@@ -3,6 +3,12 @@ import { categorias } from "@/lib/noticias";
 import type { PosicaoDaImagem } from "@/lib/conteudo";
 import type { ArquivoParaCommit } from "@/lib/admin/github";
 import { gerarSlug } from "@/lib/admin/slug";
+import {
+  marcadorDaImagem,
+  marcadoresNoCorpo,
+  markdownDaImagem,
+  trocarMarcadores,
+} from "@/lib/imagensNoCorpo";
 
 /**
  * Traduz o que o formulário do painel envia para os arquivos que o site lê:
@@ -25,9 +31,29 @@ const EXTENSOES_ACEITAS = ["jpg", "jpeg", "png", "webp", "avif", "gif"];
 /** Abaixo do `bodySizeLimit` das Server Actions, para o erro sair legível. */
 const TAMANHO_MAXIMO_DA_IMAGEM = 6 * 1024 * 1024;
 
+/**
+ * Capa e imagens do corpo sobem no MESMO POST, então o que estoura o
+ * `bodySizeLimit` é a soma, não cada arquivo. Sem este teto o envio morreria no
+ * limite do framework, que devolve erro de rede sem dizer qual foto pesou.
+ */
+const TAMANHO_MAXIMO_TOTAL = 20 * 1024 * 1024;
+
 export type FonteInformada = {
   rotulo: string;
   url: string;
+};
+
+/**
+ * Uma foto no meio do texto. A ordem no formulário é o número que o editor cita
+ * no corpo — a primeira é `[imagem:1]`.
+ */
+export type ImagemDoCorpoInformada = {
+  /** Vazio quando o editor abriu a linha e esqueceu de escolher o arquivo. */
+  nome: string;
+  bytes: Buffer;
+  legenda: string;
+  fonte: string;
+  geradaPorIA: boolean;
 };
 
 export type DadosDaNoticia = {
@@ -49,12 +75,20 @@ export type DadosDaNoticia = {
   imagemLicenca: string;
   /** Capa criada com IA — sai rotulada como tal na matéria. */
   imagemGeradaPorIA: boolean;
+  /** Fotos do meio do texto, na ordem em que o corpo as cita. */
+  imagensDoCorpo: ImagemDoCorpoInformada[];
 };
 
 export type Publicacao = {
   slug: string;
   caminhoDoMarkdown: string;
   arquivos: ArquivoParaCommit[];
+  /**
+   * Onde as fotos do corpo vão parar. Ficam à parte porque a ação confere se já
+   * existe arquivo nesses caminhos: o commit é montado com `base_tree`, então
+   * gravar em cima apagaria a foto de outra matéria sem aviso.
+   */
+  caminhosDasImagensDoCorpo: string[];
   mensagemDoCommit: string;
 };
 
@@ -115,6 +149,75 @@ export function validar(dados: DadosDaNoticia): string[] {
     erros.push("Há crédito de imagem preenchido, mas nenhuma imagem foi enviada.");
   }
 
+  erros.push(...validarImagensDoCorpo(dados));
+
+  const totalDeBytes =
+    (dados.imagem?.bytes.byteLength ?? 0) +
+    dados.imagensDoCorpo.reduce((soma, imagem) => soma + imagem.bytes.byteLength, 0);
+
+  if (totalDeBytes > TAMANHO_MAXIMO_TOTAL) {
+    erros.push(
+      `As imagens somam ${emMegabytes(totalDeBytes)} MB e o envio aceita no máximo ${emMegabytes(TAMANHO_MAXIMO_TOTAL)} MB. Comprima os arquivos ou publique menos fotos.`
+    );
+  }
+
+  return erros;
+}
+
+function emMegabytes(bytes: number): string {
+  return (bytes / 1024 / 1024).toFixed(1);
+}
+
+/**
+ * A numeração das fotos do corpo é a posição no formulário, e é ela que o
+ * marcador no texto cita. Por isso linha sem arquivo é erro, e não algo a
+ * ignorar: descartá-la em silêncio deslocaria todas as seguintes, e cada
+ * marcador passaria a apontar para a foto errada.
+ */
+function validarImagensDoCorpo(dados: DadosDaNoticia): string[] {
+  const erros: string[] = [];
+  const citados = new Set(marcadoresNoCorpo(dados.corpo));
+
+  dados.imagensDoCorpo.forEach((imagem, indice) => {
+    const numero = indice + 1;
+
+    if (imagem.bytes.byteLength === 0) {
+      erros.push(`A imagem ${numero} do corpo está sem arquivo escolhido.`);
+      return;
+    }
+
+    if (!EXTENSOES_ACEITAS.includes(extensaoDe(imagem.nome))) {
+      erros.push(
+        `A imagem ${numero} do corpo está em formato não aceito. Use ${EXTENSOES_ACEITAS.join(", ")}.`
+      );
+    }
+
+    if (imagem.bytes.byteLength > TAMANHO_MAXIMO_DA_IMAGEM) {
+      erros.push(
+        `A imagem ${numero} do corpo passa de 6 MB. Comprima antes de subir.`
+      );
+    }
+
+    if (!citados.has(numero)) {
+      erros.push(
+        `A imagem ${numero} do corpo não foi posicionada no texto: clique onde ela deve entrar e use "Inserir no texto", ou escreva ${marcadorDaImagem(numero)} à mão.`
+      );
+    }
+  });
+
+  // O contrário também trava a publicação: marcador sem foto sairia impresso na
+  // matéria como "[imagem:4]", no meio do parágrafo.
+  const quantas = dados.imagensDoCorpo.length;
+  for (const numero of citados) {
+    if (numero < 1 || numero > quantas) {
+      erros.push(
+        quantas === 0
+          ? `O corpo cita ${marcadorDaImagem(numero)}, mas nenhuma imagem foi adicionada à matéria.`
+          : `O corpo cita ${marcadorDaImagem(numero)}, mas a matéria só tem ${quantas === 1 ? "uma imagem" : `${quantas} imagens`} no meio do texto.`
+      );
+    }
+  }
+
   return erros;
 }
 
@@ -147,6 +250,36 @@ function montarFontes(fontes: FonteInformada[]) {
     );
 }
 
+/**
+ * Troca os marcadores pelas imagens de verdade, agora que o slug definiu o
+ * caminho de cada arquivo.
+ *
+ * O texto alternativo cai na legenda quando ela existe e no título da matéria
+ * quando não — é a mesma escolha que a capa já faz na página publicada.
+ */
+function aplicarImagensDoCorpo(
+  corpo: string,
+  imagens: ImagemDoCorpoInformada[],
+  urls: string[],
+  title: string
+): string {
+  return (
+    trocarMarcadores(corpo, (numero) => {
+      const imagem = imagens[numero - 1];
+      const url = urls[numero - 1];
+      if (!imagem || !url) return null;
+
+      // Parágrafo próprio: é assim que o renderizador troca o <p> em volta da
+      // imagem pelo <figure> com legenda e crédito. O painel já insere o
+      // marcador em linha separada, mas quem digita à mão pode colá-lo no meio
+      // da frase.
+      return `\n\n${markdownDaImagem(url, imagem.legenda.trim() || title, imagem)}\n\n`;
+    })
+      .replace(/\n{3,}/g, "\n\n")
+      .trim()
+  );
+}
+
 export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
   const slug = gerarSlug(dados.slug || dados.title);
   const arquivos: ArquivoParaCommit[] = [];
@@ -163,7 +296,27 @@ export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
     });
   }
 
+  // "-imagem-N" e não só "-N": a matéria de slug "ufc-320-1" gravaria a capa
+  // exatamente onde ficaria a primeira foto do corpo de "ufc-320".
+  const caminhosDasImagensDoCorpo: string[] = [];
+  const urlsDasImagensDoCorpo = dados.imagensDoCorpo.map((imagemDoCorpo, indice) => {
+    const nome = `${slug}-imagem-${indice + 1}.${extensaoDe(imagemDoCorpo.nome)}`;
+    const caminho = `public/noticias/${nome}`;
+
+    arquivos.push({ caminho, conteudo: imagemDoCorpo.bytes });
+    caminhosDasImagensDoCorpo.push(caminho);
+
+    return `/noticias/${nome}`;
+  });
+
   const imagem = montarImagem(dados, urlDaImagem);
+
+  const corpo = aplicarImagensDoCorpo(
+    dados.corpo.trim(),
+    dados.imagensDoCorpo,
+    urlsDasImagensDoCorpo,
+    dados.title.trim()
+  );
 
   const frontmatter = {
     title: dados.title.trim(),
@@ -178,7 +331,7 @@ export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
 
   // `matter.stringify` serializa o YAML pelo js-yaml, então aspas e quebras de
   // linha do título e do resumo saem escapadas corretamente.
-  const markdown = matter.stringify(`\n${dados.corpo.trim()}\n`, frontmatter);
+  const markdown = matter.stringify(`\n${corpo}\n`, frontmatter);
   const caminhoDoMarkdown = `content/noticias/${dados.date}-${slug}.md`;
 
   arquivos.push({
@@ -190,6 +343,7 @@ export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
     slug,
     caminhoDoMarkdown,
     arquivos,
+    caminhosDasImagensDoCorpo,
     mensagemDoCommit: `Feat: ${dados.title.trim()}`,
   };
 }
