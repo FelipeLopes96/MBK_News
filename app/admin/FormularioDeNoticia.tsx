@@ -473,6 +473,7 @@ export default function FormularioDeNoticia({
           </label>
         </div>
 
+        {/* Uma trilha só, alinhada com o Slug da linha de cima. */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <label className="flex flex-col gap-2">
             <span className={rotulo}>Categoria</span>
@@ -489,18 +490,45 @@ export default function FormularioDeNoticia({
               ))}
             </select>
           </label>
-
-          <label className="flex items-center gap-3 self-end pb-2">
-            <input
-              type="checkbox"
-              name="destaque"
-              checked={destaque}
-              onChange={(evento) => setDestaque(evento.target.checked)}
-              className="size-4 accent-marca"
-            />
-            <span className={rotulo}>Manchete da home</span>
-          </label>
         </div>
+
+        {/*
+          A manchete decide o topo da home, mas era uma caixinha pendurada ao
+          lado do seletor de categoria — passava batido a ponto de dar para
+          publicar a matéria do dia sem saber que a opção existia. Agora é uma
+          faixa própria, que muda de cor quando marcada.
+        */}
+        <label
+          className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors ${
+            destaque
+              ? "border-marca bg-marca/10"
+              : "border-linha-forte bg-superficie hover:bg-superficie-alta"
+          }`}
+        >
+          {/* `shrink-0`: como item de flex ao lado de um bloco de texto, a caixa
+              cede largura e sai achatada — 20px de altura por 14 de largura. */}
+          <input
+            type="checkbox"
+            name="destaque"
+            checked={destaque}
+            onChange={(evento) => setDestaque(evento.target.checked)}
+            className="mt-0.5 size-5 shrink-0 accent-marca"
+          />
+          <span>
+            <span
+              className={`block text-sm font-bold ${
+                destaque ? "text-marca-clara" : "text-texto"
+              }`}
+            >
+              Manchete da home
+            </span>
+            <span className={`mt-1 block ${dica}`}>
+              A matéria abre a home no bloco grande, acima das outras. Sem
+              nenhuma marcada, a home destaca a mais recente; entre várias
+              marcadas, ganha a de data mais nova.
+            </span>
+          </span>
+        </label>
 
         <label className="flex flex-col gap-2">
           <span className={rotulo}>Resumo</span>
@@ -643,7 +671,7 @@ export default function FormularioDeNoticia({
                       geradaPorIA: evento.target.checked,
                     })
                   }
-                  className="mt-0.5 size-4 accent-marca"
+                  className="mt-0.5 size-4 shrink-0 accent-marca"
                 />
                 <span className={dica}>Gerada por IA</span>
               </label>
@@ -788,7 +816,7 @@ export default function FormularioDeNoticia({
             name="imagemGeradaPorIA"
             checked={imagemGeradaPorIA}
             onChange={(evento) => setImagemGeradaPorIA(evento.target.checked)}
-            className="mt-0.5 size-4 accent-marca"
+            className="mt-0.5 size-4 shrink-0 accent-marca"
           />
           <span>
             <span className={rotulo}>Imagem gerada por IA</span>
