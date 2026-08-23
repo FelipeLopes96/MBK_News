@@ -231,7 +231,10 @@ export default function FormularioDeNoticia({
           />
         </label>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        {/* `grid-cols-1` explícito: a coluna implícita é `auto` e adota a
+            largura mínima de conteúdo dos campos, que num celular estreito
+            passa da viewport e estoura a página. */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <label className="flex flex-col gap-2">
             <span className={rotulo}>Slug</span>
             <input
@@ -262,7 +265,7 @@ export default function FormularioDeNoticia({
           </label>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <label className="flex flex-col gap-2">
             <span className={rotulo}>Categoria</span>
             <select
@@ -354,7 +357,7 @@ export default function FormularioDeNoticia({
           </div>
         )}
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <label className="flex flex-col gap-2">
             <span className={rotulo}>Corte</span>
             <select
@@ -449,8 +452,17 @@ export default function FormularioDeNoticia({
           Fontes da apuração
         </h2>
 
+        {/*
+          `minmax(0,…)` e não `1fr_2fr`: um `fr` sozinho tem mínimo `auto`, e o
+          mínimo de um `input` não é zero — é a largura do `size` padrão, perto
+          de 175px. Dois campos assim mais o botão não cabem nos 592px de um sm,
+          e as trilhas empurrariam o formulário para fora da tela.
+        */}
         {fontes.map((fonte, indice) => (
-          <div key={indice} className="grid gap-3 sm:grid-cols-[1fr_2fr_auto]">
+          <div
+            key={indice}
+            className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_auto]"
+          >
             <input
               name="fonteRotulo"
               value={fonte.rotulo}
