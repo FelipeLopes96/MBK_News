@@ -3,10 +3,13 @@
 import { redirect } from "next/navigation";
 import { abrirSessao, fecharSessao, senhaConfere, temSessao } from "@/lib/admin/sessao";
 import { caminhoExiste, commitarArquivos } from "@/lib/admin/github";
+import { carregarMateria } from "@/lib/admin/materias";
 import {
+  arquivosDaMateria,
   montarPublicacao,
   validar,
   type DadosDaNoticia,
+  type Edicao,
   type FonteInformada,
   type ImagemDoCorpoInformada,
 } from "@/lib/admin/publicacao";
@@ -26,6 +29,18 @@ export type EstadoDaPublicacao = {
   sucesso?: {
     slug: string;
     caminho: string;
+    urlDoCommit: string;
+    /** Muda o aviso de sucesso: matéria criada agora ou atualizada. */
+    editada: boolean;
+  };
+};
+
+export type EstadoDaExclusao = {
+  erro?: string;
+  sucesso?: {
+    slug: string;
+    /** Todos os caminhos que saíram do repositório — o .md e as imagens dela. */
+    caminhos: string[];
     urlDoCommit: string;
   };
 };
@@ -140,12 +155,45 @@ export async function publicarNoticia(
     return { erros };
   }
 
-  const publicacao = montarPublicacao(dados);
+  /**
+   * O formulário de edição manda o slug de origem num campo escondido. É ele que
+   * diz se este envio é matéria nova ou correção de uma que já está no ar — e a
+   * correção precisa do frontmatter original em mãos, senão a edição apagaria as
+   * tags e as organizações, que o formulário não tem como preencher.
+   */
+  const slugOriginal = String(formData.get("slugOriginal") ?? "").trim();
+  let edicao: Edicao | undefined;
+
+  if (slugOriginal) {
+    const original = await carregarMateria(slugOriginal);
+
+    if (!original) {
+      return {
+        erros: [
+          `A matéria "${slugOriginal}" não está mais no repositório. Ela pode ter sido excluída em outra aba.`,
+        ],
+      };
+    }
+
+    edicao = {
+      frontmatterOriginal: original.frontmatter,
+      caminhoAnterior: original.caminho,
+    };
+  }
+
+  const publicacao = montarPublicacao(dados, edicao);
 
   try {
-    // Publicar por cima de uma matéria existente apagaria o texto anterior sem
-    // aviso; o painel só cria.
-    if (await caminhoExiste(publicacao.caminhoDoMarkdown)) {
+    // Gravar por cima de uma matéria existente apagaria o texto anterior sem
+    // aviso. Na edição isso é o objetivo, mas só do arquivo dela: mudar o slug
+    // para o de outra matéria continua barrado.
+    const gravaNoProprioArquivo =
+      edicao?.caminhoAnterior === publicacao.caminhoDoMarkdown;
+
+    if (
+      !gravaNoProprioArquivo &&
+      (await caminhoExiste(publicacao.caminhoDoMarkdown))
+    ) {
       return {
         erros: [
           `Já existe uma matéria em ${publicacao.caminhoDoMarkdown}. Mude o slug ou a data.`,
@@ -174,7 +222,8 @@ export async function publicarNoticia(
 
     const commit = await commitarArquivos(
       publicacao.mensagemDoCommit,
-      publicacao.arquivos
+      publicacao.arquivos,
+      publicacao.caminhosApagados
     );
 
     return {
@@ -183,6 +232,7 @@ export async function publicarNoticia(
         slug: publicacao.slug,
         caminho: publicacao.caminhoDoMarkdown,
         urlDoCommit: commit.url,
+        editada: Boolean(edicao),
       },
     };
   } catch (erro) {
@@ -192,6 +242,64 @@ export async function publicarNoticia(
           ? `Falha ao publicar no GitHub: ${erro.message}`
           : "Falha ao publicar no GitHub.",
       ],
+    };
+  }
+}
+
+/**
+ * Tira a matéria do ar: apaga o .md e as imagens que são dela, num commit só.
+ *
+ * A URL vira 404 depois do deploy — quem tinha o link perde a página, e o Google
+ * também. A tela confirma antes, e o commit fica no histórico, então nada aqui é
+ * irreversível de verdade: reverter o commit traz a matéria de volta inteira.
+ */
+export async function excluirNoticia(
+  _anterior: EstadoDaExclusao,
+  formData: FormData
+): Promise<EstadoDaExclusao> {
+  if (!(await temSessao())) {
+    return { erro: "Sessão expirada. Recarregue a página e entre de novo." };
+  }
+
+  const slug = String(formData.get("slug") ?? "").trim();
+  if (!slug) {
+    return { erro: "Nenhuma matéria informada." };
+  }
+
+  try {
+    const materia = await carregarMateria(slug);
+
+    if (!materia) {
+      return {
+        erro: `A matéria "${slug}" não está mais no repositório. Ela pode já ter sido excluída.`,
+      };
+    }
+
+    const caminhos = arquivosDaMateria(
+      materia.caminho,
+      materia.frontmatter,
+      materia.corpo,
+      slug
+    );
+
+    const titulo =
+      typeof materia.frontmatter.title === "string"
+        ? materia.frontmatter.title
+        : slug;
+
+    const commit = await commitarArquivos(
+      `Fix: Remove a matéria ${titulo}`,
+      [],
+      caminhos
+    );
+
+    return { sucesso: { slug, caminhos, urlDoCommit: commit.url } };
+  } catch (erro) {
+    return {
+      erro:
+        erro instanceof Error
+          ? `Falha ao excluir no GitHub: ${erro.message}`
+          : "Falha ao excluir no GitHub.",
     };
   }
 }

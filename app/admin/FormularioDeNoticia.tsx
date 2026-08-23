@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { publicarNoticia, type EstadoDaPublicacao } from "@/app/admin/acoes";
 import { gerarSlug } from "@/lib/admin/slug";
@@ -27,10 +28,42 @@ import { REDACAO } from "@/lib/seo";
 
 type Opcao = { slug: string; rotulo: string };
 
+/**
+ * Uma matéria já publicada, do jeito que o formulário a mostra para edição.
+ *
+ * O corpo chega como Markdown puro, com as fotos antigas já escritas em
+ * `![...](/noticias/...)`: elas estão no repositório e não têm por que voltar a
+ * ser marcador. A seção de imagens serve para acrescentar fotos novas, que
+ * ganham número depois da última já gravada.
+ */
+export type ValoresIniciais = {
+  title: string;
+  slug: string;
+  date: string;
+  categoria: string;
+  resumo: string;
+  corpo: string;
+  destaque: boolean;
+  imagemUrl: string;
+  imagemPosicao: string;
+  imagemCredito: string;
+  imagemFonte: string;
+  imagemLicenca: string;
+  imagemGeradaPorIA: boolean;
+  fontes: { rotulo: string; url: string }[];
+};
+
 type Props = {
   categorias: Opcao[];
   posicoes: string[];
   hoje: string;
+  /** Preenche o formulário para corrigir uma matéria no ar. */
+  inicial?: ValoresIniciais;
+  /**
+   * O slug com que a matéria está publicada. Vai num campo escondido e é o que
+   * diz à action que este envio corrige uma matéria em vez de criar outra.
+   */
+  slugOriginal?: string;
 };
 
 /**
@@ -84,34 +117,45 @@ export default function FormularioDeNoticia({
   categorias,
   posicoes,
   hoje,
+  inicial,
+  slugOriginal,
 }: Props) {
+  const editando = Boolean(slugOriginal);
+
   const [estado, acao, enviando] = useActionState(
     publicarNoticia,
     estadoInicial
   );
 
-  const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
-  const [slugManual, setSlugManual] = useState(false);
-  const [date, setDate] = useState(hoje);
-  const [categoria, setCategoria] = useState(categorias[0]?.slug ?? "");
-  const [resumo, setResumo] = useState("");
-  const [corpo, setCorpo] = useState("");
-  const [destaque, setDestaque] = useState(false);
+  const [title, setTitle] = useState(inicial?.title ?? "");
+  const [slug, setSlug] = useState(inicial?.slug ?? "");
+  // Numa matéria já publicada o slug é o endereço dela: nunca derivar do título.
+  const [slugManual, setSlugManual] = useState(editando);
+  const [date, setDate] = useState(inicial?.date ?? hoje);
+  const [categoria, setCategoria] = useState(
+    inicial?.categoria ?? categorias[0]?.slug ?? ""
+  );
+  const [resumo, setResumo] = useState(inicial?.resumo ?? "");
+  const [corpo, setCorpo] = useState(inicial?.corpo ?? "");
+  const [destaque, setDestaque] = useState(inicial?.destaque ?? false);
 
-  const [imagemUrl, setImagemUrl] = useState("");
-  const [imagemPosicao, setImagemPosicao] = useState("");
-  const [imagemCredito, setImagemCredito] = useState("");
-  const [imagemFonte, setImagemFonte] = useState("");
-  const [imagemLicenca, setImagemLicenca] = useState("");
-  const [imagemGeradaPorIA, setImagemGeradaPorIA] = useState(false);
+  const [imagemUrl, setImagemUrl] = useState(inicial?.imagemUrl ?? "");
+  const [imagemPosicao, setImagemPosicao] = useState(inicial?.imagemPosicao ?? "");
+  const [imagemCredito, setImagemCredito] = useState(inicial?.imagemCredito ?? "");
+  const [imagemFonte, setImagemFonte] = useState(inicial?.imagemFonte ?? "");
+  const [imagemLicenca, setImagemLicenca] = useState(inicial?.imagemLicenca ?? "");
+  const [imagemGeradaPorIA, setImagemGeradaPorIA] = useState(
+    inicial?.imagemGeradaPorIA ?? false
+  );
   const [previa, setPrevia] = useState("");
   const [arquivoDaCapa, setArquivoDaCapa] = useState<File | null>(null);
 
   const [imagensDoCorpo, setImagensDoCorpo] = useState<ImagemDoCorpo[]>([]);
   const proximoId = useRef(1);
 
-  const [fontes, setFontes] = useState([{ rotulo: "", url: "" }]);
+  const [fontes, setFontes] = useState(
+    inicial?.fontes.length ? inicial.fontes : [{ rotulo: "", url: "" }]
+  );
   /**
    * `useActionState` não tem reset: guardamos o slug da publicação cuja tela de
    * sucesso o editor já dispensou. Comparar durante a renderização evita o
@@ -237,21 +281,29 @@ export default function FormularioDeNoticia({
     );
   }
 
+  /**
+   * Volta ao ponto de partida: em branco numa matéria nova, e nos valores como
+   * estão publicados quando o editor está corrigindo — ali "limpar" não pode
+   * significar apagar a matéria inteira do formulário.
+   */
   function limpar() {
-    setTitle("");
-    setSlug("");
-    setSlugManual(false);
-    setDate(hoje);
-    setResumo("");
-    setCorpo("");
-    setDestaque(false);
-    setImagemUrl("");
-    setImagemPosicao("");
-    setImagemCredito("");
-    setImagemFonte("");
-    setImagemLicenca("");
-    setImagemGeradaPorIA(false);
-    setFontes([{ rotulo: "", url: "" }]);
+    setTitle(inicial?.title ?? "");
+    setSlug(inicial?.slug ?? "");
+    setSlugManual(editando);
+    setDate(inicial?.date ?? hoje);
+    setCategoria(inicial?.categoria ?? categorias[0]?.slug ?? "");
+    setResumo(inicial?.resumo ?? "");
+    setCorpo(inicial?.corpo ?? "");
+    setDestaque(inicial?.destaque ?? false);
+    setImagemUrl(inicial?.imagemUrl ?? "");
+    setImagemPosicao(inicial?.imagemPosicao ?? "");
+    setImagemCredito(inicial?.imagemCredito ?? "");
+    setImagemFonte(inicial?.imagemFonte ?? "");
+    setImagemLicenca(inicial?.imagemLicenca ?? "");
+    setImagemGeradaPorIA(inicial?.imagemGeradaPorIA ?? false);
+    setFontes(
+      inicial?.fontes.length ? inicial.fontes : [{ rotulo: "", url: "" }]
+    );
     escolherImagem(undefined);
     if (inputDaImagem.current) inputDaImagem.current.value = "";
 
@@ -350,12 +402,14 @@ export default function FormularioDeNoticia({
   if (estado.sucesso && estado.sucesso.slug !== sucessoDispensado) {
     return (
       <div className="rounded-lg border border-emerald-800 bg-emerald-950/40 p-6">
-        <h2 className="text-lg font-bold text-emerald-300">Matéria publicada</h2>
+        <h2 className="text-lg font-bold text-emerald-300">
+          {estado.sucesso.editada ? "Matéria atualizada" : "Matéria publicada"}
+        </h2>
         <p className="mt-2 text-sm text-texto-corpo">
           O commit foi criado em{" "}
           <code className="text-texto-suave">{estado.sucesso.caminho}</code>. A
-          Vercel republica o site sozinha — em cerca de um minuto a matéria
-          estará em{" "}
+          Vercel republica o site sozinha — em cerca de um minuto a{" "}
+          {estado.sucesso.editada ? "correção estará" : "matéria estará"} em{" "}
           <code className="text-texto-suave">/noticia/{estado.sucesso.slug}</code>.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
@@ -367,16 +421,25 @@ export default function FormularioDeNoticia({
           >
             Ver o commit
           </a>
-          <button
-            type="button"
-            onClick={() => {
-              limpar();
-              setSucessoDispensado(estado.sucesso!.slug);
-            }}
-            className="rounded-md bg-marca px-4 py-2 text-sm font-semibold text-texto hover:opacity-90"
-          >
-            Escrever outra
-          </button>
+          {estado.sucesso.editada ? (
+            <Link
+              href="/admin/materias"
+              className="rounded-md bg-marca px-4 py-2 text-sm font-semibold text-texto hover:opacity-90"
+            >
+              Voltar às matérias
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                limpar();
+                setSucessoDispensado(estado.sucesso!.slug);
+              }}
+              className="rounded-md bg-marca px-4 py-2 text-sm font-semibold text-texto hover:opacity-90"
+            >
+              Escrever outra
+            </button>
+          )}
         </div>
       </div>
     );
@@ -384,13 +447,20 @@ export default function FormularioDeNoticia({
 
   return (
     <form action={acao} className="flex flex-col gap-10">
+      {/* Diz à action que este envio corrige a matéria em vez de criar outra. */}
+      {slugOriginal && (
+        <input type="hidden" name="slugOriginal" value={slugOriginal} />
+      )}
+
       {estado.erros.length > 0 && (
         <div
           role="alert"
           className="rounded-lg border border-red-900 bg-red-950/40 p-4"
         >
           <p className="font-semibold text-red-300">
-            A matéria não foi publicada:
+            {editando
+              ? "A matéria não foi atualizada:"
+              : "A matéria não foi publicada:"}
           </p>
           <ul className="mt-2 list-disc pl-5 text-sm text-red-200">
             {estado.erros.map((erro) => (
@@ -459,6 +529,14 @@ export default function FormularioDeNoticia({
                 ? `content/noticias/${date}-${slugFinal}.md`
                 : "Preenchido a partir do título."}
             </span>
+            {/* Mudar o slug de uma matéria no ar troca o endereço dela: quem
+                compartilhou o link cai num 404, e o Google também. */}
+            {editando && slugFinal !== slugOriginal && (
+              <span className="text-xs font-semibold text-amber-400">
+                O endereço muda de /noticia/{slugOriginal} para /noticia/
+                {slugFinal}. Quem já tem o link antigo vai cair num 404.
+              </span>
+            )}
           </label>
 
           <label className="flex flex-col gap-2">
@@ -938,7 +1016,13 @@ export default function FormularioDeNoticia({
           disabled={enviando}
           className="rounded-md bg-marca px-6 py-2.5 font-semibold text-texto transition-opacity hover:opacity-90 disabled:opacity-50"
         >
-          {enviando ? "Publicando..." : "Publicar"}
+          {enviando
+            ? editando
+              ? "Atualizando..."
+              : "Publicando..."
+            : editando
+              ? "Atualizar matéria"
+              : "Publicar"}
         </button>
         <button
           type="button"
@@ -946,8 +1030,16 @@ export default function FormularioDeNoticia({
           disabled={enviando}
           className="text-sm text-texto-fraco hover:text-texto-corpo disabled:opacity-50"
         >
-          Limpar
+          {editando ? "Desfazer alterações" : "Limpar"}
         </button>
+        {editando && (
+          <Link
+            href="/admin/materias"
+            className="text-sm text-texto-fraco hover:text-texto-corpo"
+          >
+            Cancelar
+          </Link>
+        )}
       </div>
     </form>
   );

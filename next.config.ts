@@ -12,6 +12,16 @@ const nextConfig: NextConfig = {
     // responde com erro de rede em vez de dizer qual foto pesou.
     serverActions: { bodySizeLimit: "22mb" },
   },
+  /*
+   * O painel é a única rota que lê `content/noticias` fora do build: a lista de
+   * matérias mostra título e categoria a partir do disco. As páginas do site são
+   * estáticas e levam esse conteúdo embutido, então o rastreamento do Next não
+   * tem por que incluir os .md no bundle da função — e sem eles a lista sairia
+   * vazia só em produção.
+   */
+  outputFileTracingIncludes: {
+    "/admin/**": ["./content/noticias/**/*"],
+  },
   images: {
     remotePatterns: [
       {

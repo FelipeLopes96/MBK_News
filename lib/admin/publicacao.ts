@@ -79,10 +79,29 @@ export type DadosDaNoticia = {
   imagensDoCorpo: ImagemDoCorpoInformada[];
 };
 
+/**
+ * O que muda quando a matéria já existe.
+ *
+ * `frontmatterOriginal` não é detalhe: o formulário não tem campo para `tags`,
+ * `organizacoes`, `subtitulo` nem `autor`, e remontar o frontmatter só com o que
+ * ele conhece apagaria esses campos em toda edição — a matéria perderia as tags
+ * e sumiria do hub da organização sem ninguém entender por quê.
+ */
+export type Edicao = {
+  frontmatterOriginal: Record<string, unknown>;
+  /**
+   * Onde a matéria estava. Se o editor mudou o slug ou a data, o caminho novo é
+   * outro e o antigo precisa sair no mesmo commit.
+   */
+  caminhoAnterior: string;
+};
+
 export type Publicacao = {
   slug: string;
   caminhoDoMarkdown: string;
   arquivos: ArquivoParaCommit[];
+  /** Caminhos a remover no mesmo commit — o .md antigo, quando a matéria mudou de endereço. */
+  caminhosApagados: string[];
   /**
    * Onde as fotos do corpo vão parar. Ficam à parte porque a ação confere se já
    * existe arquivo nesses caminhos: o commit é montado com `base_tree`, então
@@ -280,7 +299,73 @@ function aplicarImagensDoCorpo(
   );
 }
 
-export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
+/**
+ * Só as imagens que a matéria criou, que são as batizadas com o slug dela:
+ * `<slug>.jpg` para a capa e `<slug>-imagem-N.jpg` para as do corpo.
+ *
+ * O recorte importa na exclusão. Uma capa apontada à mão para
+ * `/noticias/outra-materia.jpg` não leva esse nome, não entra na conta e
+ * continua no lugar — apagá-la deixaria a outra matéria sem foto.
+ */
+function ehImagemDaMateria(url: string, slug: string): boolean {
+  // O slug sai de `gerarSlug`, que só deixa passar [a-z0-9-]: nada aqui precisa
+  // de escape para virar regex.
+  return new RegExp(`^/noticias/${slug}(-imagem-\\d+)?\\.[a-z0-9]+$`, "i").test(
+    url
+  );
+}
+
+/** As URLs de imagem citadas no .md: a capa no frontmatter e as fotos do corpo. */
+function urlsDasImagens(frontmatter: Record<string, unknown>, corpo: string): string[] {
+  const capa = frontmatter.imagem;
+  const urlDaCapa =
+    capa && typeof capa === "object" && typeof (capa as { url?: unknown }).url === "string"
+      ? [(capa as { url: string }).url]
+      : [];
+
+  const noCorpo = [...corpo.matchAll(/!\[[^\]]*\]\(([^\s)]+)/g)].map(
+    (achado) => achado[1]
+  );
+
+  return [...urlDaCapa, ...noCorpo];
+}
+
+/**
+ * Tudo que sai do repositório quando a matéria é excluída: o .md e as imagens
+ * que são dela. Deduplicado porque a mesma foto pode aparecer duas vezes.
+ */
+export function arquivosDaMateria(
+  caminhoDoMarkdown: string,
+  frontmatter: Record<string, unknown>,
+  corpo: string,
+  slug: string
+): string[] {
+  const imagens = urlsDasImagens(frontmatter, corpo)
+    .filter((url) => ehImagemDaMateria(url, slug))
+    .map((url) => `public${url}`);
+
+  return [...new Set([caminhoDoMarkdown, ...imagens])];
+}
+
+/**
+ * O primeiro número de imagem do corpo ainda livre para este slug — um a mais
+ * que o maior já gravado no texto.
+ *
+ * É o que impede uma foto adicionada numa edição de gravar por cima de outra
+ * que a matéria ainda exibe.
+ */
+function primeiroNumeroLivre(corpo: string, slug: string): number {
+  const numeros = [
+    ...corpo.matchAll(new RegExp(`/noticias/${slug}-imagem-(\\d+)\\.`, "gi")),
+  ].map((achado) => Number(achado[1]));
+
+  return numeros.length === 0 ? 1 : Math.max(...numeros) + 1;
+}
+
+export function montarPublicacao(
+  dados: DadosDaNoticia,
+  edicao?: Edicao
+): Publicacao {
   const slug = gerarSlug(dados.slug || dados.title);
   const arquivos: ArquivoParaCommit[] = [];
 
@@ -299,8 +384,11 @@ export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
   // "-imagem-N" e não só "-N": a matéria de slug "ufc-320-1" gravaria a capa
   // exatamente onde ficaria a primeira foto do corpo de "ufc-320".
   const caminhosDasImagensDoCorpo: string[] = [];
+  // Numa matéria nova a contagem começa em 1; numa edição, depois da última foto
+  // que o corpo já exibe.
+  const primeiroNumero = edicao ? primeiroNumeroLivre(dados.corpo, slug) : 1;
   const urlsDasImagensDoCorpo = dados.imagensDoCorpo.map((imagemDoCorpo, indice) => {
-    const nome = `${slug}-imagem-${indice + 1}.${extensaoDe(imagemDoCorpo.nome)}`;
+    const nome = `${slug}-imagem-${primeiroNumero + indice}.${extensaoDe(imagemDoCorpo.nome)}`;
     const caminho = `public/noticias/${nome}`;
 
     arquivos.push({ caminho, conteudo: imagemDoCorpo.bytes });
@@ -318,7 +406,14 @@ export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
     dados.title.trim()
   );
 
-  const frontmatter = {
+  /**
+   * Os campos do original vêm primeiro para que os que o formulário não conhece
+   * sobrevivam à edição. Espalhar antes também preserva a ordem das chaves: o
+   * spread mantém a posição de quem já existia, então o .md editado não sai com
+   * o frontmatter todo remexido no diff.
+   */
+  const frontmatter: Record<string, unknown> = {
+    ...(edicao?.frontmatterOriginal ?? {}),
     title: dados.title.trim(),
     slug,
     date: dados.date,
@@ -328,6 +423,10 @@ export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
     ...(imagem ? { imagem } : {}),
     destaque: dados.destaque,
   };
+
+  // Capa removida na edição: sem isto o `imagem` do original sobreviveria ao
+  // spread e a matéria continuaria com a foto que o editor acabou de tirar.
+  if (!imagem) delete frontmatter.imagem;
 
   // `matter.stringify` serializa o YAML pelo js-yaml, então aspas e quebras de
   // linha do título e do resumo saem escapadas corretamente.
@@ -339,11 +438,21 @@ export function montarPublicacao(dados: DadosDaNoticia): Publicacao {
     conteudo: Buffer.from(markdown, "utf8"),
   });
 
+  // Mudar o slug ou a data muda o nome do arquivo. Sem apagar o antigo, a mesma
+  // matéria ficaria publicada em dois endereços.
+  const caminhosApagados =
+    edicao && edicao.caminhoAnterior !== caminhoDoMarkdown
+      ? [edicao.caminhoAnterior]
+      : [];
+
   return {
     slug,
     caminhoDoMarkdown,
     arquivos,
+    caminhosApagados,
     caminhosDasImagensDoCorpo,
-    mensagemDoCommit: `Feat: ${dados.title.trim()}`,
+    mensagemDoCommit: edicao
+      ? `Fix: ${dados.title.trim()}`
+      : `Feat: ${dados.title.trim()}`,
   };
 }

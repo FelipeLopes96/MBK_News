@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { temSessao } from "@/lib/admin/sessao";
 import { categorias } from "@/lib/noticias";
@@ -25,14 +26,23 @@ export default async function AdminPage() {
           </p>
         </div>
 
-        <form action={sair}>
-          <button
-            type="submit"
-            className="whitespace-nowrap text-sm text-texto-fraco hover:text-texto-corpo"
+        <div className="flex shrink-0 items-center gap-4">
+          <Link
+            href="/admin/materias"
+            className="whitespace-nowrap rounded-md border border-linha-forte px-4 py-2 text-sm text-texto-corpo hover:border-marca"
           >
-            Sair
-          </button>
-        </form>
+            Matérias publicadas
+          </Link>
+
+          <form action={sair}>
+            <button
+              type="submit"
+              className="whitespace-nowrap text-sm text-texto-fraco hover:text-texto-corpo"
+            >
+              Sair
+            </button>
+          </form>
+        </div>
       </header>
 
       <FormularioDeNoticia

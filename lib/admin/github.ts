@@ -66,11 +66,11 @@ async function chamar<T>(
   return resposta.json() as Promise<T>;
 }
 
-/** `true` quando o caminho já existe no branch — usado para não sobrescrever matéria publicada. */
-export async function caminhoExiste(caminho: string): Promise<boolean> {
+/** Requisição à API de conteúdo, que responde 404 sem ser erro. */
+async function pedirConteudo(caminho: string): Promise<Response> {
   const { token, repo, branch } = config();
 
-  const resposta = await fetch(
+  return fetch(
     `${API}/repos/${repo}/contents/${encodeURI(caminho)}?ref=${encodeURIComponent(branch)}`,
     {
       headers: {
@@ -81,6 +81,11 @@ export async function caminhoExiste(caminho: string): Promise<boolean> {
       cache: "no-store",
     }
   );
+}
+
+/** `true` quando o caminho já existe no branch — usado para não sobrescrever matéria publicada. */
+export async function caminhoExiste(caminho: string): Promise<boolean> {
+  const resposta = await pedirConteudo(caminho);
 
   if (resposta.status === 404) return false;
   if (resposta.ok) return true;
@@ -92,12 +97,74 @@ export async function caminhoExiste(caminho: string): Promise<boolean> {
 }
 
 /**
- * Sobe todos os arquivos num único commit no topo do branch configurado.
+ * Nomes dos arquivos de um diretório do repositório.
+ *
+ * O painel lista as matérias por aqui, e não pelo disco, porque o disco do
+ * servidor é o do último deploy: uma matéria publicada há trinta segundos ainda
+ * não está lá, e sumir da lista logo depois de publicar é o tipo de coisa que
+ * faz o editor publicar de novo.
+ */
+export async function listarArquivos(diretorio: string): Promise<string[]> {
+  const resposta = await pedirConteudo(diretorio);
+
+  // Diretório ainda não criado é lista vazia, não erro.
+  if (resposta.status === 404) return [];
+
+  if (!resposta.ok) {
+    const corpo = await resposta.text();
+    throw new Error(
+      `GitHub respondeu ${resposta.status} ao listar ${diretorio}: ${corpo.slice(0, 300)}`
+    );
+  }
+
+  const itens = (await resposta.json()) as { name: string; type: string }[];
+  return itens.filter((item) => item.type === "file").map((item) => item.name);
+}
+
+/** Conteúdo de um arquivo de texto do repositório; `undefined` se não existe. */
+export async function lerArquivo(caminho: string): Promise<string | undefined> {
+  const resposta = await pedirConteudo(caminho);
+
+  if (resposta.status === 404) return undefined;
+
+  if (!resposta.ok) {
+    const corpo = await resposta.text();
+    throw new Error(
+      `GitHub respondeu ${resposta.status} ao ler ${caminho}: ${corpo.slice(0, 300)}`
+    );
+  }
+
+  const arquivo = (await resposta.json()) as {
+    content?: string;
+    encoding?: string;
+  };
+
+  // Acima de 1 MB a API devolve o conteúdo vazio e manda usar a API de blobs.
+  // Nenhum .md chega perto disso, mas em silêncio o painel abriria o formulário
+  // vazio e o editor publicaria a matéria em branco por cima da original.
+  if (arquivo.encoding !== "base64" || typeof arquivo.content !== "string") {
+    throw new Error(
+      `GitHub devolveu ${caminho} num formato inesperado (encoding: ${arquivo.encoding}).`
+    );
+  }
+
+  return Buffer.from(arquivo.content, "base64").toString("utf8");
+}
+
+/**
+ * Sobe todos os arquivos num único commit no topo do branch configurado, e
+ * apaga os caminhos em `apagados` no mesmo commit.
+ *
+ * Escrita e remoção juntas não são conveniência: renomear uma matéria é gravar
+ * no caminho novo e apagar o antigo, e em dois commits o site fica um deploy
+ * inteiro com a matéria duplicada em dois endereços.
+ *
  * Devolve o SHA para o painel poder linkar o commit gerado.
  */
 export async function commitarArquivos(
   mensagem: string,
-  arquivos: ArquivoParaCommit[]
+  arquivos: ArquivoParaCommit[],
+  apagados: string[] = []
 ): Promise<DadosDoCommit> {
   const { repo, branch } = config();
 
@@ -129,12 +196,22 @@ export async function commitarArquivos(
     method: "POST",
     body: JSON.stringify({
       base_tree: commitDoTopo.tree.sha,
-      tree: blobs.map((blob) => ({
-        path: blob.caminho,
-        mode: "100644",
-        type: "blob",
-        sha: blob.sha,
-      })),
+      tree: [
+        ...blobs.map((blob) => ({
+          path: blob.caminho,
+          mode: "100644",
+          type: "blob",
+          sha: blob.sha,
+        })),
+        // `sha: null` numa árvore com `base_tree` é como a Git Data API remove
+        // um caminho — não existe verbo de exclusão.
+        ...apagados.map((caminho) => ({
+          path: caminho,
+          mode: "100644",
+          type: "blob",
+          sha: null,
+        })),
+      ],
     }),
   });
 
