@@ -19,6 +19,20 @@ export const TAGLINE = "Jornalismo de esportes de combate";
 export const REDACAO = "Redação MBK News";
 
 /**
+ * Perfis oficiais do veículo.
+ *
+ * As URLs vão sem parâmetro de rastreio: o link que o Instagram oferece para
+ * compartilhar carrega um `igsi=` que identifica a sessão de quem compartilhou,
+ * e repassá-lo a todo leitor do portal não serve a ninguém aqui.
+ *
+ * Também alimentam o `sameAs` dos dados estruturados, que é como o buscador
+ * entende que o portal e o perfil são o mesmo veículo.
+ */
+export const REDES_SOCIAIS = [
+  { rede: "instagram" as const, url: "https://www.instagram.com/mbk.news" },
+];
+
+/**
  * Monta o metadata de uma página seguindo o padrão do site: título com sufixo,
  * canonical relativo (resolvido a partir de `metadataBase` no layout raiz) e
  * Open Graph. Os campos não informados caem no default do layout raiz.

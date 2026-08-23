@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/app/components/Container";
+import RedesSociais from "@/app/components/RedesSociais";
 import { getProximosEventos } from "@/lib/eventos";
 import { secoesDoArquivo } from "@/lib/navegacao";
 import { categorias } from "@/lib/noticias";
@@ -81,6 +82,8 @@ export default function Footer() {
             o veículo nasceu, mas quem abre o portal precisa encontrar um
             veículo de jornalismo, não a página de uma academia.
           */}
+          <RedesSociais className="mt-5" />
+
           <p className="mt-6 max-w-sm text-xs leading-5 text-texto-fraco">
             O {NOME_DO_SITE} nasceu no ecossistema da MBK e é editorialmente
             independente. Cobertura de MMA, boxe, muay thai, jiu-jitsu,

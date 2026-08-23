@@ -1,4 +1,4 @@
-import { NOME_DO_SITE, urlDoSite } from "@/lib/seo";
+import { NOME_DO_SITE, REDES_SOCIAIS, urlDoSite } from "@/lib/seo";
 import type { Noticia } from "@/lib/noticias";
 
 /**
@@ -37,6 +37,9 @@ export default function DadosEstruturados({ noticia }: { noticia: Noticia }) {
         "@type": "ImageObject",
         url: new URL("/marca/mbk-news.png", urlDoSite).toString(),
       },
+      // `sameAs` é como o buscador entende que o portal e o perfil na rede
+      // social são o mesmo veículo, e não duas entidades parecidas.
+      sameAs: REDES_SOCIAIS.map(({ url: perfil }) => perfil),
     },
     ...(noticia.imagem
       ? { image: [new URL(noticia.imagem.url, urlDoSite).toString()] }

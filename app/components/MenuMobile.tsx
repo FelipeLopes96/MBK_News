@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import CampoDeBusca from "@/app/components/CampoDeBusca";
+import RedesSociais from "@/app/components/RedesSociais";
 import type { ItemDeNavegacao } from "@/lib/navegacao";
 
 /** Slug utilizável como id de elemento, para ligar o botão à lista que ele abre. */
@@ -208,6 +209,12 @@ export default function MenuMobile({ secoes }: { secoes: ItemDeNavegacao[] }) {
               );
             })}
           </nav>
+
+          {/* No celular o rodapé fica muito longe; o menu é onde o leitor
+              procura tudo o que o portal tem. */}
+          <div className="px-6 pb-10">
+            <RedesSociais />
+          </div>
         </div>,
           document.body
         )}
