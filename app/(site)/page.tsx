@@ -46,12 +46,19 @@ export default function Home() {
         sidebar e notícias — funcionava, mas cada módulo novo (Mais lidas,
         Vídeos) exigia renumerar tudo.
       */}
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start">
+      {/*
+        `grid-cols-1` no mobile não é redundante com a coluna implícita: a
+        implícita é `auto`, que adota a largura mínima de conteúdo do que estiver
+        dentro dela e estoura a página se algum filho pedir mais que a viewport.
+        `grid-cols-1` é `minmax(0,1fr)` — a trilha fica presa à largura do
+        container, como no resto das grades do site.
+      */}
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start">
         <div className="flex flex-col gap-8">
           {destaque ? <HeroDestaque noticia={destaque} /> : null}
 
           {secundarias.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               {secundarias.map((noticia) => (
                 <NoticiaCard
                   key={noticia.slug}
@@ -73,7 +80,7 @@ export default function Home() {
               </p>
             ) : (
               <>
-                <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
                   {feed.map((noticia) => (
                     <NoticiaCard key={noticia.slug} noticia={noticia} />
                   ))}

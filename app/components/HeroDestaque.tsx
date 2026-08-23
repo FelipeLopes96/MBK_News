@@ -23,9 +23,22 @@ export default function HeroDestaque({
       href={`/noticia/${noticia.slug}`}
       className={`group relative block overflow-hidden rounded-xl border border-linha focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca ${className}`}
     >
-      {/* min-h no mobile: garante altura para o texto sobreposto mesmo em telas
-          estreitas, onde só a proporção deixaria a imagem baixa demais. */}
-      <div className="relative aspect-[16/9] min-h-64 w-full sm:aspect-[2/1] sm:min-h-0">
+      {/*
+        Altura fixa no mobile, proporção só de sm em diante.
+
+        Aqui havia `aspect-[16/9] min-h-64`, e as duas juntas quebravam a página
+        inteira: com `aspect-ratio`, uma altura mínima definida é *transferida*
+        para o eixo horizontal, então a contribuição de largura mínima deste
+        bloco virava 16rem × 16/9 = 455px. Numa trilha de grade `auto` isso vira
+        a largura da trilha, o documento passava a medir 481px num aparelho de
+        390px e o Chrome mobile encolhia a página inteira para caber — daí a
+        faixa vazia à direita do cabeçalho, do rodapé e do menu.
+
+        Abaixo de 455px de largura a proporção 16/9 já dava menos que 16rem e o
+        `min-h` vencia sempre: no celular, `h-64` renderiza exatamente o que
+        aquele par renderizava, sem exportar largura nenhuma.
+      */}
+      <div className="relative h-64 w-full sm:aspect-[2/1] sm:h-auto">
         <ImagemNoticia
           src={noticia.imagem?.url}
           alt={noticia.title}
