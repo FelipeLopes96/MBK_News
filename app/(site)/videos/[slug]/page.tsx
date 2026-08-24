@@ -31,6 +31,13 @@ export function generateStaticParams() {
   return getTodosOsVideos().map((video) => ({ slug: video.slug }));
 }
 
+/**
+ * Endereço fora da lista acima é 404 de verdade, e não 200 com a tela de 404
+ * dentro: a recusa acontece na roteagem, antes de o corpo começar a ser
+ * transmitido — e depois que ele começa, o status não pode mais mudar.
+ */
+export const dynamicParams = false;
+
 export async function generateMetadata(
   props: PageProps<"/videos/[slug]">
 ): Promise<Metadata> {
