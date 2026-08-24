@@ -7,11 +7,15 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import CampoDeBusca from "@/app/components/CampoDeBusca";
 import RedesSociais from "@/app/components/RedesSociais";
-import type { ItemDeNavegacao } from "@/lib/navegacao";
+import {
+  chaveDoItem,
+  enderecosDoItem,
+  type SecaoDeNavegacao,
+} from "@/lib/navegacao";
 
 /** Slug utilizável como id de elemento, para ligar o botão à lista que ele abre. */
-function idDoGrupo(href: string): string {
-  return `submenu-${href.replace(/\W+/g, "-").replace(/^-|-$/g, "")}`;
+function idDoGrupo(chave: string): string {
+  return `submenu-${chave.replace(/\W+/g, "-").replace(/^-|-$/g, "")}`;
 }
 
 /**
@@ -21,19 +25,38 @@ function idDoGrupo(href: string): string {
  * do cabeçalho continua sendo Server Component. É também onde mora a busca no
  * mobile, já que na barra estreita não há largura para o campo.
  */
-export default function MenuMobile({ secoes }: { secoes: ItemDeNavegacao[] }) {
+export default function MenuMobile({ secoes }: { secoes: SecaoDeNavegacao[] }) {
   const [aberto, setAberto] = useState(false);
-  const [expandidos, setExpandidos] = useState<string[]>([]);
   const caminho = usePathname();
 
   const ativa = (href: string) =>
     caminho === href || caminho.startsWith(`${href}/`);
 
-  const alternarGrupo = (href: string) =>
+  /**
+   * Grupos que contêm a página atual. Já abertos de saída: quem está em /boxe e
+   * abre o menu precisa ver que Boxe fica dentro de Modalidades — fechado, o
+   * menu esconderia justamente onde o leitor está.
+   */
+  const gruposDaPaginaAtual = () =>
+    secoes
+      .filter((secao) => secao.subitens?.length && enderecosDoItem(secao).some(ativa))
+      .map(chaveDoItem);
+
+  const [expandidos, setExpandidos] = useState<string[]>(gruposDaPaginaAtual);
+
+  // Navegou: a expansão volta a acompanhar a página nova. Comparar durante a
+  // renderização em vez de num efeito evita o quadro com a expansão velha.
+  const [caminhoDoMenu, setCaminhoDoMenu] = useState(caminho);
+  if (caminho !== caminhoDoMenu) {
+    setCaminhoDoMenu(caminho);
+    setExpandidos(gruposDaPaginaAtual());
+  }
+
+  const alternarGrupo = (chave: string) =>
     setExpandidos((atuais) =>
-      atuais.includes(href)
-        ? atuais.filter((item) => item !== href)
-        : [...atuais, href]
+      atuais.includes(chave)
+        ? atuais.filter((item) => item !== chave)
+        : [...atuais, chave]
     );
 
   // Enquanto o menu cobre a tela, o body não deve rolar por trás dele.
@@ -128,58 +151,91 @@ export default function MenuMobile({ secoes }: { secoes: ItemDeNavegacao[] }) {
 
           <nav className="flex flex-col px-6 pb-10">
             {secoes.map((secao) => {
-              const expandido = expandidos.includes(secao.href);
-              const id = idDoGrupo(secao.href);
+              const chave = chaveDoItem(secao);
+              const expandido = expandidos.includes(chave);
+              const id = idDoGrupo(chave);
+              const atual = enderecosDoItem(secao).some(ativa);
+
+              const seta = (
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className={`h-5 w-5 shrink-0 transition-transform ${expandido ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              );
+
+              /** Filete na seção atual: no mobile não há barra de seções. */
+              const filete = (
+                <span
+                  aria-hidden="true"
+                  className={`h-5 w-0.5 rounded-full ${
+                    atual ? "bg-marca" : "bg-transparent"
+                  }`}
+                />
+              );
 
               return (
-                <div key={secao.href} className="border-b border-linha">
-                  {/* O rótulo continua sendo link para a própria seção; quem
-                      expande é o botão ao lado. Um elemento só, fazendo as duas
-                      coisas, deixaria de ser navegável por teclado e leitor. */}
+                <div key={chave} className="border-b border-linha">
                   <div className="flex items-center justify-between gap-2">
-                    <Link
-                      href={secao.href}
-                      onClick={() => setAberto(false)}
-                      aria-current={ativa(secao.href) ? "page" : undefined}
-                      className={`flex flex-1 items-center gap-3 py-4 text-xl font-semibold transition-colors ${
-                        ativa(secao.href)
-                          ? "text-marca-clara"
-                          : "text-texto hover:text-marca-clara"
-                      }`}
-                    >
-                      {/* Filete na seção atual: no mobile não há barra de
-                          seções para carregar essa marcação. */}
-                      <span
-                        aria-hidden="true"
-                        className={`h-5 w-0.5 rounded-full ${
-                          ativa(secao.href) ? "bg-marca" : "bg-transparent"
-                        }`}
-                      />
-                      {secao.rotulo}
-                    </Link>
+                    {secao.href ? (
+                      <>
+                        {/* O rótulo continua sendo link para a própria seção;
+                            quem expande é o botão ao lado. Um elemento só,
+                            fazendo as duas coisas, deixaria de ser navegável por
+                            teclado e leitor. */}
+                        <Link
+                          href={secao.href}
+                          onClick={() => setAberto(false)}
+                          aria-current={atual ? "page" : undefined}
+                          className={`flex flex-1 items-center gap-3 py-4 text-xl font-semibold transition-colors ${
+                            atual
+                              ? "text-marca-clara"
+                              : "text-texto hover:text-marca-clara"
+                          }`}
+                        >
+                          {filete}
+                          {secao.rotulo}
+                        </Link>
 
-                    {secao.subitens?.length ? (
+                        {secao.subitens?.length ? (
+                          <button
+                            type="button"
+                            onClick={() => alternarGrupo(chave)}
+                            aria-expanded={expandido}
+                            aria-controls={id}
+                            aria-label={`${expandido ? "Recolher" : "Expandir"} ${secao.rotulo}`}
+                            className="shrink-0 p-3 text-texto-suave transition-colors hover:text-texto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
+                          >
+                            {seta}
+                          </button>
+                        ) : null}
+                      </>
+                    ) : (
+                      /* Agrupador sem página própria — "Modalidades". A linha
+                         inteira é o botão: não há link para dividir espaço com
+                         ele, e o alvo de toque fica do tamanho da linha. */
                       <button
                         type="button"
-                        onClick={() => alternarGrupo(secao.href)}
+                        onClick={() => alternarGrupo(chave)}
                         aria-expanded={expandido}
                         aria-controls={id}
-                        aria-label={`${expandido ? "Recolher" : "Expandir"} ${secao.rotulo}`}
-                        className="shrink-0 p-3 text-texto-suave transition-colors hover:text-texto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca"
+                        className={`flex flex-1 items-center gap-3 py-4 text-left text-xl font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marca ${
+                          atual
+                            ? "text-marca-clara"
+                            : "text-texto hover:text-marca-clara"
+                        }`}
                       >
-                        <svg
-                          aria-hidden="true"
-                          viewBox="0 0 24 24"
-                          className={`h-5 w-5 transition-transform ${expandido ? "rotate-180" : ""}`}
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        >
-                          <path d="M6 9l6 6 6-6" />
-                        </svg>
+                        {filete}
+                        <span className="flex-1">{secao.rotulo}</span>
+                        <span className="pr-3 text-texto-suave">{seta}</span>
                       </button>
-                    ) : null}
+                    )}
                   </div>
 
                   {secao.subitens?.length && expandido ? (
@@ -187,22 +243,27 @@ export default function MenuMobile({ secoes }: { secoes: ItemDeNavegacao[] }) {
                       id={id}
                       className="mb-4 ml-1 flex flex-col border-l border-linha pl-5"
                     >
-                      {secao.subitens.map((subitem) => (
-                        <li key={subitem.href}>
-                          <Link
-                            href={subitem.href}
-                            onClick={() => setAberto(false)}
-                            aria-current={ativa(subitem.href) ? "page" : undefined}
-                            className={`block py-3 text-lg transition-colors ${
-                              ativa(subitem.href)
-                                ? "text-marca-clara"
-                                : "text-texto-corpo hover:text-marca-clara"
-                            }`}
-                          >
-                            {subitem.rotulo}
-                          </Link>
-                        </li>
-                      ))}
+                      {secao.subitens.map((subitem) => {
+                        const href = subitem.href ?? "/";
+                        const subAtual = ativa(href);
+
+                        return (
+                          <li key={chaveDoItem(subitem)}>
+                            <Link
+                              href={href}
+                              onClick={() => setAberto(false)}
+                              aria-current={subAtual ? "page" : undefined}
+                              className={`block py-3 text-lg transition-colors ${
+                                subAtual
+                                  ? "text-marca-clara"
+                                  : "text-texto-corpo hover:text-marca-clara"
+                              }`}
+                            >
+                              {subitem.rotulo}
+                            </Link>
+                          </li>
+                        );
+                      })}
                     </ul>
                   ) : null}
                 </div>
