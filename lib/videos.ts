@@ -116,6 +116,62 @@ export function getTodosOsVideos(): Video[] {
   return ler();
 }
 
+/**
+ * Doze por página: a grade é de três colunas no desktop e duas no tablet, e doze
+ * fecha linha cheia nos dois casos. As notícias paginam em nove pelo mesmo
+ * critério.
+ */
+export const VIDEOS_POR_PAGINA = 12;
+
+export function getVideosDaPagina(videos: Video[], pagina: number): Video[] {
+  const inicio = (pagina - 1) * VIDEOS_POR_PAGINA;
+  return videos.slice(inicio, inicio + VIDEOS_POR_PAGINA);
+}
+
+/**
+ * O recorte da biblioteca, do destaque para trás. `modalidade` ausente devolve
+ * tudo.
+ */
+export function getVideosDaBiblioteca(modalidade?: string): Video[] {
+  return ordenarPorDestaque(
+    modalidade ? getVideosPorCategoria(modalidade) : getTodosOsVideos()
+  );
+}
+
+/**
+ * A lista que a grade pagina: o recorte sem o primeiro, que abre a página 1 como
+ * destaque e não se repete na grade.
+ *
+ * Existe para a rota e a tela contarem as páginas do mesmo jeito. Com a regra
+ * escrita nos dois lugares, mudar o destaque de ideia faria a última página
+ * responder 404 enquanto a paginação continuava oferecendo o link.
+ */
+export function getVideosParaGrade(modalidade?: string): Video[] {
+  return getVideosDaBiblioteca(modalidade).slice(1);
+}
+
+export function getTotalDePaginasDeVideos(videos: Video[]): number {
+  return Math.max(1, Math.ceil(videos.length / VIDEOS_POR_PAGINA));
+}
+
+export function getTotalDePaginasDaBiblioteca(modalidade?: string): number {
+  return getTotalDePaginasDeVideos(getVideosParaGrade(modalidade));
+}
+
+/**
+ * Modalidades que têm vídeo, na ordem da navegação.
+ *
+ * O filtro só oferece o que existe: pastilha ou item de menu que leva a uma
+ * grade vazia é um beco sem saída, e num acervo em formação a maioria das
+ * modalidades ainda está vazia.
+ */
+export function getModalidadesComVideo(
+  categorias: { slug: string; rotulo: string }[]
+): { slug: string; rotulo: string }[] {
+  const presentes = new Set(getTodosOsVideos().map((video) => video.categoria));
+  return categorias.filter((categoria) => presentes.has(categoria.slug));
+}
+
 export function getVideoPorSlug(slug: string): Video | undefined {
   return getTodosOsVideos().find((video) => video.slug === slug);
 }
@@ -130,11 +186,21 @@ export function getVideosPorCategoria(categoria: string): Video[] {
  * marcar `destaque`.
  */
 export function getVideosEmDestaque(quantidade: number): Video[] {
-  const todos = getTodosOsVideos();
-  const marcados = todos.filter((video) => video.destaque);
-  const resto = todos.filter((video) => !video.destaque);
+  return ordenarPorDestaque(getTodosOsVideos()).slice(0, quantidade);
+}
 
-  return [...marcados, ...resto].slice(0, quantidade);
+/**
+ * Os marcados na frente, cada grupo mantendo a ordem de publicação.
+ *
+ * Recebe a lista em vez de ir buscá-la porque a biblioteca aplica a mesma regra
+ * dentro de um recorte: em /videos/modalidade/boxe quem abre a página é o vídeo
+ * de boxe em destaque, não o destaque geral do portal.
+ */
+export function ordenarPorDestaque(videos: Video[]): Video[] {
+  return [
+    ...videos.filter((video) => video.destaque),
+    ...videos.filter((video) => !video.destaque),
+  ];
 }
 
 /** Vídeos ligados a uma matéria, na ordem em que o vídeo foi publicado. */
