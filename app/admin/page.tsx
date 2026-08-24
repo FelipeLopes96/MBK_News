@@ -26,13 +26,20 @@ export default async function AdminPage() {
           </p>
         </div>
 
-        <div className="flex shrink-0 items-center gap-4">
-          <Link
-            href="/admin/materias"
-            className="whitespace-nowrap rounded-md border border-linha-forte px-4 py-2 text-sm text-texto-corpo hover:border-marca"
-          >
-            Matérias publicadas
-          </Link>
+        <div className="flex shrink-0 flex-wrap items-center gap-3">
+          {[
+            { href: "/admin/materias", rotulo: "Matérias" },
+            { href: "/admin/videos", rotulo: "Vídeos" },
+            { href: "/admin/eventos", rotulo: "Eventos" },
+          ].map((secao) => (
+            <Link
+              key={secao.href}
+              href={secao.href}
+              className="whitespace-nowrap rounded-md border border-linha-forte px-3 py-2 text-sm text-texto-corpo hover:border-marca"
+            >
+              {secao.rotulo}
+            </Link>
+          ))}
 
           <form action={sair}>
             <button
