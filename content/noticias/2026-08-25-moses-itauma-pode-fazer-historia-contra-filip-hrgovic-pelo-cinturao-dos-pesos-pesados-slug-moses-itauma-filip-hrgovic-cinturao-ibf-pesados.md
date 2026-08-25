@@ -1,7 +1,7 @@
 ---
 title: >-
   Moses Itauma pode fazer história contra Filip Hrgovic pelo cinturão dos
-  pesos-pesados" slug: "moses-itauma-filip-hrgovic-cinturao-ibf-pesados
+  pesos-pesados
 slug: >-
   moses-itauma-pode-fazer-historia-contra-filip-hrgovic-pelo-cinturao-dos-pesos-pesados-slug-moses-itauma-filip-hrgovic-cinturao-ibf-pesados
 date: '2026-08-25'
