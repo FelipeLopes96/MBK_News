@@ -1,6 +1,6 @@
 ---
 title: >-
-  "Nutrição para quem treina: o básico para ter mais energia e se recuperar
+  Nutrição para quem treina: o básico para ter mais energia e se recuperar
   melhor
 slug: nutricao-para-quem-treina-o-basico-para-ter-mais-energia-e-se-recuperar-melhor
 date: '2026-08-25'
