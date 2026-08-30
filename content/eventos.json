@@ -64,5 +64,14 @@
     "hora": "Card principal a partir das 16h",
     "local": "Accor Arena",
     "cidade": "Paris, França"
+  },
+  {
+    "id": 9,
+    "organizacao": "UFC",
+    "nome": "UFC Paris (Dan Hooker x Salahdine Parnasse)",
+    "data": "2026-09-05",
+    "hora": "Card principal a partir das 16h",
+    "local": "Accor Arena",
+    "cidade": "Paris, França"
   }
 ]
