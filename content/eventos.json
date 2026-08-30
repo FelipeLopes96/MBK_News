@@ -48,15 +48,6 @@
     "status": "a-confirmar"
   },
   {
-    "id": 7,
-    "organizacao": "ONE",
-    "nome": "ONE Fight Night 47",
-    "data": "2026-09-04",
-    "hora": "A partir das 22h",
-    "local": "Lumpinee Stadium",
-    "cidade": "Bangkok - Tailândia"
-  },
-  {
     "id": 8,
     "organizacao": "UFC",
     "nome": "UFC Paris (Dan Hooker x Salahdine Parnasse)",
